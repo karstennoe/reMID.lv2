@@ -161,3 +161,2595 @@
 	state:state [
 		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <subsynth.conf>
 	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/agogo.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "AGOGO..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <agogo.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arp-filtupd.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ARP1...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arp-filtupd.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arp-maj-thin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "MAJOR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arp-maj-thin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arp-major.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PIANOAR2" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arp-major.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arp-minor.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PIANOARP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arp-minor.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arpfildownup.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ARPDOWNU" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arpfildownup.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arpmaj7-thin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "MAJOR7" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arpmaj7-thin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arpmi7-choir.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GUIMINR7" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arpmi7-choir.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/arpmi7-thin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "MINOR7" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <arpmi7-thin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-31filkt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASS31FI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-31filkt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-31nofil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSGUI." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-31nofil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-articul.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASS...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-articul.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-atmosph.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSDRON" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-atmosph.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-bugoff.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BUGOFBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-bugoff.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-chornof.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CHORUBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-chornof.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-claswep.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CLASSBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-claswep.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-dazzler.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "DAZZBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-dazzler.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-drum.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "DRUMBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-drum.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-funkfil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSGUIT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-funkfil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-ghostfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSGHOS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-ghostfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-hellnof.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HELLBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-hellnof.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-hihaswp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASS...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-hihaswp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-ilenfil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSILEN" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-ilenfil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-octaswp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "INTROBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-octaswp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-popfilt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSPOP." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-popfilt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-shogoon.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHOGBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-shogoon.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-slapfil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SLAPBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-slapfil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-slsweep.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SWEEPBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-slsweep.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-stchoir.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSNOFI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-stchoir.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-sweep4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TIAUBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-sweep4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-sweepud.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSFWEP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-sweepud.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-sweepy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SWEEPBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-sweepy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-sweplfo.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASS1..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-sweplfo.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-swpchor.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SWEEPBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-swpchor.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-synvocf.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ELECBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-synvocf.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-techno.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ANABASS." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-techno.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-thumbfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "THUMBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-thumbfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass-wavyswp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WAVSWBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass-wavyswp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass21hihat.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASS2..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass21hihat.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bass21octa4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ENDBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bass21octa4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bassassa.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSASSA" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bassassa.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/basskick-fkt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <basskick-fkt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bassoctavarp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "OCTABASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bassoctavarp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bassoldschol.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "OLDSBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bassoldschol.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bell-bliss.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CH2BLISS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bell-bliss.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bell-glassy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GLASBELL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bell-glassy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bell-glassy2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GLASSBEL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bell-glassy2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bell-percuss.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BELLPERC" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bell-percuss.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bell-ringy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "RINGBELL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bell-ringy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bell-snare.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARBELL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bell-snare.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bell-tremolo.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BELL...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bell-tremolo.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bongo-latino.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LATICONG" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bongo-latino.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/bongo.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BONGO..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <bongo.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-filtsw.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BRASS..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-filtsw.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-nofilt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BRASSNOF" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-nofilt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-octatk.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "OCTABRAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-octatk.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-sling.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SLINGBRA" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-sling.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-synth.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SYNBRASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-synth.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-thick.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BRASS..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-thick.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-thin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SLINGBRA" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-thin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brass-tuba.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TUBA" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brass-tuba.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brassglissdn.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BRASSDOW" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brassglissdn.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/brasstrumpet.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TRUMPET" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <brasstrumpet.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/celesta.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CELESTA." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <celesta.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-11hhat.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHATRIA" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-11hhat.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-41-fat.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FATCHORD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-41-fat.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-41slow.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SQSLCHRD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-41slow.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-61slow.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SL61CHRD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-61slow.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-autofi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "AUTOFARP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-autofi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-bugoff.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BUGOFCHD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-bugoff.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-fatswp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FATCHORD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-fatswp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-finesw.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FINEARP." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-finesw.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-organy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ORGYCHRD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-organy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-pian4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PIANOCHD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-pian4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-pulsat.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ARP1...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-pulsat.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-slow.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FINEARP." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-slow.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-slowy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ARP....." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-slowy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-slthin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SLWCHORD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-slthin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-thinfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TIEFCHRD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-thinfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-vibra.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VIBCHORD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-vibra.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord-wintrb.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WINTBCHD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord-wintrb.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord2dazzlr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "DAZZCHD2" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord2dazzlr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chord41decay.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CHORDECY" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chord41decay.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chordfadin4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CHORD 4X" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chordfadin4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chordfastrng.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ARP2...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chordfastrng.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chordfunkgit.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GUICHORD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chordfunkgit.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chordringmod.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "C=64" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chordringmod.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/chordslowatt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SLOWATCH" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <chordslowatt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/cimbalom.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CIMBALOM" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <cimbalom.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/clap-flsweep.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CLAPFILT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <clap-flsweep.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/clap-snare.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CLAPSNAR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <clap-snare.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/claps-tiefkl.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TIEFCLAP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <claps-tiefkl.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/clarinetbass.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSKLAR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <clarinetbass.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/clavinet.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CLAVINET" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <clavinet.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/conga-clean.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CONGA..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <conga-clean.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/conga-wavy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CONGA..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <conga-wavy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/conga.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CONGA..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <conga.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/crash-accent.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ACCENT.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <crash-accent.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/crash-shortf.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHRTCRAF" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <crash-shortf.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/crash-silent.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHRTCRAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <crash-silent.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/cymbal-light.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CIN....." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <cymbal-light.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/cymbalkick.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ACCENT.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <cymbalkick.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/cymbalkick4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ACCENT4X" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <cymbalkick4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/dbass-bowedf.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "NAGYBOGO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <dbass-bowedf.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/dbass-kick.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKDBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <dbass-kick.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/dbass-nofilt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ACOUBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <dbass-nofilt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/dbass-sinful.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SINFUBAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <dbass-sinful.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/doublebass.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BOGO1..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <doublebass.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/elect-guitar.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ELECGUIT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <elect-guitar.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/elpiano-nofi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ELPINOFI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <elpiano-nofi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-21attk.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FURULYA." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-21attk.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-31attk.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FLUTE..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-31attk.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-41filt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FILTFLUT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-41filt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-cryer.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FLU....." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-cryer.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-decay.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FLUTE..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-decay.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-filkbt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FURULYA." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-filkbt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-ocarin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FLU" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-ocarin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/flute-xyloph.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "XILOFLU." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <flute-xyloph.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/glassringmod.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "RINGLASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <glassringmod.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/glockenspiel.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GLOCKNSP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <glockenspiel.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/guitar-acous.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ACOUGUIT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <guitar-acous.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/guitar-funkr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FUNKGITR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <guitar-funkr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/guitar-ghosf.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GITGHOST" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <guitar-ghosf.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/guitaracusol.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ACUGUISO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <guitaracusol.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/harpsichord.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HARPSICH" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <harpsichord.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-acoust.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHAT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-acoust.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-chord.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHATARP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-chord.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-filter.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHATFIL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-filter.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-hishrt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHORTHAT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-hishrt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-nofilt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHAT..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-nofilt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-openli.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHATNOF" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-openli.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-pedal.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHATS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-pedal.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-pedal2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHATS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-pedal2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-pedal3.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHAT..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-pedal3.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-pedaly.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHAT..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-pedaly.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-short.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHATNOF" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-short.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-tic.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TIC+HH" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-tic.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihat-tiefkl.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TIEFHIHA" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihat-tiefkl.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihatkikopen.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKOHIH" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihatkikopen.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/hihatpedalfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HIHAT..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <hihatpedalfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-acousti.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "NOFIKICK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-acousti.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-bass-4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KIBASS4X" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-bass-4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-bugoff.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BUGOFKCK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-bugoff.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-hardcor.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSDRUM" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-hardcor.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-heavyfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HEAVYBDR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-heavyfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-metal.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKMETL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-metal.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-poppy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICK-POP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-poppy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-shogoon.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHOGKICK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-shogoon.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-shohard.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSDRUM" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-shohard.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-shorty.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICK...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-shorty.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-speed4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICK 4X" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-speed4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-strongf.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICK...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-strongf.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-stroomy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKONLY" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-stroomy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-superfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKFILT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-superfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-techno.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICK...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-techno.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-varifil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VARIKICK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-varifil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-vintage.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSDRUM" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-vintage.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kick-wetdecy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKNOFI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kick-wetdecy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickbassclas.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickbassclas.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickbassfilt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickbassfilt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickbassfunk.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSDRGI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickbassfunk.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickbassghos.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASGHKIC" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickbassghos.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickbasstron.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKBASS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickbasstron.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickbassweep.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BASSKICK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickbassweep.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickfiltered.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKFILT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickfiltered.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickhardecay.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BUGOFKCK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickhardecay.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/kickshortwet.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KICKNOFI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <kickshortwet.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/musicbox.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "MUSICBOX" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <musicbox.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/musicbox2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "MUSICBOX" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <musicbox2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/organ-rockup.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ORGAN..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <organ-rockup.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/organhammond.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HAMMOND." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <organhammond.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pad-61clavin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CLAVIPAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pad-61clavin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pad-glasperc.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GLASS..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pad-glasperc.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pad-glassoct.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GLASS..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pad-glassoct.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pad-hihaglas.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GLASSPAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pad-hihaglas.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pad-pulsevib.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PULSEPAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pad-pulsevib.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pad-saw-szep.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SZEP PAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pad-saw-szep.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pad-strongkt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KBTRKPAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pad-strongkt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/padshortglas.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GLASS..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <padshortglas.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/perc-dazzler.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "DAZZKONG" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <perc-dazzler.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/perc-krrrfil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "KRRRRRR." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <perc-krrrfil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/perc-ringmod.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PERCUSS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <perc-ringmod.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/perc-woodrum.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PERCUSS." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <perc-woodrum.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/percuss+clap.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PERCCLAP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <percuss+clap.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-bright.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BRIPIANO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-bright.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-choiry.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CHORPIAN" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-choiry.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-elecfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ELPIANOF" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-elecfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-fad-4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PIANOFIL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-fad-4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-filtkt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "GRDPIANO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-filtkt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-fm.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FM-PIANO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-fm.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-nofilt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PIANOFIL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-nofilt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/piano-wah-4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WAHPIANO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <piano-wah-4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/pianospeed4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PIANO-4X" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <pianospeed4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/saw-triverb.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SAWREVRB" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <saw-triverb.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/saxophone.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SAXOPHON" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <saxophone.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/saxophone2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SAXOPHON" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <saxophone2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-alienic.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX4...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-alienic.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-backnois.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BACKNOIS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-backnois.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-bottlefi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BOTTLEFX" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-bottlefi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-bounce.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX5...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-bounce.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-bounce2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX10..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-bounce2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-breakhit.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BREAKHIT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-breakhit.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-bubbling.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX8...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-bubbling.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-cat-myau.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CAT MYAU" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-cat-myau.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-deltavib.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "DELTA2" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-deltavib.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-engine.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ENGINEFX" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-engine.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-laser.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX1...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-laser.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-morajlas.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "MORAJLAS" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-morajlas.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-noisengi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX9..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-noisengi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-pumping.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX2...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-pumping.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-ringvibr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "RING...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-ringvibr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-scratch.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SCRATCH." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-scratch.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-screamy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX6...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-screamy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-shootdn.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX7...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-shootdn.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-simpwind.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WIND...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-simpwind.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-sinusoid.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SFX3...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-sinusoid.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sfx-windfilt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WINDSFX." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sfx-windfilt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/shaker-filt.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHAKER.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <shaker-filt.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/shaker-horrr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "HORRSHAK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <shaker-horrr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/shaker-notfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHAKER.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <shaker-notfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/shaker.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHAKER.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <shaker.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sidestick.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SIDESTCK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sidestick.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/sidestick2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SIDESTCK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <sidestick2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SN" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-averag.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNAR...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-averag.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-body.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNAREBOD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-body.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-deep.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARE..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-deep.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-fatty.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARE..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-fatty.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-funky.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARE.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-funky.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-hi-fil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARFIHI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-hi-fil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-hiwood.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "NOFISNAR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-hiwood.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-kicky.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARE..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-kicky.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-kicky2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "NOFISNAR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-kicky2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-loose.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LOOSESNR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-loose.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-oldsch.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "OLDSNARE" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-oldsch.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-precis.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BIGSNARE" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-precis.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-rota4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNAREROT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-rota4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-rotati.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNAREROT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-rotati.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-shogon.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHOGSNAR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-shogon.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-sidest.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SIDESTCK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-sidest.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-sinful.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SINFUSNR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-sinful.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-small.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SMALLSNR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-small.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-splas2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHARPSNR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-splas2.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-splash.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARE..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-splash.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-thick.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "THICKSNR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-thick.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-tight.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNAR...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-tight.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-windy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNARE..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-windy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snare-woody.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WOODSND." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snare-woody.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snaredazzler.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "DAZZSNAR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snaredazzler.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snarelongdec.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SNAR...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snarelongdec.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/snarespeed4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "MULTISNR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <snarespeed4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-1141shp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "REFSOLO." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-1141shp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-215141c.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLOVOC." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-215141c.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-21ninfa.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SUDDENSO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-21ninfa.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41-cry.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CRYSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41-cry.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41-echo.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "ECHOSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41-echo.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41choir.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLOCHOI" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41choir.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41crysh.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41crysh.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41decay.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LEAD ON" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41decay.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41norst.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "PULSSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41norst.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41sharp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41sharp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41slows.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41slows.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41sweet.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LEAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41sweet.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-41upraj.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LEAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-41upraj.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-51organ.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "UNISOLO." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-51organ.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-55drive.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "55DRIVE" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-55drive.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-61vocal.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOCAL..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-61vocal.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-65ringy.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SYNTSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-65ringy.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-67lead.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LEADD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-67lead.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-bugoff.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BUGOFSOL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-bugoff.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-choipup.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLOPKUP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-choipup.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-dazzler.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "DAZZSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-dazzler.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-flswp4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FSWPSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-flswp4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-funfact.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FUNFASOL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-funfact.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-glasatk.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LEAD" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-glasatk.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-incvech.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-incvech.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-light.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLIGHT." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-light.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-octecho.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VALAMI.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-octecho.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-openfil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO...." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-openfil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-percuss.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLOPERC" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-percuss.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-pickup.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LEAD UP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-pickup.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-picobas.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "POPSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-picobas.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-saw-fil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SAWSOLOF" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-saw-fil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-sawvibr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SAW-SOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-sawvibr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-sinful.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SINFUSOL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-sinful.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-slowcry.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO1..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-slowcry.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-swpthin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO2..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-swpthin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-thin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "THINSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-thin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-trancey.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TRANCES." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-trancey.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-vocal.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOCALNOF" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-vocal.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-vocalfi.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOCAL..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-vocalfi.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo-winterb.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WINTBSOL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo-winterb.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo2141huzo.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SOLO2..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo2141huzo.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo41incvib.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "FATROTSO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo41incvib.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo41straig.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "STRASOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo41straig.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solo41thecho.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "SHORTSOL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solo41thecho.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/soloctachoir.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CHORSOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <soloctachoir.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solooctavarp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "OCTASOLO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solooctavarp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/solopickdown.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "LEAD DN" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <solopickdown.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tamburin.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TAMBURIN" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tamburin.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tic-belly.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TIKFA..." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tic-belly.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tic-xt-41-11.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TIC XT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tic-xt-41-11.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tictoc-octav.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TICTOC" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tictoc-octav.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tinkle-bell.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TINKBELL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tinkle-bell.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tinklelonghr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TINKLNHR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tinklelonghr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/toc-4x.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TOC" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <toc-4x.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/toc.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TOC" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <toc.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tom-containr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TOM....." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tom-containr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/tom-filtkbtr.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TOMFILT." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <tom-filtkbtr.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/trumpetdecay.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "TRUMPET." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <trumpetdecay.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/vibraphone.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VIBRAFON" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <vibraphone.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/violin-decay.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VIOLIN2" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <violin-decay.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/violin-slow.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VIOLIN.." ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <violin-slow.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/violin-vibra.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VIOLIN3" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <violin-vibra.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/violinstraig.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VIOLIN" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <violinstraig.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/vocal-catfil.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "CATVOCAL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <vocal-catfil.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/vocal-chord.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOCAL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <vocal-chord.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/vocal-comeon.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOC:COMO" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <vocal-comeon.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/vocal-door.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOC: DOR" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <vocal-door.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/vocal-my.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOC: MY" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <vocal-my.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/vocal-pimp.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "VOC:PIMP" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <vocal-pimp.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/woodbl-hihat.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WOODHHAT" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <woodbl-hihat.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/woodblk-bell.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WOODBELL" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <woodblk-bell.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/woodblock.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "WOODBLOK" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <woodblock.conf>
+	] .

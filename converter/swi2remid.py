@@ -33,6 +33,7 @@
 
 from pathlib import Path
 import argparse, re
+import math  #  for vibrato shapes
 
 # -------------------------------
 # SWI instrument-local byte map (SID-Wizard v1.7 layout)
@@ -44,6 +45,13 @@ ARPS = 0x07           # WF/ARP step timing byte (low 6 bits), SID-Wizard tempo d
 PWPT = 0x0A           # pointer (byte offset within payload) to PW table
 FLPT = 0x0B           # pointer (byte offset within payload) to Filter table
 WF0  = 0x0F           # initial control register value for first frame (SID ctrl byte)
+
+#  additional header bytes seen in SW 1.7 exports
+VIB_DEPTH = 0x05      # often used for instrument vibrato depth
+VIB_DELAY = 0x06      # often used for instrument vibrato delay (frames or ticks)
+GO_WF = 0x0C          # optional "gate-off when WF table reaches row N"
+GO_PW = 0x0D          # optional "gate-off when PW table reaches row N"
+GO_FL = 0x0E          # optional "gate-off when FL table reaches row N"
 
 # ====================================================================================
 # I/O helpers
@@ -267,7 +275,8 @@ def mat_pw(payload: bytes, pwrows: list, frames: int, pw_base: int) -> list[int]
 # Filter materializer
 # ====================================================================================
 
-def mat_filter(flrows: list, frames: int, fl_base: int):
+def mat_filter(flrows: list, frames: int, fl_base: int,
+               cutoff_scale: float = 1.0, res_scale: float = 1.0):  #  calibration
     """
     Build per-frame filter cutoff values and return (cutoff_list, mode_bits, fr_vic).
 
@@ -308,6 +317,14 @@ def mat_filter(flrows: list, frames: int, fl_base: int):
     last_f = -1
     no_progress = 0
     max_no_progress = len(flrows) * 4 + 16
+
+    #  helpers for calibration
+    def scale_cut(v: int) -> int:
+        v = int(v * cutoff_scale)
+        return max(0x000, min(0x7FF, v))
+    def pack_fr_vic(res_nibble: int, route_bits: int) -> int:
+        r = max(0, min(15, int(round(res_nibble * res_scale))))
+        return ((r & 0xF) << 4) | (route_bits & 0x7)
 
     while f < frames:
         # Watchdog for "no progress" scenarios
@@ -361,16 +378,16 @@ def mat_filter(flrows: list, frames: int, fl_base: int):
             res   =  l       & 0x0F
             route = (t & 0x07) or 0x1
             mode  = band_to_mode(band)
-            fr_vic= ((res & 0xF) << 4) | (route & 0x7)
+            fr_vic= pack_fr_vic(res, route)  #  calibrated resonance pack
             fine  = (t >> 4) & 0x07
-            cur   = min(0x7FF, ((r & 0xFF) << 3) | fine)
+            cur   = scale_cut(min(0x7FF, ((r & 0xFF) << 3) | fine))
             out[f] = cur
             f += 1
             i += 1
 
         elif l == 0x00:
             # Absolute cutoff set
-            cur = min(0x7FF, (r & 0xFF) << 3)
+            cur = scale_cut(min(0x7FF, (r & 0xFF) << 3))
             out[f] = cur
             f += 1
             i += 1
@@ -382,7 +399,7 @@ def mat_filter(flrows: list, frames: int, fl_base: int):
             for _ in range(dur):
                 if f >= frames:
                     break
-                cur = max(0x000, min(0x7FF, cur + slope))
+                cur = scale_cut(max(0x000, min(0x7FF, cur + slope)))
                 out[f] = cur
                 f += 1
             i += 1
@@ -479,7 +496,16 @@ def materialize_arp_offsets(wf_triplets: list[tuple[int,int,int]], step_frames: 
 def emit(name: str, payload: bytes, *,
          program_speed=50, speed_mult=1, arp_plus1=False,
          strict_wf=False, emit_arp=True, hard_restart=False,
-         sustain_frames=64):
+         sustain_frames=64,
+         #  fidelity toggles
+         filter_on_tonal=True,
+         oneshot_if_steady_wf=True,
+         respect_gateoff=False,
+         #  vibrato controls
+         enable_vibrato=False, vib_depth=None, vib_delay=None,
+         vib_rate_frames=4, vib_shape="tri",
+         #  calibration
+         cutoff_scale=1.0, res_scale=1.0):
     """
     Convert one .swi instrument payload to a reMID .conf string.
 
@@ -491,6 +517,11 @@ def emit(name: str, payload: bytes, *,
       - emit_arp     : if False, ignore ARP offsets entirely.
       - hard_restart : if True, emit a TEST+GATE jab (0x09) at start (defaults OFF).
       - sustain_frames: how long to continue evolving PW/Filter in one-shot patches.
+      - filter_on_tonal: delay first filter set to first tonal (non-NOISE) frame.
+      - oneshot_if_steady_wf: treat constant-WF/no-arp as one-shot (no WF FE loop).
+      - respect_gateoff: clear GATE when header gate-off indices are reached.
+      - enable_vibrato: add per-frame LFO (depth/delay from header unless overridden).
+      - cutoff_scale/res_scale: quick per-project calibration.
     """
     # Sanitize/normalize instrument name for the block header
     name = re.sub(r'[^A-Za-z0-9_-]+', '-', name.strip()) or "instrument"
@@ -529,8 +560,17 @@ def emit(name: str, payload: bytes, *,
         # Fallback: single frame with the initial control byte
         wf_steps = [((wf0 if strict_wf else sanitize(wf0)), 0x00, 0x00)]
 
+    # Helper lambdas
+    is_noise = lambda ctrl: (ctrl & 0x80) != 0
+    wf_only  = [w for (w, _a, _x) in wf_steps]
+
     wf_has_loop = wf_loop_row is not None
     loop_start_frame = (wf_loop_row or 0) * step_frames
+
+    # Optional heuristic: treat as one-shot if WF becomes steady and ARP is steady
+    if oneshot_if_steady_wf:
+        steady_wf = all(w == wf_only[0] for w in wf_only)
+        # steady ARP is checked later after ARP expansion; we'll decide again there
 
     # Total frames for the "attack" (one pass through WF rows)
     total_frames = step_frames * len(wf_steps)
@@ -552,12 +592,49 @@ def emit(name: str, payload: bytes, *,
     else:
         arp_abs = [0] * total_frames
 
+    # If one-shot heuristic enabled, refine with ARP: must be steady offsets
+    if oneshot_if_steady_wf:
+        steady_wf = all(w == wf_only[0] for w in wf_only)
+        steady_arp = all(a == arp_abs[0] for a in arp_abs) if arp_abs else True
+        if steady_wf and steady_arp:
+            wf_has_loop = False  # override FE loop — musical one-shot
+
+    # --------------------------------
+    # Vibrato LFO (optional): add to ARP absolute offsets before differencing
+    # --------------------------------
+    if enable_vibrato:
+        # Depth/delay from header unless overridden
+        depth = vib_depth if vib_depth is not None else (payload[VIB_DEPTH] & 0x3F)
+        delay = vib_delay if vib_delay is not None else (payload[VIB_DELAY] & 0xFF)
+        depth_semi = float(depth) / 8.0  # heuristic: map to semitones (0..~8/8=1 by default)
+        period = max(2, vib_rate_frames * 4)  # full-cycle frames (triangle default)
+
+        vib = [0.0] * total_frames
+        for f in range(total_frames):
+            if f < delay:
+                vib[f] = 0.0
+            else:
+                t = (f - delay) % period
+                ph = t / period
+                if vib_shape.lower().startswith("s"):
+                    # sine
+                    vib[f] = depth_semi * math.sin(2 * math.pi * ph)
+                else:
+                    # triangle in [-1,1]
+                    tri = 4*ph - 2 if ph < 0.5 else 2 - 4*ph
+                    vib[f] = depth_semi * tri
+        # Combine and quantize to integer semitone offsets at frame resolution
+        comb_abs = [int(round(arp_abs[f] + vib[f])) for f in range(total_frames)]
+    else:
+        comb_abs = arp_abs[:]  # no vibrato
+
     # --------------------------------
     # Materialize PW and Filter tracks out to the "horizon"
     # --------------------------------
     horizon = total_frames + max(1, sustain_frames)  # allow sustain evolving
     pw_all  = mat_pw(payload, pwrows, horizon, payload[PWPT])
-    fl_all, mode, fr_vic = mat_filter(flrows, horizon, payload[FLPT])
+    fl_all, mode, fr_vic = mat_filter(flrows, horizon, payload[FLPT],
+                                      cutoff_scale=cutoff_scale, res_scale=res_scale)
 
     # Optimization: in many patches PW doesn't move at all in the attack
     pw_static_attack = all(pw_all[i] == pw_all[0] for i in range(1, total_frames))
@@ -601,24 +678,41 @@ def emit(name: str, payload: bytes, *,
     # We'll also remember the line number right AFTER the initial seed.
     loop_entry_line_after_seed = None
 
+    # Gate-off handling state (NEW)
+    gate_cleared = False
+    go_wf = payload[GO_WF] if respect_gateoff else 0xFF
+    go_pw = payload[GO_PW] if respect_gateoff else 0xFF
+    go_fl = payload[GO_FL] if respect_gateoff else 0xFF
+
+    # Find the first tonal frame for filter-on-tonal (NEW)
+    first_tonal_f = 0
+    if filter_on_tonal and total_frames >= 2 and is_noise(wf_abs[0]):
+        for idx in range(1, total_frames):
+            if not is_noise(wf_abs[idx]):
+                first_tonal_f = idx
+                break
+
     # ------------- Attack pass (one run across WF table) -------------
     for f in range(0, total_frames):
         frame_line.append(t)
+
+        row_idx = f // step_frames  # current WF row
 
         if f == 0:
             # First frame: set control byte (waveform + gate/sync/ring)
             lines.append(f".{t}=v1_control 0x{wf_abs[0]:02X}"); t += 1
 
             # ARP "seed" for frame 0 (absolute offset relative to played note)
-            if emit_arp and arp_abs[0] != 0:
-                lines.append(f".{t}=v1_freq_hs {arp_abs[0]}"); t += 1
+            if emit_arp and comb_abs[0] != 0:
+                lines.append(f".{t}=v1_freq_hs {comb_abs[0]}"); t += 1
 
             # IMPORTANT: Loop should re-enter AFTER we apply the seed
             loop_entry_line_after_seed = t
 
-            # Initialize PW and filter at their first values
+            # Initialize PW and (optionally delayed) filter at their first values
             lines.append(f".{t}=v1_pulse 0x{max(1, pw_all[0]):03X}"); t += 1
-            lines.append(f".{t}=filter_cutoff 0x{fl_all[0]:04X}");   t += 1
+            if not (filter_on_tonal and first_tonal_f > 0):
+                lines.append(f".{t}=filter_cutoff 0x{fl_all[0]:04X}");   t += 1
 
         else:
             # Control changes only when the control byte actually changes
@@ -629,15 +723,25 @@ def emit(name: str, payload: bytes, *,
             if (not pw_static_attack) and pw_all[f] != pw_all[f-1]:
                 lines.append(f".{t}=v1_pulse 0x{pw_all[f]:03X}");   t += 1
 
-            # Filter cutoff changes
-            if fl_all[f] != fl_all[f-1]:
+            # Filter cutoff changes (with optional delay to tonal frame)
+            if fl_all[f] != fl_all[f-1] or (filter_on_tonal and f == first_tonal_f and first_tonal_f > 0):
                 lines.append(f".{t}=filter_cutoff 0x{fl_all[f]:04X}"); t += 1
 
-            # ARP delta for this frame (relative change only)
+            # ARP delta for this frame (relative change only; vibrato included if enabled)
             if emit_arp:
-                d = arp_abs[f] - arp_abs[f-1]
+                d = comb_abs[f] - comb_abs[f-1]
                 if d != 0:
                     lines.append(f".{t}=v1_freq_hs {d}"); t += 1
+
+        # Respect gate-off indices (only once)
+        if respect_gateoff and not gate_cleared:
+            if ((go_wf != 0xFF and row_idx == go_wf) or
+                (go_pw != 0xFF and row_idx == go_pw) or
+                (go_fl != 0xFF and row_idx == go_fl)):
+                # Clear GATE bit on current control
+                ctrl_no_gate = wf_abs[f] & ~0x01
+                lines.append(f".{t}=v1_control 0x{ctrl_no_gate:02X}"); t += 1
+                gate_cleared = True
 
         # Each WF/ARP row frame consumes 1 tick
         lines.append(f".{t}=wait 1"); t += 1
@@ -646,8 +750,8 @@ def emit(name: str, payload: bytes, *,
     if wf_has_loop:
         # Ensure the absolute ARP offset at loop-start equals the target.
         if emit_arp:
-            target = arp_abs[loop_start_frame] if loop_start_frame < len(arp_abs) else 0
-            cur    = arp_abs[total_frames - 1]
+            target = comb_abs[loop_start_frame] if loop_start_frame < len(comb_abs) else 0
+            cur    = comb_abs[total_frames - 1]
             wrap   = target - cur
             if wrap != 0:
                 lines.append(f".{t}=v1_freq_hs {wrap}"); t += 1
@@ -667,8 +771,8 @@ def emit(name: str, payload: bytes, *,
         last_wf = wf_abs[-1] if wf_abs else sanitize(payload[WF0])
 
         # Return pitch to base if we had a non-zero offset at the end.
-        if emit_arp and arp_abs[-1] != 0:
-            lines.append(f".{t}=v1_freq_hs {-arp_abs[-1]}"); t += 1
+        if emit_arp and comb_abs[-1] != 0:
+            lines.append(f".{t}=v1_freq_hs {-comb_abs[-1]}"); t += 1
 
         lines.append(f".{t}=v1_control 0x{last_wf:02X}"); t += 1
 
@@ -720,6 +824,32 @@ def main():
     ap.add_argument("--hard-restart",  action="store_true",  help="emit TEST+GATE jab at start (default OFF)")
     ap.add_argument("--sustain-frames", type=int, default=64, help="frames to evolve PW/Filter in one-shot patches")
 
+    #  fidelity toggles
+    ap.add_argument("--no-filter-on-tonal", action="store_true",
+                    help="do NOT delay first filter set to first tonal frame")
+    ap.add_argument("--no-oneshot-if-steady-wf", action="store_true",
+                    help="always honor WF FE loops (even if WF/ARP steady)")
+    ap.add_argument("--respect-gateoff", action="store_true",
+                    help="clear GATE when header gate-off indices are reached")
+
+    #  vibrato controls
+    ap.add_argument("--enable-vibrato", action="store_true",
+                    help="enable vibrato LFO from header depth/delay (or overrides)")
+    ap.add_argument("--vib-depth", type=float, default=None,
+                    help="override vibrato depth (semitones, float); default derives from header byte")
+    ap.add_argument("--vib-delay", type=int, default=None,
+                    help="override vibrato delay in frames; default derives from header byte")
+    ap.add_argument("--vib-rate-frames", type=int, default=4,
+                    help="vibrato full-cycle/4 (triangle) in frames; higher = slower")
+    ap.add_argument("--vib-shape", choices=["tri","sine"], default="tri",
+                    help="vibrato waveform")
+
+    #  filter calibration
+    ap.add_argument("--cutoff-scale", type=float, default=1.0,
+                    help="multiply cutoff values by this factor (clamped to 0..0x7FF)")
+    ap.add_argument("--res-scale", type=float, default=1.0,
+                    help="scale resonance nibble before packing into fr_vic")
+
     args = ap.parse_args()
 
     payload = read_payload(Path(args.inp))
@@ -737,6 +867,19 @@ def main():
         emit_arp=not args.no_emit_arp,
         hard_restart=args.hard_restart,
         sustain_frames=max(1, args.sustain_frames),
+        #  fidelity toggles (defaults ON)
+        filter_on_tonal=not args.no_filter_on_tonal,
+        oneshot_if_steady_wf=not args.no_oneshot_if_steady_wf,
+        respect_gateoff=args.respect_gateoff,
+        #  vibrato
+        enable_vibrato=args.enable_vibrato,
+        vib_depth=args.vib_depth,
+        vib_delay=args.vib_delay,
+        vib_rate_frames=max(1, args.vib_rate_frames),
+        vib_shape=args.vib_shape,
+        #  calibration
+        cutoff_scale=max(0.01, args.cutoff_scale),
+        res_scale=max(0.01, args.res_scale),
     )
 
     Path(args.outp).write_text(txt, encoding="utf-8")
