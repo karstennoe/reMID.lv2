@@ -116,3 +116,23 @@ See:
 - `instruments/gm_drumkit.conf` (GM-style subset example)
 
 Load one of these as the instrument file/preset and send MIDI notes on channel 10 (GM convention). If you want to force channel 10 from the host, set `ch10_program=1` (both kits define program 1 as `kit`).
+
+Building "banks" (category instrument files)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have more than 128 individual `instruments/*.conf` files, you can generate categorized bank files that each expose up to 128 programs:
+
+- Edit bank rules: `converter/bank_rules.json`
+- Generate banks: `python3 converter/build_banks.py`
+- Outputs: `instruments/banks/bank-<category>-<page>.conf`
+- Index (for looking up which program came from which file): `instruments/banks/banks_index.json`
+
+Usage with MODEP:
+
+1) Put the generated bank files inside the plugin bundle (same place as `instruments.conf`).
+2) Load a bank file via the plugin's instrument-file parameter/preset.
+3) Pick sounds either:
+   - from the host UI: set `ch1_program` (1..128), or
+   - from MIDI: leave `ch1_program=0` and send MIDI Program Change on channel 1.
+
+Controller note: selecting different bank *files* from MIDI (Bank Select CC0/CC32) is not implemented yet; the bank files are for making program selection manageable once you’ve chosen a bank file.

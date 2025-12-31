@@ -1,0 +1,111 @@
+{
+  "input_dir": "instruments",
+  "output_dir": "instruments/banks",
+  "max_programs_per_file": 128,
+  "channels_default_program": 1,
+  "channels_enable_all_16": true,
+
+  "banks": [
+    {
+      "id": "drums",
+      "label": "Drums / Percussion",
+      "patterns": [
+        "*drumkit*",
+        "*drum*",
+        "*kick*",
+        "*snare*",
+        "*hihat*",
+        "*hat*",
+        "*crash*",
+        "*ride*",
+        "*cymbal*",
+        "*tom*",
+        "*clap*",
+        "*shaker*",
+        "*conga*",
+        "*bongo*",
+        "*perc*",
+        "*wood*",
+        "*agogo*"
+      ]
+    },
+    {
+      "id": "bass",
+      "label": "Bass",
+      "patterns": [
+        "bass-*",
+        "dbass-*",
+        "*bass*"
+      ]
+    },
+    {
+      "id": "lead",
+      "label": "Lead / Solo",
+      "patterns": [
+        "solo-*",
+        "*lead*",
+        "*trumpet*",
+        "*brass*",
+        "*flute*",
+        "*violin*",
+        "*guitar*"
+      ]
+    },
+    {
+      "id": "arp",
+      "label": "Arps",
+      "patterns": [
+        "arp*",
+        "*arpe*"
+      ]
+    },
+    {
+      "id": "keys",
+      "label": "Keys",
+      "patterns": [
+        "piano*",
+        "organ*",
+        "*harpsi*",
+        "*vibra*",
+        "*musicbox*"
+      ]
+    },
+    {
+      "id": "pads",
+      "label": "Pads / Chords",
+      "patterns": [
+        "pad-*",
+        "chord-*",
+        "*pad*",
+        "*chord*",
+        "*string*"
+      ]
+    },
+    {
+      "id": "fx",
+      "label": "SFX",
+      "patterns": [
+        "sfx-*",
+        "*sfx*",
+        "*siren*",
+        "tic-*",
+        "toc-*",
+        "*noise*"
+      ]
+    },
+    {
+      "id": "vocal",
+      "label": "Vocal",
+      "patterns": [
+        "vocal-*",
+        "*vocal*"
+      ]
+    }
+  ],
+
+  "fallback_bank": {
+    "id": "misc",
+    "label": "Misc"
+  }
+}
+

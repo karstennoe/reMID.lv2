@@ -2966,3 +2966,99 @@
 	state:state [
 		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <gm_drumkit.conf>
 	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-bass-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Bass (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-bass-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-lead-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Lead (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-lead-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-keys-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Keys (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-keys-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-pads-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Pads (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-pads-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-arp-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Arp (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-arp-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-fx-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: FX (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-fx-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-drums-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Drums (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-drums-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-vocal-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Vocal (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-vocal-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-misc-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: Misc (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-misc-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-all-0.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: All (0)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-all-0.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-all-1.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: All (1)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-all-1.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/banks/bank-all-2.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "BANK: All (2)" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <banks/bank-all-2.conf>
+	] .
