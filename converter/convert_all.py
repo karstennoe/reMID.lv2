@@ -86,12 +86,12 @@ def main():
     print(f"Repo root: {repo_root}")
 
     converter_py = repo_root / "converter" / "swi2remid.py"
-    in_dir       = repo_root / "converter" / "sidwizard_instruments"
-    out_dir      = repo_root / "instruments"
 
     swi2remid = load_converter(converter_py)
 
     ap = argparse.ArgumentParser()
+    ap.add_argument("--in-dir", default=str(repo_root / "converter" / "sidwizard_instruments"), help="Folder containing .swi inputs")
+    ap.add_argument("--out-dir", default=str(repo_root / "instruments"), help="Folder to write .conf outputs")
     ap.add_argument("--suffix", default="", help="Filename suffix before .conf (e.g. _remid)")
     ap.add_argument("--overwrite", action="store_true", help="Overwrite existing files")
     ap.add_argument("--force", action="store_true", help="Alias for --overwrite")
@@ -107,6 +107,9 @@ def main():
     args = ap.parse_args()
 
     overwrite = args.overwrite or args.force
+
+    in_dir = Path(args.in_dir).resolve()
+    out_dir = Path(args.out_dir).resolve()
 
     if not in_dir.is_dir():
         print(f"Input folder not found: {in_dir}", file=sys.stderr)
@@ -136,7 +139,7 @@ def main():
                 arp_plus1=args.arp_plus1,
                 strict_wf=args.strict_wf,
                 emit_arp=not args.no_emit_arp,
-                hard_restart=not args.no-hard_restart if hasattr(args, "no-hard_restart") else not args.no_hard_restart,
+                hard_restart=not args.no_hard_restart,
                 sustain_frames=max(1, args.sustain_frames),
             )
 

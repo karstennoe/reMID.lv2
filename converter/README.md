@@ -27,7 +27,12 @@ Run tools from the repo root; expected structure:
 
 2) Batch convert all *.swi* and update the manifest:
 
-- `python converter/convert_all.py --force --ttl src/remid.ttl`
+- `python converter/convert_all.py --force --manifest src/remid.ttl`
+
+## SWI packing note
+
+Most `.swi` instrument files are stored in a packed form where the last `0xFF` table terminator is replaced by a size byte and followed by an 8-byte instrument name.
+`swi2remid.py` automatically unpacks this to a fixed 128-byte in-memory instrument image before converting.
 
 ---
 
@@ -101,11 +106,11 @@ Batch convert all *.swi* in *converter/sidwizard_instruments/* and write *.conf*
 
 | Flag | Type | Default | What it does |
 |---|---:|---:|---|
+| --in-dir | path | `converter/sidwizard_instruments` | Folder containing input *.swi* files. |
+| --out-dir | path | `instruments` | Output folder for generated *.conf* files. |
 | --suffix | str | "" | Appended before *.conf* (e.g., \_remid). |
 | --force | flag | off | Always overwrite existing *.conf* files. |
-| --ttl | path | none | If given, update *src/remid.ttl* with any **new** presets (idempotent). |
-| --converter | path | auto | Path to *swi2remid.py* if you keep it elsewhere. |
-| --opts | str | "" | Extra args to pass verbatim to *swi2remid.py* (quote as one string). |
+| --manifest | path | auto | Path under repo root to `remid.ttl` (defaults to `src/remid.ttl` if present). |
 
 ### Examples
 
@@ -115,15 +120,11 @@ Batch convert all *.swi* in *converter/sidwizard_instruments/* and write *.conf*
 
 2) Force overwrite and update manifest:
 
-- `python converter/convert_all.py --force --ttl src/remid.ttl`
-
-3) Pass options through to the converter:
-
-- `python converter/convert_all.py --opts "--enable-vibrato --respect-gateoff --cutoff-scale 0.9"`
+- `python converter/convert_all.py --force --manifest src/remid.ttl`
 
 ### TTL update behavior
 
-When `--ttl` is provided, the batch script:
+When `--manifest` is provided, the batch script:
 
 1. Parses *src/remid.ttl* for existing \*pset:Preset\* entries.  
 2. For each generated *.conf*, adds a new preset block if not present:
@@ -194,7 +195,7 @@ The converter aims for high fidelity but a few behaviors can’t be reproduced *
 - **“Click then fade-in”** → ensure `filter-on-tonal` is enabled (default) and try `--respect-gateoff`.  
 - **“Too bright/dull sweep”** → adjust `--cutoff-scale` (e.g., 0.85 or 1.15).  
 - **“PWM inaudible”** → some patches set very low PW; the converter clamps PW ≥ 0x001 on frame 0.  
-- **Batch didn’t update manifest** → pass `--ttl src/remid.ttl`; the script is idempotent and won’t duplicate entries.
+- **Batch didn’t update manifest** → pass `--manifest src/remid.ttl`; the script is idempotent and won’t duplicate entries.
 
 ---
 
