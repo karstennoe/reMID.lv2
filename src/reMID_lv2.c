@@ -23,6 +23,26 @@ typedef struct arugalatastesbad
 	void* everything;
 }Remid;
 
+static void apply_chan_program_overrides(struct super* s)
+{
+	// Apply before reading MIDI so note_on uses the intended mapping.
+	for(int ch = 0; ch < 16; ++ch)
+	{
+		const float* port = s->chan_program_override[ch];
+		if(!port) continue;
+
+		const int override_program_1based = (int)lrintf(*port);
+		if(override_program_1based <= 0) continue;
+
+		int program = override_program_1based - 1;
+		if(program < 0) program = 0;
+		if(program > 127) program = 127;
+
+		s->midi->midi_channels[ch].in_use = 1;
+		s->midi->midi_channels[ch].program = program;
+	}
+}
+
 LV2_Handle init_remid(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
 	char instr_file[255];
@@ -30,6 +50,11 @@ LV2_Handle init_remid(const LV2_Descriptor *descriptor,double sample_freq, const
 	struct super* s = init_lv2_audio(lrint(sample_freq), instr_file, host_features);
 	struct lmidi* lm = (struct lmidi*)s->midi->seq;
 	strcpy(lm->filepath,instr_file);
+	for(int ch = 0; ch < 16; ++ch)
+	{
+		s->chan_program_override[ch] = NULL;
+		lm->chan_program_override[ch] = NULL;
+	}
 	return (void*)s;
 }
 
@@ -51,11 +76,20 @@ void connect_remid_ports(LV2_Handle handle, uint32_t port, void* data)
 	case 3:
 		lm->atom_out_p = (LV2_Atom_Sequence*)data;
 		break;
+	default:
+		if(port >= 4 && port < 20)
+		{
+			const int ch = (int)port - 4;
+			s->chan_program_override[ch] = (const float*)data;
+			lm->chan_program_override[ch] = (const float*)data;
+		}
+		break;
 	}
 }
 
 void run_remid(LV2_Handle handle, uint32_t nframes)
 {
+	apply_chan_program_overrides((struct super*)handle);
 	process(nframes,handle);
 }
 

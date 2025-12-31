@@ -19,6 +19,9 @@ struct super
 
     float* outl; //lv2 ports
 	float* outr;
+
+	// Optional per-channel program overrides (1..128). 0 means "no override".
+	const float* chan_program_override[16];
 };
 
 void* init_lv2_audio(uint32_t fs, char* instr_file, const LV2_Feature * const* host_features);

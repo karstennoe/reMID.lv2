@@ -107,6 +107,10 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 					midi->midi_channels[channel].pitchbend = pitchbend;
 					break;
 				case SND_SEQ_EVENT_PGMCHANGE:
+					if(lm->chan_program_override[channel] && *lm->chan_program_override[channel] > 0.5f)
+					{
+						break;
+					}
 					if(midi->midi_channels[channel].program==-1) break;
 					//printf("prg change %d\n", value);
 					midi->midi_channels[channel].program = param;
@@ -164,6 +168,10 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 void* lv2_init_seq(const LV2_Feature * const* host_features)
 {
     struct lmidi* lm = (struct lmidi*)malloc(sizeof(struct lmidi));
+	for(int ch = 0; ch < 16; ++ch)
+	{
+		lm->chan_program_override[ch] = NULL;
+	}
     for (int i = 0; host_features[i]; i++)
     {
         if (strcmp(host_features[i]->URI, LV2_URID__map) == 0)

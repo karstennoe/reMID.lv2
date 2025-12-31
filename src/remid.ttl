@@ -40,6 +40,11 @@
     rdfs:range atom:Bool ;
     .
 
+<http://github.com/ssj71/reMID.lv2#channel_programs>
+	a pg:Group ;
+	lv2:name "Channel Programs" ;
+	lv2:symbol "channel_programs" ;
+	.
 
 <http://github.com/ssj71/reMID.lv2>
         a doap:Project, lv2:Plugin, lv2:InstrumentPlugin ;
@@ -90,6 +95,198 @@
                 lv2:index 3 ;
                 lv2:symbol "NOTIFY";
                 lv2:name "Notify";
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "ch1_program" ;
+                lv2:name "Ch 1 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "ch2_program" ;
+                lv2:name "Ch 2 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "ch3_program" ;
+                lv2:name "Ch 3 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "ch4_program" ;
+                lv2:name "Ch 4 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "ch5_program" ;
+                lv2:name "Ch 5 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "ch6_program" ;
+                lv2:name "Ch 6 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "ch7_program" ;
+                lv2:name "Ch 7 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "ch8_program" ;
+                lv2:name "Ch 8 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
+                lv2:symbol "ch9_program" ;
+                lv2:name "Ch 9 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 13 ;
+                lv2:symbol "ch10_program" ;
+                lv2:name "Ch 10 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 14 ;
+                lv2:symbol "ch11_program" ;
+                lv2:name "Ch 11 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 15 ;
+                lv2:symbol "ch12_program" ;
+                lv2:name "Ch 12 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 16 ;
+                lv2:symbol "ch13_program" ;
+                lv2:name "Ch 13 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 17 ;
+                lv2:symbol "ch14_program" ;
+                lv2:name "Ch 14 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 18 ;
+                lv2:symbol "ch15_program" ;
+                lv2:name "Ch 15 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 19 ;
+                lv2:symbol "ch16_program" ;
+                lv2:name "Ch 16 Program" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 128 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "Optional override. 0 uses the instrument file's [channels] mapping; 1..128 selects a program." ;
+                pg:group <http://github.com/ssj71/reMID.lv2#channel_programs> ;
         ] ;
         state:state [
             <http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <instruments.conf> ;
@@ -2752,4 +2949,20 @@
 	rdfs:label "WOODBLOK" ;
 	state:state [
 		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <woodblock.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/drumkit.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "drumkit" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <drumkit.conf>
+	] .
+
+<http://github.com/ssj71/reMID.lv2/blob/master/instruments/gm_drumkit.conf>
+	a pset:Preset ;
+	lv2:appliesTo <http://github.com/ssj71/reMID.lv2> ;
+	rdfs:label "gm_drumkit" ;
+	state:state [
+		<http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf> <gm_drumkit.conf>
 	] .

@@ -50,6 +50,9 @@ struct lmidi
     LV2_Worker_Schedule* scheduler;
     char filepath[255];
     char newfilepath[255];
+
+	// Optional per-channel program overrides (1..128). 0 means "no override".
+	const float* chan_program_override[16];
 };
 
 void* lv2_init_seq(const LV2_Feature * const* host_features);

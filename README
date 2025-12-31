@@ -84,3 +84,35 @@ env3_2fltr  |  -            | modulate filter cutoff with output of v3's envelop
             |               |   to stop modulation call fltr_cutmod 0
 osc3_2fltr  |  -            | modulate filter cutoff with output of v3's oscillator (use for LFO)
 
+
+LV2 / MODEP notes
+-----------------
+
+Channel-based instrument selection (no Program Change required)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The LV2 plugin now exposes 16 optional control ports:
+
+- `ch1_program` .. `ch16_program` (integer, 0..128)
+
+If a port is set to:
+
+- `0`: no override (the instrument file's `[channels]` mapping is used)
+- `1..128`: force that MIDI channel to use the selected program number
+
+This makes it easy to set up multi-timbral use in hosts (including MODEP) by assigning one instrument/program per MIDI channel from the host UI.
+
+MIDI drum kit (different notes → different drum instruments)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+reMID supports a drumkit/percussion-map instrument in the instrument `.conf` format:
+
+- an instrument section with `type=percussion`
+- note numbers mapped to instrument names, e.g. `38=snare_drum1`
+
+See:
+
+- `instruments/drumkit.conf` (small example)
+- `instruments/gm_drumkit.conf` (GM-style subset example)
+
+Load one of these as the instrument file/preset and send MIDI notes on channel 10 (GM convention). If you want to force channel 10 from the host, set `ch10_program=1` (both kits define program 1 as `kit`).
