@@ -59,9 +59,10 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
     		{
                 msg = (uint8_t*) LV2_ATOM_BODY(&(event->body));
 
-				uint8_t status = msg[0];
-				uint8_t param = msg[1];
-				uint8_t value = msg[2];
+				const uint32_t msg_size = event->body.size;
+				uint8_t status = (msg_size > 0) ? msg[0] : 0;
+				uint8_t param = (msg_size > 1) ? msg[1] : 0;
+				uint8_t value = (msg_size > 2) ? msg[2] : 0;
 				//printf("JACK MIDI event: %x %x %x\n", status, param, value);
 
 				uint8_t ev_type = status&0xf0;

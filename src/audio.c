@@ -148,6 +148,10 @@ void* init_lv2_audio(uint32_t fs, char* instr_file, const LV2_Feature * const* h
     s->midi = init_midi((void*)host_features, max_polyphony, midi_connect_args);//TODO: make sure this doesn't clobber the instrument stuff
 
     s->bank = sw_bank_load(instr_file);
+    if(!s->bank)
+    {
+        fprintf(stderr, "reMID.lv2: failed to load .swibank: %s\n", instr_file ? instr_file : "(null)");
+    }
 
     s->oldmidi = s->newmidi = 0;
     s->old_bank = s->new_bank = 0;

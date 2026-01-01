@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <string.h>
 
 
 #include "lv2_audio.h"
@@ -42,13 +43,69 @@ static void apply_chan_program_overrides(struct super* s)
 	}
 }
 
+static void set_bundle_path(struct super* s, const char* bundle_path)
+{
+	if(!s)
+		return;
+
+	s->bundle_path[0] = 0;
+	if(!bundle_path)
+		return;
+
+	snprintf(s->bundle_path, sizeof(s->bundle_path), "%s", bundle_path);
+
+	const size_t n = strlen(s->bundle_path);
+	if(n && s->bundle_path[n - 1] != '/')
+	{
+		if(n + 1 < sizeof(s->bundle_path))
+		{
+			s->bundle_path[n] = '/';
+			s->bundle_path[n + 1] = 0;
+		}
+	}
+}
+
+static void resolve_bank_path(const struct super* s, const char* in_path, char* out_path, size_t out_len)
+{
+	if(!out_path || out_len == 0)
+		return;
+
+	out_path[0] = 0;
+	if(!in_path)
+		return;
+
+	if(in_path[0] == '/')
+	{
+		snprintf(out_path, out_len, "%s", in_path);
+		return;
+	}
+
+	if(s && s->bundle_path[0])
+	{
+		snprintf(out_path, out_len, "%s%s", s->bundle_path, in_path);
+		return;
+	}
+
+	snprintf(out_path, out_len, "%s", in_path);
+}
+
 LV2_Handle init_remid(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
-	char instr_file[255];
-	sprintf(instr_file,"%sinstruments/banks/bank-all-0.swibank",bundle_path);//create an absolute path
+	char instr_file[512];
+	char base[512];
+	snprintf(base, sizeof(base), "%s", bundle_path ? bundle_path : "");
+	const size_t n = strlen(base);
+	if(n && base[n - 1] != '/' && n + 1 < sizeof(base))
+	{
+		base[n] = '/';
+		base[n + 1] = 0;
+	}
+	snprintf(instr_file, sizeof(instr_file), "%sinstruments/banks/bank-all-0.swibank", base);
+
 	struct super* s = init_lv2_audio(lrint(sample_freq), instr_file, host_features);
+	set_bundle_path(s, base);
 	struct lmidi* lm = (struct lmidi*)s->midi->seq;
-	strcpy(lm->filepath,instr_file);
+	snprintf(lm->filepath, sizeof(lm->filepath), "%s", instr_file);
 	for(int ch = 0; ch < 16; ++ch)
 	{
 		s->chan_program_override[ch] = NULL;
@@ -119,12 +176,14 @@ static LV2_Worker_Status remidwork(LV2_Handle handle, LV2_Worker_Respond_Functio
     if (file_path && file_path->type == lm->urid.a_path)
     {
         // Load file.
-        char* path = (char*)LV2_ATOM_BODY_CONST(file_path);
-        strcpy(lm->newfilepath,path);
+        const char* path = (const char*)LV2_ATOM_BODY_CONST(file_path);
+        char resolved[512];
+        resolve_bank_path(s, path, resolved, sizeof(resolved));
+        snprintf(lm->newfilepath, sizeof(lm->newfilepath), "%s", resolved);
 
         //need to create new arrays based on this instrument file
         s->newmidi = new_midi_arrays(s->midi,s->sid_bank->polyphony);
-        s->new_bank = sw_bank_load(path);
+        s->new_bank = sw_bank_load(resolved);
         if(!s->new_bank)
         {
         	free(s->newmidi);
@@ -221,10 +280,17 @@ static LV2_State_Status remidrestore(LV2_Handle handle, LV2_State_Retrieve_Funct
     {
     	const char* load_path = path;
     	char* abs_path = NULL;
-    	if(map_path)
+		char resolved[512];
+
+    	if((valflags & LV2_STATE_IS_PORTABLE) && map_path)
     	{
     		abs_path = map_path->absolute_path(map_path->handle, path);
     		if(abs_path) load_path = abs_path;
+    	}
+    	else if(path[0] != '/')
+    	{
+    		resolve_bank_path(s, path, resolved, sizeof(resolved));
+    		load_path = resolved;
     	}
 
     	sw_bank_t* loaded = sw_bank_load(load_path);
@@ -258,7 +324,7 @@ static LV2_State_Status remidrestore(LV2_Handle handle, LV2_State_Retrieve_Funct
 		sw_bank_free(s->old_bank);
 		s->oldmidi = 0;
 		s->old_bank = 0;
-		strcpy(lm->filepath,load_path);
+		snprintf(lm->filepath, sizeof(lm->filepath), "%s", load_path);
 		lm->newfilepath[0] = 1;
 
 		if(abs_path) free(abs_path);

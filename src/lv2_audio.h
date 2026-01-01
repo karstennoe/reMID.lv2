@@ -23,6 +23,9 @@ struct super
 
 	// Optional per-channel program overrides (1..128). 0 means "no override".
 	const float* chan_program_override[16];
+
+	// LV2 bundle base path (always ends with '/'), used to resolve relative .swibank paths.
+	char bundle_path[512];
 };
 
 void* init_lv2_audio(uint32_t fs, char* instr_file, const LV2_Feature * const* host_features);
