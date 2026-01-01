@@ -26,6 +26,9 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
     LV2_Atom_Event event;
     uint8_t* msg;
 
+    if(!lm || !midi) return;
+    if(!lm->atom_in_p || !lm->atom_out_p) return;
+
     // Set up forge to write directly to notify output port.
     const uint32_t notify_capacity = lm->atom_out_p->atom.size;
     lv2_atom_forge_set_buffer(&lm->forge, (uint8_t*)lm->atom_out_p, notify_capacity);
@@ -132,7 +135,10 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 						if (key == lm->urid.filetype_instr)
 						{
 							// a new file! pass the atom to the worker thread to load it
-							lm->scheduler->schedule_work(lm->scheduler->handle, lv2_atom_total_size(&event->body), &event->body);
+							if(lm->scheduler)
+							{
+								lm->scheduler->schedule_work(lm->scheduler->handle, lv2_atom_total_size(&event->body), &event->body);
+							}
 #if(0)
 							const LV2_Atom* file_path;
 							lv2_atom_object_get(&event->body, lm->urid.p_value, &file_path, 0);
@@ -168,7 +174,7 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 
 void* lv2_init_seq(const LV2_Feature * const* host_features)
 {
-    struct lmidi* lm = (struct lmidi*)malloc(sizeof(struct lmidi));
+    struct lmidi* lm = (struct lmidi*)calloc(1, sizeof(struct lmidi));
 	for(int ch = 0; ch < 16; ++ch)
 	{
 		lm->chan_program_override[ch] = NULL;

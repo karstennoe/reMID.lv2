@@ -270,6 +270,8 @@ sw_bank_t* sw_bank_load(const char* bank_path)
   }
   init_defaults(bank);
 
+  int load_errors = 0;
+
   char section[128] = {0};
 
   char line[1024];
@@ -334,6 +336,11 @@ sw_bank_t* sw_bank_load(const char* bank_path)
         char* abs = resolve_path(bank_path, bank->base_dir, val);
         if (!abs) continue;
         const int inst_idx = add_instrument(bank, abs);
+        if (inst_idx < 0)
+        {
+          fprintf(stderr, "reMID.lv2: swibank %s: failed to load %s\n", bank_path, abs);
+          load_errors++;
+        }
         free(abs);
         if (inst_idx < 0) continue;
         bank->programs[program].type = SLOT_INSTRUMENT;
@@ -369,6 +376,11 @@ sw_bank_t* sw_bank_load(const char* bank_path)
       char* abs = resolve_path(bank_path, bank->base_dir, val);
       if (!abs) continue;
       const int inst_idx = add_instrument(bank, abs);
+      if (inst_idx < 0)
+      {
+        fprintf(stderr, "reMID.lv2: swibank %s: failed to load %s\n", bank_path, abs);
+        load_errors++;
+      }
       free(abs);
       if (inst_idx < 0) continue;
 
@@ -378,6 +390,18 @@ sw_bank_t* sw_bank_load(const char* bank_path)
   }
 
   fclose(f);
+
+  if (bank->instrument_count == 0)
+  {
+    fprintf(stderr, "reMID.lv2: swibank %s: no instruments loaded (check base= and instruments/swi/)\n", bank_path);
+    sw_bank_free(bank);
+    return NULL;
+  }
+  if (load_errors)
+  {
+    fprintf(stderr, "reMID.lv2: swibank %s: had %d load error(s)\n", bank_path, load_errors);
+  }
+
   return bank;
 }
 
