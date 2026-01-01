@@ -25,3 +25,8 @@ install (DIRECTORY converter/sidwizard_instruments/
     DESTINATION lib/lv2/remid.lv2/instruments/swi
     FILES_MATCHING PATTERN "*.swi"
 )
+
+# MOD GUI resources (MODEP)
+install (DIRECTORY modgui/
+    DESTINATION lib/lv2/remid.lv2/modgui
+)

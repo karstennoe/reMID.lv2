@@ -742,5 +742,6 @@
     ]
   },
   "base_dir": "../swi",
-  "drumkit_gm": "instruments\\banks\\drumkit-gm.swibank"
+  "drumkit_gm": "instruments\\banks\\drumkit-gm.swibank",
+  "drumkit_remid": "instruments\\banks\\drumkit-remid.swibank"
 }
