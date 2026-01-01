@@ -240,7 +240,9 @@ bool sw_runtime_init(sw_runtime_t* rt, const uint8_t* payload, size_t payload_le
   rt->payload_len = payload_len;
 
   rt->cfg.clear_test_bit = false;
-  rt->cfg.default_filter_route = 0x01;
+  // Default to bypassing the filter routing; some instruments never set filter mode,
+  // and routing a voice into a filter with mode=0 can effectively mute it.
+  rt->cfg.default_filter_route = 0x00;
   rt->cfg.volume = 0x0F;
   if (cfg) rt->cfg = *cfg;
 
@@ -589,4 +591,3 @@ bool sw_runtime_tick(sw_runtime_t* rt, sw_sid_frame_t* out)
   out->mode_vol = (uint8_t)(rt->filter_band | (rt->cfg.volume & 0x0Fu));
   return true;
 }
-

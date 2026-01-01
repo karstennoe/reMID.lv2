@@ -149,7 +149,12 @@ static void write_frame(SID* sid, const sw_sid_frame_t* fr)
   sid->write(0x17, fr->fr_vic);
   sid->write(0x18, fr->mode_vol);
 
-  sid->enable_filter((fr->fr_vic & 0x0Fu) != 0);
+  // Only enable filter emulation when both:
+  // - at least one voice is routed to the filter (low nibble of $d417)
+  // - at least one filter mode is enabled (bits 4..6 of $d418)
+  //
+  // Otherwise, some instruments can end up effectively muted (routed to filter, but mode=0).
+  sid->enable_filter(((fr->fr_vic & 0x0Fu) != 0) && ((fr->mode_vol & 0x70u) != 0));
 }
 
 extern "C" void sid_process(struct CHIPS* chips, midi_arrays_t* midi, sw_bank_t* bank, int num_samples, float* outl, float* outr)
@@ -208,7 +213,7 @@ extern "C" void sid_process(struct CHIPS* chips, midi_arrays_t* midi, sw_bank_t*
 
         sw_runtime_config_t cfg = {
             .clear_test_bit = false,
-            .default_filter_route = 0x01,
+            .default_filter_route = 0x00,
             .volume = (uint8_t)(chips->use_sid_volume ? (midi->midi_keys[i]->velocity / 8) : 0x0F),
         };
 
@@ -286,4 +291,3 @@ extern "C" void sid_process(struct CHIPS* chips, midi_arrays_t* midi, sw_bank_t*
     }
   }
 }
-
