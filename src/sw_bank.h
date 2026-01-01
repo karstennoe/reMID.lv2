@@ -5,6 +5,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Bank/mapping layer for selecting SID-Wizard .swi instruments via MIDI Program Change
 // (and optional drumkit note->instrument mapping).
 //
@@ -28,5 +32,8 @@ bool sw_bank_get_instrument(const sw_bank_t* bank, uint8_t program, uint8_t note
 // Human-readable bank name (may be NULL).
 const char* sw_bank_name(const sw_bank_t* bank);
 
+#ifdef __cplusplus
+} // extern "C"
 #endif
 
+#endif

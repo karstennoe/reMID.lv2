@@ -10,18 +10,27 @@
 #include "gui.h"
 #endif
 
-#define JACK_MIDI
 #include "jack_audio.h"
 
 #ifndef MAX_POLYPHONY
 #define MAX_POLYPHONY 32
 #endif
 
+static char* xstrdup(const char* s)
+{
+    if(!s) return NULL;
+    const size_t n = strlen(s);
+    char* out = (char*)malloc(n + 1);
+    if(!out) return NULL;
+    memcpy(out, s, n + 1);
+    return out;
+}
+
 void add_connect(char** connect_args, char *port)
 {
     int i;
     for(i=0; connect_args[i]; i++);
-    connect_args[i++] = strdup(port);
+    connect_args[i++] = xstrdup(port);
     connect_args[i] = NULL;
 }
 

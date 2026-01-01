@@ -35,6 +35,16 @@ struct sw_bank {
   size_t drumkit_count;
 };
 
+static char* sw_strdup(const char* s)
+{
+  if (!s) return NULL;
+  const size_t n = strlen(s);
+  char* out = (char*)malloc(n + 1u);
+  if (!out) return NULL;
+  memcpy(out, s, n + 1u);
+  return out;
+}
+
 static void trim(char* s)
 {
   if (!s) return;
@@ -60,7 +70,7 @@ static char* dirname_dup(const char* path)
   const char* last_back = strrchr(path, '\\');
   const char* last = last_slash;
   if (!last || (last_back && last_back > last)) last = last_back;
-  if (!last) return strdup(".");
+  if (!last) return sw_strdup(".");
   size_t len = (size_t)(last - path);
   if (!len) len = 1;
   char* out = (char*)malloc(len + 1);
@@ -72,8 +82,8 @@ static char* dirname_dup(const char* path)
 
 static char* path_join(const char* a, const char* b)
 {
-  if (!a || !*a) return strdup(b ? b : "");
-  if (!b || !*b) return strdup(a);
+  if (!a || !*a) return sw_strdup(b ? b : "");
+  if (!b || !*b) return sw_strdup(a);
   const size_t al = strlen(a);
   const size_t bl = strlen(b);
   const bool need_sep = (a[al - 1] != '/' && a[al - 1] != '\\');
@@ -90,7 +100,7 @@ static char* path_join(const char* a, const char* b)
 static char* resolve_path(const char* bank_path, const char* base_dir, const char* rel)
 {
   if (!rel) return NULL;
-  if (is_abs_path(rel)) return strdup(rel);
+  if (is_abs_path(rel)) return sw_strdup(rel);
 
   char* bank_dir = dirname_dup(bank_path);
   if (!bank_dir) return NULL;
@@ -98,11 +108,11 @@ static char* resolve_path(const char* bank_path, const char* base_dir, const cha
   char* base = NULL;
   if (base_dir && *base_dir)
   {
-    base = is_abs_path(base_dir) ? strdup(base_dir) : path_join(bank_dir, base_dir);
+    base = is_abs_path(base_dir) ? sw_strdup(base_dir) : path_join(bank_dir, base_dir);
   }
   else
   {
-    base = strdup(bank_dir);
+    base = sw_strdup(bank_dir);
   }
 
   free(bank_dir);
@@ -182,7 +192,7 @@ static int add_instrument(sw_bank_t* bank, const char* abs_path)
 
   instrument_entry_t* e = &bank->instruments[bank->instrument_count++];
   memset(e, 0, sizeof(*e));
-  e->path = strdup(abs_path);
+  e->path = sw_strdup(abs_path);
   if (!e->path) return -1;
   memcpy(e->inst, inst, SW_MAX_INSTSIZE);
 
@@ -218,7 +228,7 @@ static int add_drumkit(sw_bank_t* bank, const char* name)
 
   drumkit_entry_t* dk = &bank->drumkits[bank->drumkit_count++];
   memset(dk, 0, sizeof(*dk));
-  dk->name = strdup(name);
+  dk->name = sw_strdup(name);
   if (!dk->name) return -1;
   for (int i = 0; i < 128; ++i) dk->note_to_inst[i] = -1;
 
@@ -294,12 +304,12 @@ sw_bank_t* sw_bank_load(const char* bank_path)
       if (!strcmp(key, "name"))
       {
         free(bank->name);
-        bank->name = strdup(val);
+        bank->name = sw_strdup(val);
       }
       else if (!strcmp(key, "base"))
       {
         free(bank->base_dir);
-        bank->base_dir = strdup(val);
+        bank->base_dir = sw_strdup(val);
       }
       continue;
     }
@@ -416,4 +426,3 @@ bool sw_bank_get_instrument(const sw_bank_t* bank, uint8_t program, uint8_t note
   memcpy(out_inst, bank->instruments[inst_idx].inst, 128);
   return true;
 }
-
