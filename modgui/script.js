@@ -1,10 +1,12 @@
 (function () {
   "use strict";
 
-  const BANK_INDEX_PATH = "instruments/banks/banks_index.json";
+  // MOD GUI resources are served from <bundle>/modgui/, so bundle-relative paths must use "../".
+  const BUNDLE_PREFIX = "../";
+  const BANK_INDEX_PATH = BUNDLE_PREFIX + "instruments/banks/banks_index.json";
 
   function prettyName(v) {
-    if (!v) return "—";
+    if (!v) return "N/A";
     if (String(v).toUpperCase().startsWith("DRUMKIT:")) return v;
     const s = String(v).replace(/^.*[\\/]/, "").replace(/\.swi$/i, "");
     return s.replace(/[-_]+/g, " ");
@@ -79,7 +81,7 @@
     try {
       index = await fetchJson(BANK_INDEX_PATH);
     } catch (e) {
-      bankSelect.innerHTML = `<option value="">(missing ${BANK_INDEX_PATH})</option>`;
+      bankSelect.innerHTML = `<option value="">missing banks_index.json</option>`;
       return;
     }
 
@@ -90,12 +92,18 @@
       });
     }
 
-    options.sort((a, b) => a.label.localeCompare(b.label));
-    bankSelect.innerHTML = options.map((o) => `<option value="${o.file}">${o.label}</option>`).join("");
+    // Include drumkit presets listed in the index.
+    if (index.drumkit_gm) options.push({ label: "DRUMKIT: GM (example)", file: index.drumkit_gm });
+    if (index.drumkit_remid) options.push({ label: "DRUMKIT: reMID (built-in)", file: index.drumkit_remid });
 
-    const defaultBank = "instruments/banks/bank-all-0.swibank";
-    const hasDefault = options.some((o) => o.file === defaultBank);
-    bankSelect.value = hasDefault ? defaultBank : (options[0] ? options[0].file : "");
+    options.sort((a, b) => a.label.localeCompare(b.label));
+    bankSelect.innerHTML = options
+      .map((o) => `<option value="${BUNDLE_PREFIX + o.file}">${o.label}</option>`)
+      .join("");
+
+    const defaultBank = BUNDLE_PREFIX + "instruments/banks/bank-all-0.swibank";
+    const hasDefault = options.some((o) => (BUNDLE_PREFIX + o.file) === defaultBank);
+    bankSelect.value = hasDefault ? defaultBank : (options[0] ? (BUNDLE_PREFIX + options[0].file) : "");
 
     let programMap = {};
 
@@ -107,7 +115,7 @@
         programMap = parseSwibank(text);
         updateLabels(programMap);
       } catch (e) {
-        for (let ch = 1; ch <= 16; ch++) setChannelLabel(ch, "—");
+        for (let ch = 1; ch <= 16; ch++) setChannelLabel(ch, "N/A");
       }
     }
 
@@ -125,4 +133,3 @@
     main().catch(() => {});
   });
 })();
-

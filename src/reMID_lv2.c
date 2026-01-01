@@ -89,6 +89,47 @@ static void resolve_bank_path(const struct super* s, const char* in_path, char* 
 	snprintf(out_path, out_len, "%s", in_path);
 }
 
+static bool ends_with_ci(const char* s, const char* suffix)
+{
+	if(!s || !suffix) return false;
+	const size_t sl = strlen(s);
+	const size_t tl = strlen(suffix);
+	if(tl > sl) return false;
+	const char* a = s + (sl - tl);
+	for(size_t i = 0; i < tl; ++i)
+	{
+		char ca = a[i];
+		char cb = suffix[i];
+		if(ca >= 'A' && ca <= 'Z') ca = (char)(ca - 'A' + 'a');
+		if(cb >= 'A' && cb <= 'Z') cb = (char)(cb - 'A' + 'a');
+		if(ca != cb) return false;
+	}
+	return true;
+}
+
+static bool is_legacy_instruments_conf_path(const char* path)
+{
+	// Old reMID used "instruments.conf" as the instrument preset file. MODEP pedalboards may still
+	// reference that filename in stored state. Treat it as a request for the default SWI bank.
+	return ends_with_ci(path, "/instruments.conf") || ends_with_ci(path, "\\instruments.conf") || ends_with_ci(path, "instruments.conf");
+}
+
+static sw_bank_t* try_load_bank_with_fallback(struct super* s, const char* requested_path)
+{
+	if(!requested_path) return NULL;
+	sw_bank_t* b = sw_bank_load(requested_path);
+	if(b) return b;
+
+	if(s && s->bundle_path[0] && is_legacy_instruments_conf_path(requested_path))
+	{
+		char fallback[512];
+		snprintf(fallback, sizeof(fallback), "%sinstruments/banks/bank-all-0.swibank", s->bundle_path);
+		fprintf(stderr, "reMID.lv2: legacy state path %s -> using %s\n", requested_path, fallback);
+		return sw_bank_load(fallback);
+	}
+	return NULL;
+}
+
 LV2_Handle init_remid(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
 	char instr_file[512];
@@ -183,7 +224,7 @@ static LV2_Worker_Status remidwork(LV2_Handle handle, LV2_Worker_Respond_Functio
 
         //need to create new arrays based on this instrument file
         s->newmidi = new_midi_arrays(s->midi,s->sid_bank->polyphony);
-        s->new_bank = sw_bank_load(resolved);
+        s->new_bank = try_load_bank_with_fallback(s, resolved);
         if(!s->new_bank)
         {
         	free(s->newmidi);
@@ -303,7 +344,7 @@ static LV2_State_Status remidrestore(LV2_Handle handle, LV2_State_Retrieve_Funct
     		load_path = resolved;
     	}
 
-    	sw_bank_t* loaded = sw_bank_load(load_path);
+    	sw_bank_t* loaded = try_load_bank_with_fallback(s, load_path);
     	if(!loaded)
     	{
     		if(abs_path) free(abs_path);
