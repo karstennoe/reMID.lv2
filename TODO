@@ -1,5 +1,5 @@
 V1
-fix standalone default instruments.conf path
+fix standalone default .swibank path
 add string state
 learn AVTK/Pugl
 make gui

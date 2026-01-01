@@ -6,3 +6,9 @@ add_subdirectory(src/)
 install (DIRECTORY instruments/
     DESTINATION lib/lv2/remid.lv2
 )
+
+# Install the raw SID-Wizard instrument exports into the bundle.
+install (DIRECTORY converter/sidwizard_instruments/
+    DESTINATION lib/lv2/remid.lv2/instruments/swi
+    FILES_MATCHING PATTERN "*.swi"
+)

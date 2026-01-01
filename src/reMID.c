@@ -12,7 +12,6 @@
 
 #define JACK_MIDI
 #include "jack_audio.h"
-#include "prefs.h"
 
 #ifndef MAX_POLYPHONY
 #define MAX_POLYPHONY 32
@@ -30,8 +29,8 @@ void usage(char *prgname)
 {
     printf("usage: %s [options...]\n\n"
            "-h 			this help\n"
-           "-d			debug program table execution\n"
-           "-i	<path>	select instrument configuration file\n"
+           "-d			debug\n"
+           "-i	<path>	select .swibank file\n"
            "-j <client:port>	connect audio output to JACK port, may be specified multiple times\n"
            "-m <client:port>	connect MIDI input to output from client:port\n"
            "-c <6581|8580>		select SID chip model\n"
@@ -50,11 +49,18 @@ int main(int argc, char **argv)
     int c, use_sid_volume=0, max_poly = MAX_POLYPHONY;
 ////    pthread_t gui_thread;
 //    int use_gui;
-    int pt_debug;
+    int pt_debug = 0;
     int chiptype = 0;
     char *midi_connect_args[255];
     char *jack_connect_args[255];
-    char *instr_file = "instruments.conf";
+    char default_bank[512];
+    snprintf(default_bank, sizeof(default_bank), "instruments/banks/bank-all-0.swibank");
+    if (access(default_bank, F_OK) != 0)
+    {
+        // Standalone is often run outside the LV2 bundle. Try the installed bundle location.
+        snprintf(default_bank, sizeof(default_bank), "%s/lib/lv2/remid.lv2/instruments/banks/bank-all-0.swibank", PREFIX);
+    }
+    char *instr_file = default_bank;
     jack_connect_args[0] = NULL;
     midi_connect_args[0] = NULL;
 
@@ -120,4 +126,3 @@ int main(int argc, char **argv)
 
     while(1) sleep(1);
 }
-

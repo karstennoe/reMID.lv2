@@ -1,138 +1,91 @@
-This is a MIDI implementation of a MOS8580 6581 SID chip using the reSID library. It includes support for scripted instruments that allow complex sonic control of the chip.
+reMID is a MIDI-controlled emulation of a MOS 6581/8580 SID chip using the reSID library.
 
+This branch plays **SID-Wizard 1.7** instruments directly at runtime:
 
-Dependencies:
-libglib-2.0
-libjack-dev (standalone version)
-liblv2-dev (plugin version)
-libasound2-dev
-pkg-config
+- Instruments are stored as `.swi` files.
+- The LV2 plugin loads a `.swibank` file that maps MIDI Program Change (0..127) to `.swi` instruments.
+- The old reMID `.conf` “instrument language” is not used.
 
-Once the dependencies are fulfilled return to this folder and run:
-   mkdir build
-   cd build
-   cmake ..
-   make
-   sudo make install
-   
-Currently this will build and install the standalone and the lv2 plugin. At some point I hope it will allow just one or just the other if you want.
+Dependencies (Linux)
+--------------------
 
-reMID has scripting capabilities so that you can create instruments and files containing banks of instruments. You cannot actually get any sound out of reMID without an instrument file (so naturally we include and install a default and several others can be found in instruments/). See instruments.conf for examples and more info on instrument parameters.
+- `libjack-dev` (standalone build)
+- `liblv2-dev` (plugin build)
+- `libasound2-dev`
+- `pkg-config`
 
-Note that the original design was intended to allow a sequencer to control a single instance of reMID and perform an entire chiptune piece through use of midi channels and program changes. That capability remains, but the more modern use of each instance having a sound is also available.
+Build & install
+---------------
 
-full documentation for the instrument programming is at http://gp2x.org/remid/inst_config.php 
-A full datasheet of the SID is pretty helpful too if you aren't familiar with it. See http://archive.6502.org/datasheets/mos_6581_sid.pdf
+Once dependencies are installed:
 
-Here are the basics for setting the registers. Usually working in hex is easier, though you can use decimal numbers if you really want. Note that the * for voice parameters is 1-3 (e.g. v2_control).
+    mkdir build
+    cd build
+    cmake ..
+    make
+    sudo make install
 
-v*_control  0x80 - noise 
-            0x40 - pulse (square/rectangle)
-            0x20 - saw
-            0x10 - triangle
-            0x04 - ring mod with voice(N-1) (where 1-1 == 3)
-            0x02 - sync with voice(N-1) (where 1-1 == 3)
+This builds and installs both the standalone (`reMID`) and the LV2 plugin (`remid.lv2`).
 
-v*_detune   [-1000,1000] voice detune in cents/10
+Instrument selection (`.swibank`)
+---------------------------------
 
-v*_pulse    [0x000,0xfff]==[0,4095] pulse width when pulse waveform selected 
-                in control reg. 0x800 is a square wave. 0 is DC 0, 0xfff is DC 1
+A `.swibank` file is a small INI-style mapping:
 
-v*_ad       [0x00,0xff] 0xXY - X is attack, Y decay. They aren't linear, but 
-                larger is longer. The link above has tables.
-v*_sr       [0x00,0xff] 0xXY - same idea as ad register but sustain and release
-                for each nibble
+- `[programs]` maps program numbers `0..127` to either:
+  - a `.swi` filename, or
+  - `DRUMKIT:<name>`
+- Optional `[meta]`:
+  - `name=...`
+  - `base=...` (relative to the `.swibank` file; used to resolve `.swi` paths)
 
-fltr_cutoff [0x000,0x7ff]==[0,2047] cutoff frequency which ranges linearly 
-                from about 30Hz to 12kHz (f=N*11970/2048+30)
-fltr_res_vic [0x00,0xf7] 0xXY - X sets filter resonance, Y sets filter voice 
-                input connections 
-            0xX7 - filter all 3 voices
-            0xX4 - filter only voice3
-            0xX2 - filter only voice2
-            0xX1 - filter only voice1
-            0xX0 - bypass filter
+Example:
 
-fltr_mode   0x4 - highpass
-            0x2 - bandpass
-            0x1 - lowpass
+    [meta]
+    name=My Bank
+    base=../swi
 
-There are some other options, but those are the most common.
-For scripting I recommend you look at some examples. The files in the instruments directory has many examples to look at. Each line starts with a '.' and line number and then one of the following commands:
+    [programs]
+    0=lead.swi
+    1=bass.swi
+    2=DRUMKIT:gm
 
-__OPCODE____|___Argument____|___Description______
-nop         |  -            | no operation
-wait        |  cycles       | do nothing for N cycles
-goto        |  line, jumps  | jump to line N in script, if 2nd arg provided, it will only jump M times
-stop        |  -            | end script
-v*_freq     |  hertz        | set voice frequency directly in hz
-v*_freq_pct |  percent      | change voice freq by N percent
-v*_freq_hs  |  half-steps   | change voice freq by N semitones
-v*_detune   |  .1 cents     | change voice freq by N/10 cents (semitone/1000)
-v*_pulse    |  register     | set pulse width register
-v*_control  |  register     | set control register
-v*_ad       |  register     | set attack and decay register
-v*_sr       |  register     | set sustain and release
-v*_pulsemod |  reg./cycle   | add N to pulse width register each cycle
-v*_gate     |  gate state   | start (1) or stop (0) voice from sounding
-fltr_cutoff |  register     | set filter cutoff register
-fltr_cut_pct|  percent      | change filter cutoff register by N percent
-fltr_cutmod |  .1 percent   | each cycle change filter cutoff by N/10 percent
-fltr_res_vic|  register     | set filter resonance and voice input connections reg.
-fltr_mode   |  register     | set filter mode (note this is shifted up into the upper nibble)
-env3_2fltr  |  -            | modulate filter cutoff with output of v3's envelope, call this once and it starts modulation
-            |               |   to stop modulation call fltr_cutmod 0
-osc3_2fltr  |  -            | modulate filter cutoff with output of v3's oscillator (use for LFO)
+    [drumkit:gm]
+    36=kick.swi
+    38=snare.swi
+    42=hihat_closed.swi
 
+The plugin bundle installs:
+
+- `.swibank` files under `instruments/banks/`
+- `.swi` files under `instruments/swi/`
+
+Banks & drumkits
+----------------
+
+Banks are grouped into categories and split into pages (up to 128 programs per bank file).
+
+- Rules: `converter/bank_rules.json`
+- Generate: `python converter/build_banks.py`
+- Outputs:
+  - `instruments/banks/bank-<category>-<page>.swibank`
+  - `instruments/banks/bank-all-<page>.swibank`
+  - `instruments/banks/banks_index.json`
 
 LV2 / MODEP notes
 -----------------
 
-Channel-based instrument selection (no Program Change required)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Channel program overrides (no MIDI Program Change required)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The LV2 plugin now exposes 16 optional control ports:
+The LV2 plugin exposes 16 optional control ports:
 
 - `ch1_program` .. `ch16_program` (integer, 0..128)
 
 If a port is set to:
 
-- `0`: no override (the instrument file's `[channels]` mapping is used)
-- `1..128`: force that MIDI channel to use the selected program number
+- `0`: no override (use incoming MIDI Program Change; default program is 0)
+- `1..128`: force that MIDI channel to use program `0..127` (`value-1`)
 
-This makes it easy to set up multi-timbral use in hosts (including MODEP) by assigning one instrument/program per MIDI channel from the host UI.
+If you don't hear anything, verify the bank file exists in the plugin bundle and that it references `.swi` files that exist under `instruments/swi/` (or adjust the bank's `base=`).
 
-MIDI drum kit (different notes → different drum instruments)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-reMID supports a drumkit/percussion-map instrument in the instrument `.conf` format:
-
-- an instrument section with `type=percussion`
-- note numbers mapped to instrument names, e.g. `38=snare_drum1`
-
-See:
-
-- `instruments/drumkit.conf` (small example)
-- `instruments/gm_drumkit.conf` (GM-style subset example)
-
-Load one of these as the instrument file/preset and send MIDI notes on channel 10 (GM convention). If you want to force channel 10 from the host, set `ch10_program=1` (both kits define program 1 as `kit`).
-
-Building "banks" (category instrument files)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have more than 128 individual `instruments/*.conf` files, you can generate categorized bank files that each expose up to 128 programs:
-
-- Edit bank rules: `converter/bank_rules.json`
-- Generate banks: `python3 converter/build_banks.py`
-- Outputs: `instruments/banks/bank-<category>-<page>.conf`
-- Index (for looking up which program came from which file): `instruments/banks/banks_index.json`
-
-Usage with MODEP:
-
-1) Put the generated bank files inside the plugin bundle (same place as `instruments.conf`).
-2) Load a bank file via the plugin's instrument-file parameter/preset.
-3) Pick sounds either:
-   - from the host UI: set `ch1_program` (1..128), or
-   - from MIDI: leave `ch1_program=0` and send MIDI Program Change on channel 1.
-
-Controller note: selecting different bank *files* from MIDI (Bank Select CC0/CC32) is not implemented yet; the bank files are for making program selection manageable once you’ve chosen a bank file.

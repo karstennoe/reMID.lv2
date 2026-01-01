@@ -4,18 +4,19 @@
 #include<lv2.h>
 #include "midi.h"
 #include "sid_chips.h" //this must appear out of order due to a circular dependency around the above typedef
+#include "sw_bank.h"
 
 //I'd really rather not put types in headers but it really simplifies the plugin version
 struct super
 {
     struct CHIPS* sid_bank;
     struct midi_arrays* midi;
-    sid_instrument_t **sid_instr;
+    sw_bank_t* bank;
 
     struct midi_arrays* newmidi;
-    sid_instrument_t **new_sid_instr;
+    sw_bank_t* new_bank;
     struct midi_arrays* oldmidi;
-    sid_instrument_t **old_sid_instr;
+    sw_bank_t* old_bank;
 
     float* outl; //lv2 ports
 	float* outr;

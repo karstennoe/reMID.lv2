@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 
 #include "midi.h"
 //#define JACK_MIDI
@@ -19,9 +18,6 @@
 #ifdef LV2
 #include "lv2_midi.h"
 #endif
-
-#include "prefs.h"
-
 
 void silence_all(midi_key_state_t **midi_keys)
 {
@@ -77,8 +73,6 @@ void note_on(midi_arrays_t* midi, int channel, int note, int velocity)
     if(!midi->midi_channels[channel].in_use) return;
     int program = midi->midi_channels[channel].program;
     if(program==-1) return;
-    int inst_num = midi->midi_programs[program];
-    if(inst_num==-1) return;
     if(!velocity)
     {
         note_off(midi, channel, note);
@@ -100,8 +94,6 @@ void note_off(midi_arrays_t* midi, int channel, int note)
     if(!midi->midi_channels[channel].in_use) return;
     int program = midi->midi_channels[channel].program;
     if(program==-1) return;
-    int inst_num = midi->midi_programs[program];
-    if(inst_num==-1) return;
 
     int i;
     for(i=0; midi->midi_keys[i]; i++)
@@ -199,20 +191,24 @@ midi_arrays_t* init_midi(void* o, int polyphony, char** midi_connect_args)
     midi->next_voice = 0;
     midi->voice_use_index = 0;
 
-    for(i=0; i<128; i++) midi->midi_programs[i] = -1;
+    // Program mapping is provided by the SWI bank; keep MIDI state independent.
 
+    // With direct .swi playback there is no per-channel enable list anymore.
+    // Treat all channels as active, and default program to 0 unless a Program Change arrives.
     for(i=0; i<16; i++)
     {
-        midi->midi_channels[i].in_use = 0;
-        midi->midi_channels[i].program = -1;
+        midi->midi_channels[i].in_use = 1;
+        midi->midi_channels[i].program = 0;
         midi->midi_channels[i].sustain = 0;
         midi->midi_channels[i].pitchbend = 0;
         midi->midi_channels[i].vibrato = 0;
         midi->midi_channels[i].vibrato_changed = 0;
+        midi->midi_channels[i].chanpress = 0;
+        midi->midi_channels[i].chanpress_changed = 0;
+        midi->midi_channels[i].last_velocity = 0;
     }
 
-    // calculate midi note frequencies
-    for(i=0; i<128; i++) midi->note_frqs[i] = 440.0*pow(2,((double)i-69.0)/12.0);
+    // Pitch is handled by the SID-Wizard frequency tables (no floating point needed here).
 
     return midi;
 }
@@ -255,19 +251,24 @@ midi_arrays_t* new_midi_arrays(midi_arrays_t* old_midi, int polyphony)
     midi->next_voice = 0;
     midi->voice_use_index = 0;
 
-    for(i=0; i<128; i++) midi->midi_programs[i] = -1;
+    // Program mapping is provided by the SWI bank; keep MIDI state independent.
 
+    // With direct .swi playback there is no per-channel enable list anymore.
+    // Treat all channels as active, and default program to 0 unless a Program Change arrives.
     for(i=0; i<16; i++)
     {
-        midi->midi_channels[i].in_use = 0;
-        midi->midi_channels[i].program = -1;
+        midi->midi_channels[i].in_use = 1;
+        midi->midi_channels[i].program = 0;
         midi->midi_channels[i].sustain = 0;
         midi->midi_channels[i].pitchbend = 0;
         midi->midi_channels[i].vibrato = 0;
         midi->midi_channels[i].vibrato_changed = 0;
+        midi->midi_channels[i].chanpress = 0;
+        midi->midi_channels[i].chanpress_changed = 0;
+        midi->midi_channels[i].last_velocity = 0;
     }
 
-    for(i=0; i<128; i++) midi->note_frqs[i] = old_midi->note_frqs[i];
+    // Pitch is handled by the SID-Wizard frequency tables (no floating point needed here).
 
     midi->seq = old_midi->seq;
 

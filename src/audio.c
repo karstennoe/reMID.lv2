@@ -11,15 +11,14 @@
 #else
 #include "lv2_audio.h"
 #endif
-#include "sid_instr.h"
-#include "prefs.h"
+#include "sw_bank.h"
 
 #ifndef LV2
 struct super
 {
     struct CHIPS* sid_bank;
     struct midi_arrays* midi;
-    sid_instrument_t **sid_instr;
+    sw_bank_t* bank;
 
     jack_client_t *client;
     jack_port_t *output_port_l;
@@ -42,7 +41,7 @@ int process(uint32_t nframes, void *arg)
     float* outr = s->outr;
 #endif
 
-    sid_process(s->sid_bank, s->midi, s->sid_instr, (int)nframes, outr, outl);
+    sid_process(s->sid_bank, s->midi, s->bank, (int)nframes, outr, outl);
     return 0;
 }
 
@@ -62,6 +61,7 @@ void jack_shutdown(void *arg)
     if(s->client) jack_client_close(s->client);
     midi_close(s->midi,s->sid_bank->polyphony);
     sid_close(s->sid_bank);
+    sw_bank_free(s->bank);
     free(s);
     exit(0);
 }
@@ -102,11 +102,7 @@ int init_jack_audio( int use_sid_volume, int max_polyphony, int chiptype, int de
 
     s->midi = init_midi((void*)s->client, max_polyphony, midi_connect_args);//TODO: make sure this doesn't clobber the instrument stuff
 
-    //load instrument //TODO: make a "find file" function
-    s->sid_instr = NULL;
-	s->sid_instr = read_instruments(instr_file, s->midi);
-    if(!s->sid_instr)
-        s->sid_instr = default_instrument();
+    s->bank = sw_bank_load(instr_file);
 
 
     s->sid_bank = sid_init(max_polyphony, use_sid_volume,chiptype, debug);
@@ -151,14 +147,10 @@ void* init_lv2_audio(uint32_t fs, char* instr_file, const LV2_Feature * const* h
 
     s->midi = init_midi((void*)host_features, max_polyphony, midi_connect_args);//TODO: make sure this doesn't clobber the instrument stuff
 
-    //load instrument //TODO: make a "find file" function
-    s->sid_instr = NULL;
-	s->sid_instr = read_instruments(instr_file, s->midi);
-    if(!s->sid_instr)
-        s->sid_instr = default_instrument();//TODO: this doesn't really work
+    s->bank = sw_bank_load(instr_file);
 
     s->oldmidi = s->newmidi = 0;
-    s->old_sid_instr = s->new_sid_instr = 0;
+    s->old_bank = s->new_bank = 0;
 
     s->sid_bank = sid_init(max_polyphony, use_sid_volume, chiptype, debug);
     srate(fs,s);
@@ -169,17 +161,17 @@ void cleanup_audio(void* arg)
 {
     struct super* s = (struct super*)arg;
     midi_close(s->midi,s->sid_bank->polyphony);
-    close_instruments(s->sid_instr);
+    sw_bank_free(s->bank);
 
     //in case there was an unfinished operation
     if(s->oldmidi)
     	free(s->oldmidi);
     if(s->newmidi)
     	free(s->newmidi);
-    if(s->old_sid_instr)
-    	close_instruments(s->old_sid_instr);
-    if(s->new_sid_instr)
-    	close_instruments(s->new_sid_instr);
+    if(s->old_bank)
+      sw_bank_free(s->old_bank);
+    if(s->new_bank)
+      sw_bank_free(s->new_bank);
 
     sid_close(s->sid_bank);
     free(s);

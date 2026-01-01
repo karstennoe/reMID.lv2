@@ -5,7 +5,6 @@
 #include <math.h>
 
 
-#include "prefs.h"
 #include "lv2_audio.h"
 #include "lv2_midi.h"
 
@@ -25,7 +24,7 @@ typedef struct arugalatastesbad
 
 static void apply_chan_program_overrides(struct super* s)
 {
-	// Apply before reading MIDI so note_on uses the intended mapping.
+	// Apply before reading MIDI so incoming notes use the intended program.
 	for(int ch = 0; ch < 16; ++ch)
 	{
 		const float* port = s->chan_program_override[ch];
@@ -46,7 +45,7 @@ static void apply_chan_program_overrides(struct super* s)
 LV2_Handle init_remid(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
 	char instr_file[255];
-	sprintf(instr_file,"%sinstruments.conf",bundle_path);//create an absolute path
+	sprintf(instr_file,"%sinstruments/banks/bank-all-0.swibank",bundle_path);//create an absolute path
 	struct super* s = init_lv2_audio(lrint(sample_freq), instr_file, host_features);
 	struct lmidi* lm = (struct lmidi*)s->midi->seq;
 	strcpy(lm->filepath,instr_file);
@@ -110,10 +109,10 @@ static LV2_Worker_Status remidwork(LV2_Handle handle, LV2_Worker_Respond_Functio
     while(s->newmidi){usleep(1000);}//wait if in the middle of switching files
     if(s->oldmidi)
     	free(s->oldmidi);
-    if(s->old_sid_instr)
-    	close_instruments(s->old_sid_instr);
+    if(s->old_bank)
+    	sw_bank_free(s->old_bank);
     s->oldmidi = 0;
-    s->old_sid_instr = 0;
+    s->old_bank = 0;
 
     //work was scheduled to load a new file
     lv2_atom_object_get(obj, lm->urid.p_value, &file_path, 0);
@@ -125,7 +124,13 @@ static LV2_Worker_Status remidwork(LV2_Handle handle, LV2_Worker_Respond_Functio
 
         //need to create new arrays based on this instrument file
         s->newmidi = new_midi_arrays(s->midi,s->sid_bank->polyphony);
-        s->new_sid_instr = read_instruments(path,s->newmidi);
+        s->new_bank = sw_bank_load(path);
+        if(!s->new_bank)
+        {
+        	free(s->newmidi);
+        	s->newmidi = 0;
+        	return LV2_WORKER_ERR_UNKNOWN;
+        }
 
         respond(rhandle,0,0);//not passing the new arrays directly, using plugin newmidi etc pointers
     }//got file
@@ -142,11 +147,11 @@ static LV2_Worker_Status remidwork_response(LV2_Handle handle, uint32_t size, co
 	struct super* s = (struct super*)handle;
 	struct lmidi* lm = s->midi->seq;
 	s->oldmidi = s->midi;
-	s->old_sid_instr = s->sid_instr;
+	s->old_bank = s->bank;
 	s->midi = s->newmidi;
-	s->sid_instr = s->new_sid_instr;
+	s->bank = s->new_bank;
 	s->newmidi = 0;
-	s->new_sid_instr = 0;
+	s->new_bank = 0;
 	strcpy(lm->filepath,lm->newfilepath);
 	lm->newfilepath[0] = 1; //this special case to notify host
     return LV2_WORKER_SUCCESS;
@@ -167,12 +172,23 @@ static LV2_State_Status remidsave(LV2_Handle handle, LV2_State_Store_Function  s
         }
     }
 
-    char* abstractpath = map_path->abstract_path(map_path->handle, lm->filepath);
+    const char* to_store = lm->filepath;
+    uint32_t store_flags = LV2_STATE_IS_POD;
+    char* abstractpath = NULL;
+    if(map_path)
+    {
+    	abstractpath = map_path->abstract_path(map_path->handle, lm->filepath);
+    	if(abstractpath)
+    	{
+    		to_store = abstractpath;
+    		store_flags |= LV2_STATE_IS_PORTABLE;
+    	}
+    }
 
-    store(state_handle, lm->urid.filetype_instr, abstractpath, strlen(lm->filepath) + 1,
-    		lm->urid.a_path, LV2_STATE_IS_POD | LV2_STATE_IS_PORTABLE);
+    store(state_handle, lm->urid.filetype_instr, to_store, strlen(to_store) + 1,
+    		lm->urid.a_path, store_flags);
 
-    free(abstractpath);
+    if(abstractpath) free(abstractpath);
 
     return LV2_STATE_SUCCESS;
 
@@ -186,69 +202,67 @@ static LV2_State_Status remidrestore(LV2_Handle handle, LV2_State_Retrieve_Funct
     size_t   size;
     uint32_t type;
     uint32_t valflags;
-    uint8_t polyphony,vol;
-    uint16_t chiptype;
-    char* path = 0;
+    const char* path = 0;
+    LV2_State_Map_Path* map_path = NULL;
+
+    for (int i = 0; features[i]; ++i)
+    {
+        if (!strcmp(features[i]->URI, LV2_STATE__mapPath))
+        {
+            map_path = (LV2_State_Map_Path*)features[i]->data;
+        }
+    }
 
     const void* value = retrieve( state_handle, lm->urid.filetype_instr, &size, &type, &valflags);
     if (value)
-		path = (char*)value;
-
-    polyphony = s->sid_bank->polyphony;
-    value = retrieve( state_handle, lm->urid.polyphony, &size, &type, &valflags);
-    if (value)
-		polyphony = (uint8_t)*((int32_t*)value);
-
-    vol = s->sid_bank->use_sid_volume;
-    value = retrieve( state_handle, lm->urid.use_sid_vol, &size, &type, &valflags);
-    if (value)
-		vol = (uint8_t)*((int32_t*)value);
-
-    chiptype = s->sid_bank->chiptype;
-    value = retrieve( state_handle, lm->urid.chiptype, &size, &type, &valflags);
-    if (value)
-		chiptype = (uint16_t)*((int32_t*)value);
+		path = (const char*)value;
 
     if(path)
     {
+    	const char* load_path = path;
+    	char* abs_path = NULL;
+    	if(map_path)
+    	{
+    		abs_path = map_path->absolute_path(map_path->handle, path);
+    		if(abs_path) load_path = abs_path;
+    	}
+
+    	sw_bank_t* loaded = sw_bank_load(load_path);
+    	if(!loaded)
+    	{
+    		if(abs_path) free(abs_path);
+    		return LV2_STATE_ERR_UNKNOWN;
+    	}
+
 		if(s->oldmidi)
 			free(s->oldmidi);
-		if(s->old_sid_instr)
-			close_instruments(s->old_sid_instr);
+		if(s->old_bank)
+			sw_bank_free(s->old_bank);
 		s->oldmidi = 0;
-		s->old_sid_instr = 0;
+		s->old_bank = 0;
 		if(s->newmidi && s->newmidi != s->midi)
 		{
 			//was loading a file, but this will supersede
 			free(s->newmidi);
-			close_instruments(s->new_sid_instr);
+			sw_bank_free(s->new_bank);
 		}
 		s->newmidi = 0;
-		s->new_sid_instr = 0;
+		s->new_bank = 0;
 
 		s->oldmidi = s->midi;
-		s->old_sid_instr = s->sid_instr;
+		s->old_bank = s->bank;
 
         s->midi = new_midi_arrays(s->oldmidi,s->sid_bank->polyphony);
-        s->sid_instr = read_instruments(path,s->midi);
+        s->bank = loaded;
         free(s->oldmidi);
-		close_instruments(s->old_sid_instr);
+		sw_bank_free(s->old_bank);
 		s->oldmidi = 0;
-		s->old_sid_instr = 0;
-		strcpy(lm->filepath,path);
+		s->old_bank = 0;
+		strcpy(lm->filepath,load_path);
 		lm->newfilepath[0] = 1;
 
+		if(abs_path) free(abs_path);
     }
-
-    //only reinit if something has changed
-    if(polyphony != s->sid_bank->polyphony
-    		|| vol != s->sid_bank->use_sid_volume
-			|| chiptype != s->sid_bank->chiptype)
-    {
-    	sid_close(s->sid_bank);
-		s->sid_bank = sid_init(polyphony,vol,chiptype,0);
-    }
-
 
     return LV2_STATE_SUCCESS;
 

@@ -12,7 +12,6 @@ find_package(PkgConfig)
 find_package(Jack)
 #find_package(GTK2 2.10 COMPONENTS gtk glade)
 pkg_check_modules(ALSA alsa)
-pkg_check_modules(GLIB glib-2.0)
 pkg_check_modules(LV2 lv2) 
 #find_path(RESID_INCLUDE_DIRS resid/sid.h)
 #find_library(RESID_LIBRARIES resid PATH_SUFFIXES resid)
@@ -25,8 +24,8 @@ pkg_check_modules(LV2 lv2)
 #message(${GLIB_LIBRARIES})
 #message(${JACK_LIBRARIES})
 
-include_directories (${JACK_INCLUDE_DIRS} ${GLIB_INCLUDE_DIRS} ${LV2_INCLUDE_DIRS})
-link_directories ( ${JACK_LIBRARY_DIRS} ${GLIB_LIBRARY_DIRS} ${LV2_LIBRARY_DIRS})
+include_directories (${JACK_INCLUDE_DIRS} ${LV2_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../sidwizard_runtime)
+link_directories ( ${JACK_LIBRARY_DIRS} ${LV2_LIBRARY_DIRS})
 
 #by default, we're going to use jack midi
 #if(ALSA_FOUND) 
@@ -53,8 +52,9 @@ add_executable(reMID
     audio.c
     jack_midi.c
     midi.c
-    prefs.c
+    sw_bank.c
     sid_chips.cc
+    ../sidwizard_runtime/sw_runtime.c
 )
 
 #add_definitions(-DLV2)
@@ -64,7 +64,8 @@ add_library(remid.lv2 SHARED
     audio.c
     lv2_midi.c
     midi.c
-    prefs.c
+    sw_bank.c
+    ../sidwizard_runtime/sw_runtime.c
 )
 
 #set_target_properties(remid.lv2 PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
@@ -78,8 +79,8 @@ SET_TARGET_PROPERTIES(remid.lv2 PROPERTIES COMPILE_FLAGS -DLV2)
 set_target_properties(remid.lv2 PROPERTIES PREFIX "")
 #set_target_properties(remid.lv2 PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
-target_link_libraries(reMID resid ${JACK_LIBRARIES} ${GLIB_LIBARIES} glib-2.0 m resid)
-target_link_libraries(remid.lv2 resid ${LV2_LIBRARIES} ${GLIB_LIBARIES} glib-2.0 m resid)
+target_link_libraries(reMID resid ${JACK_LIBRARIES} m resid)
+target_link_libraries(remid.lv2 resid ${LV2_LIBRARIES} m resid)
 
 # config install
 install(TARGETS reMID

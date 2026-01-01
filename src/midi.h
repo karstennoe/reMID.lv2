@@ -38,8 +38,6 @@ typedef struct midi_arrays
 {
     struct midi_key_state **midi_keys;
     struct midi_channel_state midi_channels[16];
-    int midi_programs[128];
-    double note_frqs[128];
     int *free_voices;
     int next_voice;
     int voice_use_index;
