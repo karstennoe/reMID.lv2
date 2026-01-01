@@ -243,6 +243,16 @@ static LV2_State_Status remidsave(LV2_Handle handle, LV2_State_Store_Function  s
     		store_flags |= LV2_STATE_IS_PORTABLE;
     	}
     }
+    else if (s && s->bundle_path[0])
+    {
+    	// If mapPath is unavailable, prefer storing paths relative to the bundle root.
+    	// MODEP warns when plugins write absolute paths into patch/state.
+    	const size_t bl = strlen(s->bundle_path);
+    	if (!strncmp(lm->filepath, s->bundle_path, bl))
+    	{
+    		to_store = lm->filepath + bl;
+    	}
+    }
 
     store(state_handle, lm->urid.filetype_instr, to_store, strlen(to_store) + 1,
     		lm->urid.a_path, store_flags);

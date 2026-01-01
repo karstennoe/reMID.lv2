@@ -15,8 +15,9 @@ endif()
 
 add_subdirectory(lib/) 
 add_subdirectory(src/) 
+# Install bank files into the bundle under instruments/banks/.
 install (DIRECTORY instruments/
-    DESTINATION lib/lv2/remid.lv2
+    DESTINATION lib/lv2/remid.lv2/instruments
 )
 
 # Install the raw SID-Wizard instrument exports into the bundle.

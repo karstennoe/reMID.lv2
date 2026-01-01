@@ -3,6 +3,7 @@
 #include "../sidwizard_runtime/sw_runtime.h"
 
 #include <ctype.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -260,7 +261,11 @@ sw_bank_t* sw_bank_load(const char* bank_path)
 {
   if (!bank_path) return NULL;
   FILE* f = fopen(bank_path, "rb");
-  if (!f) return NULL;
+  if (!f)
+  {
+    fprintf(stderr, "reMID.lv2: swibank: can't open %s: %s\n", bank_path, strerror(errno));
+    return NULL;
+  }
 
   sw_bank_t* bank = (sw_bank_t*)calloc(1, sizeof(*bank));
   if (!bank)
