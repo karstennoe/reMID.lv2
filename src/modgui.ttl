@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+<http://github.com/ssj71/reMID.lv2>
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon.html> ;
+        modgui:stylesheet <modgui/stylesheet.css> ;
+        modgui:javascript <modgui/script.js> ;
+    ] .
+
