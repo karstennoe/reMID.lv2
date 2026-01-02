@@ -12,37 +12,36 @@
 
 .mod-pedal-ports {
   position: absolute;
-  top: 10px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  pointer-events: none; /* MOD will manage interaction on port elements */
-}
-
-.mod-ports-left,
-.mod-ports-right {
-  display: flex;
-  gap: 8px;
-  padding: 0 6px;
-  pointer-events: none;
+  inset: 0;
 }
 
 .mod-port {
+  position: absolute;
   width: 18px;
   height: 18px;
   border-radius: 9px;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(0, 0, 0, 0.35);
-  pointer-events: auto; /* allow MOD to hook the port */
 }
 
 .mod-port-midi {
   background: rgba(0, 120, 255, 0.25);
+  left: -9px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .mod-port-audio {
   background: rgba(0, 0, 0, 0.25);
+  right: -9px;
+}
+
+.mod-port-audio-l {
+  top: calc(50% - 14px);
+}
+
+.mod-port-audio-r {
+  top: calc(50% + 14px);
 }
 
 .mod-pedal-header {
