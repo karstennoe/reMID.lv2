@@ -114,6 +114,16 @@ static bool is_legacy_instruments_conf_path(const char* path)
 	return ends_with_ci(path, "/instruments.conf") || ends_with_ci(path, "\\instruments.conf") || ends_with_ci(path, "instruments.conf");
 }
 
+static const char* path_basename(const char* path)
+{
+	if(!path) return NULL;
+	const char* last_slash = strrchr(path, '/');
+	const char* last_back = strrchr(path, '\\');
+	const char* last = last_slash;
+	if(!last || (last_back && last_back > last)) last = last_back;
+	return last ? (last + 1) : path;
+}
+
 static sw_bank_t* try_load_bank_with_fallback(struct super* s, const char* requested_path)
 {
 	if(!requested_path) return NULL;
@@ -126,6 +136,25 @@ static sw_bank_t* try_load_bank_with_fallback(struct super* s, const char* reque
 		snprintf(fallback, sizeof(fallback), "%sinstruments/banks/bank-all-0.swibank", s->bundle_path);
 		fprintf(stderr, "reMID.lv2: legacy state path %s -> using %s\n", requested_path, fallback);
 		return sw_bank_load(fallback);
+	}
+
+	// Some hosts (including MODEP) may copy referenced files into the pedalboard folder for state.
+	// If a built-in bank file is copied without also copying the .swi directory, base=../swi will break.
+	// Detect that and fall back to the bundled bank with the same basename.
+	if(s && s->bundle_path[0] && ends_with_ci(requested_path, ".swibank"))
+	{
+		const char* base = path_basename(requested_path);
+		if(base && *base)
+		{
+			char fallback[512];
+			snprintf(fallback, sizeof(fallback), "%sinstruments/banks/%s", s->bundle_path, base);
+			b = sw_bank_load(fallback);
+			if(b)
+			{
+				fprintf(stderr, "reMID.lv2: state path %s -> using bundled %s\n", requested_path, fallback);
+				return b;
+			}
+		}
 	}
 	return NULL;
 }
@@ -275,8 +304,20 @@ static LV2_State_Status remidsave(LV2_Handle handle, LV2_State_Store_Function  s
     const char* to_store = lm->filepath;
     uint32_t store_flags = LV2_STATE_IS_POD;
     char* abstractpath = NULL;
-    if(map_path)
+
+    // Prefer storing paths relative to the plugin bundle for built-in banks.
+    // This avoids hosts copying bank files into pedalboard directories (which breaks base=../swi).
+    if (s && s->bundle_path[0])
     {
+    	const size_t bl = strlen(s->bundle_path);
+    	if (!strncmp(lm->filepath, s->bundle_path, bl))
+    	{
+    		to_store = lm->filepath + bl;
+    	}
+    }
+    else if(map_path)
+    {
+    	// For user-provided external files, allow host portability mapping.
     	abstractpath = map_path->abstract_path(map_path->handle, lm->filepath);
     	if(abstractpath)
     	{
@@ -284,22 +325,11 @@ static LV2_State_Status remidsave(LV2_Handle handle, LV2_State_Store_Function  s
     		store_flags |= LV2_STATE_IS_PORTABLE;
     	}
     }
-    else if (s && s->bundle_path[0])
-    {
-    	// If mapPath is unavailable, prefer storing paths relative to the bundle root.
-    	// MODEP warns when plugins write absolute paths into patch/state.
-    	const size_t bl = strlen(s->bundle_path);
-    	if (!strncmp(lm->filepath, s->bundle_path, bl))
-    	{
-    		to_store = lm->filepath + bl;
-    	}
-    }
 
     store(state_handle, lm->urid.filetype_instr, to_store, strlen(to_store) + 1,
     		lm->urid.a_path, store_flags);
 
     if(abstractpath) free(abstractpath);
-
     return LV2_STATE_SUCCESS;
 
 }

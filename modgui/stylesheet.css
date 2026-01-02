@@ -3,6 +3,42 @@
   padding: 10px;
   box-sizing: border-box;
   font-family: sans-serif;
+  position: relative;
+}
+
+.mod-pedal-ports {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none; /* MOD will manage interaction on port elements */
+}
+
+.mod-ports-left,
+.mod-ports-right {
+  display: flex;
+  gap: 8px;
+  padding: 0 6px;
+  pointer-events: none;
+}
+
+.mod-port {
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  pointer-events: auto; /* allow MOD to hook the port */
+}
+
+.mod-port-midi {
+  background: rgba(0, 120, 255, 0.25);
+}
+
+.mod-port-audio {
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .mod-pedal-header {
@@ -72,4 +108,3 @@
   font-size: 11px;
   opacity: 0.8;
 }
-
