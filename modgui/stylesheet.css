@@ -10,69 +10,30 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.mod-pedal-inputs,
-.mod-pedal-outputs {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 5;
-}
-
-.mod-pedal-inputs {
-  left: -10px;
-  width: 20px;
-}
-
-.mod-pedal-outputs {
-  right: -10px;
-  width: 20px;
-}
-
-.mod-input,
-.mod-output {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-radius: 9px;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 0, 0, 0.35);
-  cursor: pointer;
-}
-
-.mod-midi-input {
+.mod-reMID .mod-midi-input {
   background: rgba(0, 120, 255, 0.25);
-  top: 50%;
-  transform: translateY(-50%);
 }
 
-.mod-audio-output {
+.mod-reMID .mod-audio-output {
   background: rgba(0, 0, 0, 0.25);
 }
 
-.mod-audio-output-l {
-  top: calc(50% - 14px);
-}
-
-.mod-audio-output-r {
-  top: calc(50% + 14px);
-}
-
-.mod-pedal-header {
+.mod-reMID .mod-pedal-header {
   margin-bottom: 10px;
 }
 
-.mod-pedal-title {
+.mod-reMID .mod-pedal-title {
   font-size: 18px;
   font-weight: 700;
   color: #ffffff;
 }
 
-.mod-pedal-subtitle {
+.mod-reMID .mod-pedal-subtitle {
   font-size: 12px;
   opacity: 0.8;
 }
 
-.mod-bank-row {
+.mod-reMID .mod-bank-row {
   display: grid;
   grid-template-columns: 60px 1fr auto;
   gap: 8px;
@@ -80,12 +41,12 @@
   margin-bottom: 10px;
 }
 
-.mod-bank-row label,
-.mod-table-header {
+.mod-reMID .mod-bank-row label,
+.mod-reMID .mod-table-header {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.mod-bank-row select {
+.mod-reMID .mod-bank-row select {
   width: 100%;
   background: rgba(255, 255, 255, 0.08);
   color: #eef2f7;
@@ -94,12 +55,12 @@
   padding: 4px 6px;
 }
 
-.mod-bank-hint {
+.mod-reMID .mod-bank-hint {
   font-size: 11px;
   opacity: 0.7;
 }
 
-.mod-table-header {
+.mod-reMID .mod-table-header {
   display: grid;
   grid-template-columns: 30px 80px 1fr;
   gap: 8px;
@@ -110,7 +71,7 @@
   margin-bottom: 6px;
 }
 
-.mod-channels .mod-row {
+.mod-reMID .mod-channels .mod-row {
   display: grid;
   grid-template-columns: 30px 80px 1fr;
   gap: 8px;
@@ -118,7 +79,7 @@
   padding: 3px 0;
 }
 
-.mod-program {
+.mod-reMID .mod-program {
   width: 80px;
   background: rgba(255, 255, 255, 0.08);
   color: #eef2f7;
@@ -127,7 +88,7 @@
   padding: 3px 6px;
 }
 
-.mod-inst {
+.mod-reMID .mod-inst {
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -135,7 +96,7 @@
   opacity: 0.9;
 }
 
-.mod-help {
+.mod-reMID .mod-help {
   margin-top: 10px;
   font-size: 11px;
   opacity: 0.8;
