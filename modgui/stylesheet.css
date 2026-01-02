@@ -10,37 +10,50 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.mod-pedal-ports {
+.mod-pedal-inputs,
+.mod-pedal-outputs {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
 }
 
-.mod-port {
+.mod-pedal-inputs {
+  left: -10px;
+  width: 20px;
+}
+
+.mod-pedal-outputs {
+  right: -10px;
+  width: 20px;
+}
+
+.mod-input,
+.mod-output {
   position: absolute;
   width: 18px;
   height: 18px;
   border-radius: 9px;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(0, 0, 0, 0.35);
+  cursor: pointer;
 }
 
-.mod-port-midi {
+.mod-midi-input {
   background: rgba(0, 120, 255, 0.25);
-  left: -9px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.mod-port-audio {
+.mod-audio-output {
   background: rgba(0, 0, 0, 0.25);
-  right: -9px;
 }
 
-.mod-port-audio-l {
+.mod-audio-output-l {
   top: calc(50% - 14px);
 }
 
-.mod-port-audio-r {
+.mod-audio-output-r {
   top: calc(50% + 14px);
 }
 
