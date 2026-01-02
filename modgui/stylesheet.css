@@ -4,6 +4,10 @@
   box-sizing: border-box;
   font-family: sans-serif;
   position: relative;
+  background: linear-gradient(180deg, #2b2f36 0%, #1d2025 100%);
+  color: #eef2f7;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mod-pedal-ports {
@@ -48,6 +52,7 @@
 .mod-pedal-title {
   font-size: 18px;
   font-weight: 700;
+  color: #ffffff;
 }
 
 .mod-pedal-subtitle {
@@ -63,8 +68,18 @@
   margin-bottom: 10px;
 }
 
+.mod-bank-row label,
+.mod-table-header {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .mod-bank-row select {
   width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #eef2f7;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding: 4px 6px;
 }
 
 .mod-bank-hint {
@@ -78,7 +93,7 @@
   gap: 8px;
   font-size: 12px;
   font-weight: 700;
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(255,255,255,0.16);
   padding-bottom: 6px;
   margin-bottom: 6px;
 }
@@ -93,6 +108,11 @@
 
 .mod-program {
   width: 80px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #eef2f7;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding: 3px 6px;
 }
 
 .mod-inst {
