@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  // MOD GUI resources are served from <bundle>/modgui/, so bundle-relative paths must use "../".
-  const BUNDLE_PREFIX = "../";
-  const BANK_INDEX_PATH = BUNDLE_PREFIX + "instruments/banks/banks_index.json";
+  // MOD only serves files under modgui:resourcesDirectory. We ship a generated copy of
+  // the bank index into modgui/banks_index.json at build/install time.
+  const BANK_INDEX_PATH = "banks_index.json";
 
   function prettyName(v) {
     if (!v) return "N/A";
@@ -12,39 +12,10 @@
     return s.replace(/[-_]+/g, " ");
   }
 
-  function parseSwibank(text) {
-    const programs = {};
-    let section = "";
-    text.split(/\r?\n/).forEach((line) => {
-      line = line.trim();
-      if (!line || line.startsWith("#") || line.startsWith(";")) return;
-      if (line.startsWith("[") && line.endsWith("]")) {
-        section = line.slice(1, -1).trim().toLowerCase();
-        return;
-      }
-      const eq = line.indexOf("=");
-      if (eq < 0) return;
-      const key = line.slice(0, eq).trim();
-      const val = line.slice(eq + 1).trim();
-      if (section === "programs") {
-        const p = parseInt(key, 10);
-        if (!Number.isFinite(p) || p < 0 || p > 127) return;
-        programs[p] = val;
-      }
-    });
-    return programs;
-  }
-
   async function fetchJson(path) {
     const r = await fetch(path, { cache: "no-cache" });
     if (!r.ok) throw new Error(`HTTP ${r.status} for ${path}`);
     return await r.json();
-  }
-
-  async function fetchText(path) {
-    const r = await fetch(path, { cache: "no-cache" });
-    if (!r.ok) throw new Error(`HTTP ${r.status} for ${path}`);
-    return await r.text();
   }
 
   function getProgramOverrideValue(ch) {
@@ -68,7 +39,7 @@
         continue;
       }
       const p = ov - 1;
-      const v = programMap[p];
+      const v = programMap[String(p)] ?? programMap[p];
       setChannelLabel(ch, prettyName(v));
     }
   }
@@ -88,35 +59,28 @@
     const options = [];
     for (const [bankId, pages] of Object.entries(index.banks || {})) {
       (pages || []).forEach((p) => {
-        options.push({ label: p.name || p.file, file: p.file });
+        options.push({ label: p.name || p.file, key: p.file, programs: p.programs || {} });
       });
     }
 
-    // Include drumkit presets listed in the index.
-    if (index.drumkit_gm) options.push({ label: "DRUMKIT: GM (example)", file: index.drumkit_gm });
-    if (index.drumkit_remid) options.push({ label: "DRUMKIT: reMID (built-in)", file: index.drumkit_remid });
+    // Include drumkit presets listed in the index (file paths only; program mapping isn't needed).
+    if (index.drumkit_gm) options.push({ label: "DRUMKIT: GM (example)", key: index.drumkit_gm, programs: { "0": "DRUMKIT:gm" } });
+    if (index.drumkit_remid) options.push({ label: "DRUMKIT: reMID (built-in)", key: index.drumkit_remid, programs: { "0": "DRUMKIT:remid" } });
 
     options.sort((a, b) => a.label.localeCompare(b.label));
-    bankSelect.innerHTML = options
-      .map((o) => `<option value="${BUNDLE_PREFIX + o.file}">${o.label}</option>`)
-      .join("");
+    bankSelect.innerHTML = options.map((o) => `<option value="${o.key}">${o.label}</option>`).join("");
 
-    const defaultBank = BUNDLE_PREFIX + "instruments/banks/bank-all-0.swibank";
-    const hasDefault = options.some((o) => (BUNDLE_PREFIX + o.file) === defaultBank);
-    bankSelect.value = hasDefault ? defaultBank : (options[0] ? (BUNDLE_PREFIX + options[0].file) : "");
+    const defaultKey = "instruments/banks/bank-all-0.swibank";
+    const hasDefault = options.some((o) => o.key === defaultKey);
+    bankSelect.value = hasDefault ? defaultKey : (options[0] ? options[0].key : "");
 
     let programMap = {};
 
-    async function loadSelectedBank() {
-      const file = bankSelect.value;
-      if (!file) return;
-      try {
-        const text = await fetchText(file);
-        programMap = parseSwibank(text);
-        updateLabels(programMap);
-      } catch (e) {
-        for (let ch = 1; ch <= 16; ch++) setChannelLabel(ch, "N/A");
-      }
+    function loadSelectedBank() {
+      const key = bankSelect.value;
+      const found = options.find((o) => o.key === key);
+      programMap = found ? (found.programs || {}) : {};
+      updateLabels(programMap);
     }
 
     bankSelect.addEventListener("change", loadSelectedBank);
@@ -125,7 +89,7 @@
       el.addEventListener("change", () => updateLabels(programMap));
     });
 
-    await loadSelectedBank();
+    loadSelectedBank();
     updateLabels(programMap);
   }
 

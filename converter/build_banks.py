@@ -203,6 +203,12 @@ def main() -> int:
     if not args.dry_run:
         idx_path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
+    # Also write a copy into modgui/ so the MOD GUI can load it via its own resourcesDirectory.
+    modgui_idx = repo_root / "modgui" / "banks_index.json"
+    if not args.dry_run:
+        modgui_idx.parent.mkdir(parents=True, exist_ok=True)
+        modgui_idx.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
     print(f"Input:  {input_dir}")
     print(f"Output: {output_dir}")
     print(f"Wrote:  {idx_path}")
