@@ -1,5 +1,6 @@
-.mod-reMID {
+.mod-reMID{{{cns}}}, .mod-reMID {
   width: 360px;
+  height: 620px;
   padding: 10px;
   box-sizing: border-box;
   font-family: sans-serif;
@@ -10,43 +11,41 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.mod-reMID .mod-midi-input {
-  background: rgba(0, 120, 255, 0.25);
+.mod-reMID{{{cns}}} .remid-header, .mod-reMID .remid-header {
+  margin: 0 38px 10px 38px;
 }
 
-.mod-reMID .mod-audio-output {
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.mod-reMID .mod-pedal-header {
-  margin-bottom: 10px;
-}
-
-.mod-reMID .mod-pedal-title {
+.mod-reMID{{{cns}}} .remid-title, .mod-reMID .remid-title {
   font-size: 18px;
   font-weight: 700;
   color: #ffffff;
 }
 
-.mod-reMID .mod-pedal-subtitle {
+.mod-reMID{{{cns}}} .remid-subtitle, .mod-reMID .remid-subtitle {
   font-size: 12px;
   opacity: 0.8;
 }
 
-.mod-reMID .mod-bank-row {
+.mod-reMID{{{cns}}} .remid-panel, .mod-reMID .remid-panel {
+  margin: 0 38px;
+}
+
+.mod-reMID{{{cns}}} .remid-bank-row, .mod-reMID .remid-bank-row {
   display: grid;
   grid-template-columns: 60px 1fr auto;
   gap: 8px;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.mod-reMID .mod-bank-row label,
-.mod-reMID .mod-table-header {
+.mod-reMID{{{cns}}} .remid-bank-row label,
+.mod-reMID .remid-bank-row label,
+.mod-reMID{{{cns}}} .remid-table-header,
+.mod-reMID .remid-table-header {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.mod-reMID .mod-bank-row select {
+.mod-reMID{{{cns}}} .remid-bank-row select, .mod-reMID .remid-bank-row select {
   width: 100%;
   background: rgba(255, 255, 255, 0.08);
   color: #eef2f7;
@@ -55,23 +54,30 @@
   padding: 4px 6px;
 }
 
-.mod-reMID .mod-bank-hint {
+.mod-reMID{{{cns}}} .remid-bank-hint, .mod-reMID .remid-bank-hint {
   font-size: 11px;
   opacity: 0.7;
 }
 
-.mod-reMID .mod-table-header {
+.mod-reMID{{{cns}}} .remid-status, .mod-reMID .remid-status {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-bottom: 8px;
+  min-height: 14px;
+}
+
+.mod-reMID{{{cns}}} .remid-table-header, .mod-reMID .remid-table-header {
   display: grid;
   grid-template-columns: 30px 80px 1fr;
   gap: 8px;
   font-size: 12px;
   font-weight: 700;
-  border-bottom: 1px solid rgba(255,255,255,0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
   padding-bottom: 6px;
   margin-bottom: 6px;
 }
 
-.mod-reMID .mod-channels .mod-row {
+.mod-reMID{{{cns}}} .remid-row, .mod-reMID .remid-row {
   display: grid;
   grid-template-columns: 30px 80px 1fr;
   gap: 8px;
@@ -79,7 +85,7 @@
   padding: 3px 0;
 }
 
-.mod-reMID .mod-program {
+.mod-reMID{{{cns}}} .remid-program, .mod-reMID .remid-program {
   width: 80px;
   background: rgba(255, 255, 255, 0.08);
   color: #eef2f7;
@@ -88,15 +94,19 @@
   padding: 3px 6px;
 }
 
-.mod-reMID .mod-inst {
+.mod-reMID{{{cns}}} .remid-inst, .mod-reMID .remid-inst {
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
-.mod-reMID .mod-help {
+.mod-reMID{{{cns}}} .remid-hidden, .mod-reMID .remid-hidden {
+  display: none;
+}
+
+.mod-reMID{{{cns}}} .remid-help, .mod-reMID .remid-help {
   margin-top: 10px;
   font-size: 11px;
   opacity: 0.8;

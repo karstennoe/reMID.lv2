@@ -1,9 +1,22 @@
 (function () {
   "use strict";
 
-  // MOD only serves files under modgui:resourcesDirectory. We ship a generated copy of
-  // the bank index into modgui/banks_index.json at build/install time.
-  const BANK_INDEX_PATH = "banks_index.json";
+  // MOD only serves files under modgui:resourcesDirectory, exposed via /resources/.
+  // The {{{ns}}} tag ensures the correct per-plugin query string is used across hosts.
+  const BANK_INDEX_URL = "/resources/banks_index.json{{{ns}}}";
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+  function setStatus(text) {
+    const el = $("remid-status");
+    if (el) el.textContent = text;
+  }
+
+  function normalizePath(p) {
+    return String(p || "").replace(/\\/g, "/");
+  }
 
   function prettyName(v) {
     if (!v) return "N/A";
@@ -18,54 +31,85 @@
     return await r.json();
   }
 
+  function getProgramOverrideValueFromMirror(ch) {
+    const el = $(`remid-ch${ch}-val`);
+    if (!el) return null;
+    const v = parseInt(String(el.textContent || "").trim(), 10);
+    if (!Number.isFinite(v)) return null;
+    return Math.max(0, Math.min(128, v));
+  }
+
   function getProgramOverrideValue(ch) {
-    const input = document.querySelector(`.mod-program[mod-port-symbol="ch${ch}_program"]`);
+    const mv = getProgramOverrideValueFromMirror(ch);
+    if (mv !== null) return mv;
+    const input = document.querySelector(`.remid-program[mod-port-symbol="ch${ch}_program"]`);
     if (!input) return 0;
-    const v = parseInt(input.value, 10);
+    const v = parseInt(String(input.value || "").trim(), 10);
     if (!Number.isFinite(v)) return 0;
     return Math.max(0, Math.min(128, v));
   }
 
   function setChannelLabel(ch, text) {
-    const el = document.querySelector(`.mod-inst[data-ch="${ch}"]`);
+    const el = $(`remid-ch${ch}-label`);
     if (el) el.textContent = text;
   }
 
-  function updateLabels(programMap) {
-    for (let ch = 1; ch <= 16; ch++) {
-      const ov = getProgramOverrideValue(ch);
-      if (ov <= 0) {
-        setChannelLabel(ch, "MIDI Program Change");
-        continue;
-      }
-      const p = ov - 1;
-      const v = programMap[String(p)] ?? programMap[p];
-      setChannelLabel(ch, prettyName(v));
-    }
+  function labelForOverride(programMap, ov) {
+    if (!Number.isFinite(ov) || ov <= 0) return "MIDI Program Change";
+    const p = ov - 1;
+    const v = programMap[String(p)] ?? programMap[p];
+    return prettyName(v);
   }
 
   async function main() {
-    const bankSelect = document.getElementById("remid-bank-select");
+    const bankSelect = $("remid-bank-select");
     if (!bankSelect) return;
 
     let index;
     try {
-      index = await fetchJson(BANK_INDEX_PATH);
+      setStatus("Loading banks...");
+      try {
+        index = await fetchJson(BANK_INDEX_URL);
+      } catch (e1) {
+        try {
+          index = await fetchJson("/resources/banks_index.json");
+        } catch (e2) {
+          index = await fetchJson("banks_index.json");
+        }
+      }
     } catch (e) {
       bankSelect.innerHTML = `<option value="">missing banks_index.json</option>`;
+      setStatus("Failed to load banks_index.json (check /resources + {{{ns}}})");
       return;
     }
 
     const options = [];
     for (const [bankId, pages] of Object.entries(index.banks || {})) {
       (pages || []).forEach((p) => {
-        options.push({ label: p.name || p.file, key: p.file, programs: p.programs || {} });
+        const file = normalizePath(p.file);
+        options.push({
+          label: p.name || file || bankId,
+          key: file,
+          programs: p.programs || {},
+        });
       });
     }
 
     // Include drumkit presets listed in the index (file paths only; program mapping isn't needed).
-    if (index.drumkit_gm) options.push({ label: "DRUMKIT: GM (example)", key: index.drumkit_gm, programs: { "0": "DRUMKIT:gm" } });
-    if (index.drumkit_remid) options.push({ label: "DRUMKIT: reMID (built-in)", key: index.drumkit_remid, programs: { "0": "DRUMKIT:remid" } });
+    if (index.drumkit_gm) {
+      options.push({
+        label: "DRUMKIT: GM (example)",
+        key: normalizePath(index.drumkit_gm),
+        programs: { 0: "DRUMKIT:gm" },
+      });
+    }
+    if (index.drumkit_remid) {
+      options.push({
+        label: "DRUMKIT: reMID (built-in)",
+        key: normalizePath(index.drumkit_remid),
+        programs: { 0: "DRUMKIT:remid" },
+      });
+    }
 
     options.sort((a, b) => a.label.localeCompare(b.label));
     bankSelect.innerHTML = options.map((o) => `<option value="${o.key}">${o.label}</option>`).join("");
@@ -80,20 +124,43 @@
       const key = bankSelect.value;
       const found = options.find((o) => o.key === key);
       programMap = found ? (found.programs || {}) : {};
-      updateLabels(programMap);
+      for (let ch = 1; ch <= 16; ch++) {
+        setChannelLabel(ch, labelForOverride(programMap, getProgramOverrideValue(ch)));
+      }
     }
 
+    function hookChannel(ch) {
+      const mirror = $(`remid-ch${ch}-val`);
+      const input = document.querySelector(`.remid-program[mod-port-symbol="ch${ch}_program"]`);
+
+      const update = () => {
+        setChannelLabel(ch, labelForOverride(programMap, getProgramOverrideValue(ch)));
+      };
+
+      update();
+      if (mirror) {
+        try {
+          new MutationObserver(update).observe(mirror, { childList: true, characterData: true, subtree: true });
+        } catch (_) {
+          // Ignore; MOD's webview should support MutationObserver, but don't crash if it doesn't.
+        }
+      }
+      if (input) {
+        input.addEventListener("input", update);
+        input.addEventListener("change", update);
+      }
+    }
+
+    for (let ch = 1; ch <= 16; ch++) hookChannel(ch);
     bankSelect.addEventListener("change", loadSelectedBank);
-    document.querySelectorAll(".mod-program").forEach((el) => {
-      el.addEventListener("input", () => updateLabels(programMap));
-      el.addEventListener("change", () => updateLabels(programMap));
-    });
 
     loadSelectedBank();
-    updateLabels(programMap);
+    setStatus("Banks loaded");
   }
 
-  window.addEventListener("load", () => {
-    main().catch(() => {});
-  });
-})();
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => main().catch(() => {}));
+    } else {
+      main().catch(() => {});
+    }
+  })();

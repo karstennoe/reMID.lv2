@@ -185,19 +185,19 @@ def main() -> int:
             mapping = {i: page[i].name for i in range(len(page))}
             if not args.dry_run:
                 write_swibank(out, name=name, base_dir=base_dir, program_to_file=mapping)
-            index["banks"][bid].append({"file": str(out.relative_to(repo_root)).replace('\\\\', '/'), "name": name, "programs": mapping})
+            index["banks"][bid].append({"file": str(out.relative_to(repo_root)).replace("\\", "/"), "name": name, "programs": mapping})
 
     # Always emit a small GM drumkit example.
     dk_path = output_dir / "drumkit-gm.swibank"
     if not args.dry_run:
         write_gm_drumkit(dk_path, base_dir=base_dir)
-    index["drumkit_gm"] = str(dk_path.relative_to(repo_root)).replace('\\\\', '/')
+    index["drumkit_gm"] = str(dk_path.relative_to(repo_root)).replace("\\", "/")
 
     # Curated "built-in" drumkit.
     dk2_path = output_dir / "drumkit-remid.swibank"
     if not args.dry_run:
         write_builtin_drumkit(dk2_path, base_dir=base_dir)
-    index["drumkit_remid"] = str(dk2_path.relative_to(repo_root)).replace('\\\\', '/')
+    index["drumkit_remid"] = str(dk2_path.relative_to(repo_root)).replace("\\", "/")
 
     idx_path = output_dir / "banks_index.json"
     if not args.dry_run:

@@ -1,121 +1,148 @@
-<!-- Minimal MOD GUI for reMID.lv2 -->
-<div class="mod-pedal mod-reMID" mod-role="pedal">
-  <div class="mod-pedal-inputs">
-    <div class="mod-pedal-input mod-midi-input" mod-role="input-midi-port" mod-port-symbol="MIDI_IN" mod-port-index="2" title="MIDI In"></div>
+<!-- MOD GUI for reMID.lv2 -->
+<div class="mod-pedal mod-reMID mod-reMID{{{cns}}}" mod-role="pedal">
+  <div mod-role="drag-handle" class="mod-drag-handle"></div>
+
+  <!-- INPUTS (left) -->
+  <div class="mod-pedal-input">
+    <div class="mod-input"
+         title="MIDI In"
+         mod-role="input-midi-port"
+         mod-port-symbol="MIDI_IN"></div>
   </div>
 
-  <div class="mod-pedal-outputs">
-    <div class="mod-pedal-output mod-audio-output" mod-role="output-audio-port" mod-port-symbol="OUTPUT_L" mod-port-index="1" title="Audio Out L"></div>
-    <div class="mod-pedal-output mod-audio-output" mod-role="output-audio-port" mod-port-symbol="OUTPUT_R" mod-port-index="0" title="Audio Out R"></div>
+  <!-- OUTPUTS (right) -->
+  <div class="mod-pedal-output">
+    <div class="mod-output"
+         title="Out L"
+         mod-role="output-audio-port"
+         mod-port-symbol="OUTPUT_L"></div>
+    <div class="mod-output"
+         title="Out R"
+         mod-role="output-audio-port"
+         mod-port-symbol="OUTPUT_R"></div>
   </div>
 
-  <div class="mod-pedal-header">
-    <div class="mod-pedal-title">reMID</div>
-    <div class="mod-pedal-subtitle">SID-Wizard (.swi) runtime</div>
+  <div class="remid-header">
+    <div class="remid-title">reMID</div>
+    <div class="remid-subtitle">SID-Wizard (.swi) runtime</div>
   </div>
 
-  <div class="mod-pedal-body">
-    <div class="mod-bank-row">
+  <div class="remid-panel">
+    <div class="remid-bank-row">
       <label for="remid-bank-select">Bank</label>
       <select id="remid-bank-select">
         <option value="">Loading...</option>
       </select>
-      <span class="mod-bank-hint">(UI-only)</span>
+      <span class="remid-bank-hint">(UI-only)</span>
     </div>
 
-    <div class="mod-table-header">
+    <div id="remid-status" class="remid-status">Loading banks...</div>
+
+    <div class="remid-table-header">
       <div>Ch</div>
       <div>Program</div>
       <div>Instrument</div>
     </div>
 
-    <div class="mod-channels">
-      <div class="mod-row">
-        <div class="mod-ch">1</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch1_program">
-        <div class="mod-inst" data-ch="1">N/A</div>
+    <div class="remid-channels">
+      <div class="remid-row" data-ch="1">
+        <div class="remid-ch">1</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch1_program">
+        <div class="remid-inst" id="remid-ch1-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch1-val" mod-role="input-control-value" mod-port-symbol="ch1_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">2</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch2_program">
-        <div class="mod-inst" data-ch="2">N/A</div>
+      <div class="remid-row" data-ch="2">
+        <div class="remid-ch">2</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch2_program">
+        <div class="remid-inst" id="remid-ch2-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch2-val" mod-role="input-control-value" mod-port-symbol="ch2_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">3</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch3_program">
-        <div class="mod-inst" data-ch="3">N/A</div>
+      <div class="remid-row" data-ch="3">
+        <div class="remid-ch">3</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch3_program">
+        <div class="remid-inst" id="remid-ch3-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch3-val" mod-role="input-control-value" mod-port-symbol="ch3_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">4</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch4_program">
-        <div class="mod-inst" data-ch="4">N/A</div>
+      <div class="remid-row" data-ch="4">
+        <div class="remid-ch">4</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch4_program">
+        <div class="remid-inst" id="remid-ch4-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch4-val" mod-role="input-control-value" mod-port-symbol="ch4_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">5</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch5_program">
-        <div class="mod-inst" data-ch="5">N/A</div>
+      <div class="remid-row" data-ch="5">
+        <div class="remid-ch">5</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch5_program">
+        <div class="remid-inst" id="remid-ch5-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch5-val" mod-role="input-control-value" mod-port-symbol="ch5_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">6</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch6_program">
-        <div class="mod-inst" data-ch="6">N/A</div>
+      <div class="remid-row" data-ch="6">
+        <div class="remid-ch">6</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch6_program">
+        <div class="remid-inst" id="remid-ch6-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch6-val" mod-role="input-control-value" mod-port-symbol="ch6_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">7</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch7_program">
-        <div class="mod-inst" data-ch="7">N/A</div>
+      <div class="remid-row" data-ch="7">
+        <div class="remid-ch">7</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch7_program">
+        <div class="remid-inst" id="remid-ch7-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch7-val" mod-role="input-control-value" mod-port-symbol="ch7_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">8</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch8_program">
-        <div class="mod-inst" data-ch="8">N/A</div>
+      <div class="remid-row" data-ch="8">
+        <div class="remid-ch">8</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch8_program">
+        <div class="remid-inst" id="remid-ch8-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch8-val" mod-role="input-control-value" mod-port-symbol="ch8_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">9</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch9_program">
-        <div class="mod-inst" data-ch="9">N/A</div>
+      <div class="remid-row" data-ch="9">
+        <div class="remid-ch">9</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch9_program">
+        <div class="remid-inst" id="remid-ch9-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch9-val" mod-role="input-control-value" mod-port-symbol="ch9_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">10</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch10_program">
-        <div class="mod-inst" data-ch="10">N/A</div>
+      <div class="remid-row" data-ch="10">
+        <div class="remid-ch">10</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch10_program">
+        <div class="remid-inst" id="remid-ch10-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch10-val" mod-role="input-control-value" mod-port-symbol="ch10_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">11</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch11_program">
-        <div class="mod-inst" data-ch="11">N/A</div>
+      <div class="remid-row" data-ch="11">
+        <div class="remid-ch">11</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch11_program">
+        <div class="remid-inst" id="remid-ch11-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch11-val" mod-role="input-control-value" mod-port-symbol="ch11_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">12</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch12_program">
-        <div class="mod-inst" data-ch="12">N/A</div>
+      <div class="remid-row" data-ch="12">
+        <div class="remid-ch">12</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch12_program">
+        <div class="remid-inst" id="remid-ch12-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch12-val" mod-role="input-control-value" mod-port-symbol="ch12_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">13</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch13_program">
-        <div class="mod-inst" data-ch="13">N/A</div>
+      <div class="remid-row" data-ch="13">
+        <div class="remid-ch">13</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch13_program">
+        <div class="remid-inst" id="remid-ch13-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch13-val" mod-role="input-control-value" mod-port-symbol="ch13_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">14</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch14_program">
-        <div class="mod-inst" data-ch="14">N/A</div>
+      <div class="remid-row" data-ch="14">
+        <div class="remid-ch">14</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch14_program">
+        <div class="remid-inst" id="remid-ch14-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch14-val" mod-role="input-control-value" mod-port-symbol="ch14_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">15</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch15_program">
-        <div class="mod-inst" data-ch="15">N/A</div>
+      <div class="remid-row" data-ch="15">
+        <div class="remid-ch">15</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch15_program">
+        <div class="remid-inst" id="remid-ch15-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch15-val" mod-role="input-control-value" mod-port-symbol="ch15_program"></span>
       </div>
-      <div class="mod-row">
-        <div class="mod-ch">16</div>
-        <input class="mod-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch16_program">
-        <div class="mod-inst" data-ch="16">N/A</div>
+      <div class="remid-row" data-ch="16">
+        <div class="remid-ch">16</div>
+        <input class="remid-program" type="number" min="0" max="128" value="0" mod-role="input-control-port" mod-port-symbol="ch16_program">
+        <div class="remid-inst" id="remid-ch16-label">N/A</div>
+        <span class="remid-hidden" id="remid-ch16-val" mod-role="input-control-value" mod-port-symbol="ch16_program"></span>
       </div>
     </div>
-  </div>
 
-  <div class="mod-pedal-footer">
-    <div class="mod-help">
-      Program: 0 = use MIDI Program Change, 1..128 = override
-    </div>
+    <div class="remid-help">Program: 0 = use MIDI Program Change, 1..128 = override</div>
   </div>
 </div>
