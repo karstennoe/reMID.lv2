@@ -146,43 +146,147 @@
     <div class="remid-help">Program: 0 = use MIDI Program Change, 1..128 = override</div>
   </div>
 
-  <!-- Fallback loader: ensures JS runs even if modgui:javascript isn't applied by the host -->
+  <!-- Inline JS: avoids relying on external script loading (some MODEP builds fail to fetch script.js). -->
   <script>
     (function () {
-      function load() {
-        var st = document.getElementById('remid-status');
-        var q = window.location && window.location.search ? window.location.search : '';
+      if (window.__remid_modgui_loaded) return;
+      window.__remid_modgui_loaded = true;
+
+      function $(id) { return document.getElementById(id); }
+      function setStatus(text) {
+        var el = $('remid-status');
+        if (el) el.textContent = text;
+      }
+      function normalizePath(p) { return String(p || '').replace(/\\/g, '/'); }
+      function prettyName(v) {
+        if (!v) return 'N/A';
+        if (String(v).toUpperCase().indexOf('DRUMKIT:') === 0) return v;
+        var s = String(v).replace(/^.*[\\/]/, '').replace(/\.swi$/i, '');
+        return s.replace(/[-_]+/g, ' ');
+      }
+
+      function getProgramOverrideValue(ch) {
+        var mirror = $('remid-ch' + ch + '-val');
+        if (mirror) {
+          var mv = parseInt(String(mirror.textContent || '').trim(), 10);
+          if (isFinite(mv)) return Math.max(0, Math.min(128, mv));
+        }
+        var input = document.querySelector('.remid-program[mod-port-symbol="ch' + ch + '_program"]');
+        if (input) {
+          var v = parseInt(String(input.value || '').trim(), 10);
+          if (isFinite(v)) return Math.max(0, Math.min(128, v));
+        }
+        return 0;
+      }
+
+      function setChannelLabel(ch, text) {
+        var el = $('remid-ch' + ch + '-label');
+        if (el) el.textContent = text;
+      }
+
+      function labelForOverride(programMap, ov) {
+        if (!isFinite(ov) || ov <= 0) return 'MIDI Program Change';
+        var p = ov - 1;
+        var v = (programMap[String(p)] !== undefined) ? programMap[String(p)] : programMap[p];
+        return prettyName(v);
+      }
+
+      function fetchJson(url) {
+        return fetch(url, { cache: 'no-cache' }).then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
+          return r.json();
+        });
+      }
+
+      function loadIndex() {
+        var q = (window.location && window.location.search) ? window.location.search : '';
         var candidates = [
-          '/resources/script.js' + q,
-          'script.js' + q,
-          '/resources/script.js',
-          'script.js'
+          '/resources/banks_index.json{{{ns}}}',
+          'banks_index.json{{{ns}}}',
+          '/resources/banks_index.json' + q,
+          'banks_index.json' + q,
+          '/resources/banks_index.json',
+          'banks_index.json'
         ];
+        var last = null;
 
         function tryNext() {
-          if (!candidates.length) {
-            if (st) st.textContent = 'Failed to load script.js (all URL candidates failed)';
+          if (!candidates.length) return Promise.reject(last || new Error('banks_index.json load failed'));
+          var url = candidates.shift();
+          return fetchJson(url).catch(function (e) {
+            last = e;
+            return tryNext();
+          });
+        }
+
+        return tryNext();
+      }
+
+      function main() {
+        var bankSelect = $('remid-bank-select');
+        if (!bankSelect) return;
+
+        setStatus('Loading banks...');
+        loadIndex().then(function (index) {
+          var options = [];
+          var banks = index && index.banks ? index.banks : {};
+
+          Object.keys(banks).forEach(function (bankId) {
+            var pages = banks[bankId] || [];
+            pages.forEach(function (p) {
+              var file = normalizePath(p.file);
+              options.push({ label: p.name || file || bankId, key: file, programs: p.programs || {} });
+            });
+          });
+
+          if (index && index.drumkit_gm) options.push({ label: 'DRUMKIT: GM (example)', key: normalizePath(index.drumkit_gm), programs: { 0: 'DRUMKIT:gm' } });
+          if (index && index.drumkit_remid) options.push({ label: 'DRUMKIT: reMID (built-in)', key: normalizePath(index.drumkit_remid), programs: { 0: 'DRUMKIT:remid' } });
+
+          options.sort(function (a, b) { return a.label.localeCompare(b.label); });
+
+          if (!options.length) {
+            bankSelect.innerHTML = '<option value="">(no banks in index)</option>';
+            setStatus('banks_index.json loaded but contained zero banks');
             return;
           }
 
-          var url = candidates.shift();
-          if (st && st.textContent === 'Loading banks...') st.textContent = 'Inline JS loaded, loading script.js from ' + url;
+          bankSelect.innerHTML = options.map(function (o) {
+            return '<option value="' + o.key + '">' + o.label + '</option>';
+          }).join('');
 
-          var s = document.createElement('script');
-          s.src = url;
-          s.onload = function () {
-            if (st) st.textContent = 'script.js loaded from ' + url;
-          };
-          s.onerror = function () {
-            tryNext();
-          };
-          document.head.appendChild(s);
-        }
+          var defaultKey = 'instruments/banks/bank-all-0.swibank';
+          var hasDefault = options.some(function (o) { return o.key === defaultKey; });
+          bankSelect.value = hasDefault ? defaultKey : (options[0] ? options[0].key : '');
 
-        tryNext();
+          var programMap = {};
+          function loadSelectedBank() {
+            var key = bankSelect.value;
+            var found = options.find(function (o) { return o.key === key; });
+            programMap = found ? (found.programs || {}) : {};
+            for (var ch = 1; ch <= 16; ch++) setChannelLabel(ch, labelForOverride(programMap, getProgramOverrideValue(ch)));
+          }
+
+          function hookChannel(ch) {
+            var mirror = $('remid-ch' + ch + '-val');
+            var input = document.querySelector('.remid-program[mod-port-symbol="ch' + ch + '_program"]');
+            var update = function () { setChannelLabel(ch, labelForOverride(programMap, getProgramOverrideValue(ch))); };
+            if (mirror && window.MutationObserver) new MutationObserver(update).observe(mirror, { childList: true, characterData: true, subtree: true });
+            if (input) { input.addEventListener('input', update); input.addEventListener('change', update); }
+            update();
+          }
+
+          for (var i = 1; i <= 16; i++) hookChannel(i);
+          bankSelect.addEventListener('change', loadSelectedBank);
+          loadSelectedBank();
+          setStatus('Banks loaded (' + options.length + ' UI entries)');
+        }).catch(function (e) {
+          bankSelect.innerHTML = '<option value="">(banks_index.json missing)</option>';
+          setStatus('Failed to load banks_index.json: ' + String(e && e.message ? e.message : e));
+        });
       }
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
-      else load();
+
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);
+      else main();
     })();
   </script>
 </div>
