@@ -1,6 +1,7 @@
 //spencer jackson
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "midi.h"
 #include "lv2_midi.h"
@@ -137,7 +138,14 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 							// a new file! pass the atom to the worker thread to load it
 							if(lm->scheduler)
 							{
-								lm->scheduler->schedule_work(lm->scheduler->handle, lv2_atom_total_size(&event->body), &event->body);
+								const uint32_t atom_size = (uint32_t)lv2_atom_total_size(&event->body);
+								if (!lm->work_pending && atom_size > 0 && atom_size <= sizeof(lm->work_buf))
+								{
+									memcpy(lm->work_buf, &event->body, atom_size);
+									lm->work_size = atom_size;
+									lm->work_pending = 1;
+									lm->scheduler->schedule_work(lm->scheduler->handle, atom_size, lm->work_buf);
+								}
 							}
 #if(0)
 							const LV2_Atom* file_path;
@@ -179,6 +187,12 @@ void* lv2_init_seq(const LV2_Feature * const* host_features)
 	{
 		lm->chan_program_override[ch] = NULL;
 	}
+    if (!host_features)
+    {
+        fprintf(stderr, "reMID.lv2: missing host features (URID map required)\n");
+        strcpy(lm->newfilepath,"");
+        return (void*)lm;
+    }
     for (int i = 0; host_features[i]; i++)
     {
         if (strcmp(host_features[i]->URI, LV2_URID__map) == 0)

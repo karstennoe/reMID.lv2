@@ -258,14 +258,20 @@ static LV2_Worker_Status remidwork(LV2_Handle handle, LV2_Worker_Respond_Functio
         {
         	free(s->newmidi);
         	s->newmidi = 0;
+            lm->work_pending = 0;
         	return LV2_WORKER_ERR_UNKNOWN;
         }
 
         respond(rhandle,0,0);//not passing the new arrays directly, using plugin newmidi etc pointers
+        lm->work_pending = 0;
     }//got file
     else
+    {
+        lm->work_pending = 0;
         return LV2_WORKER_ERR_UNKNOWN;
+    }
 
+    lm->work_pending = 0;
     return LV2_WORKER_SUCCESS;
 
 }
@@ -293,6 +299,7 @@ static LV2_State_Status remidsave(LV2_Handle handle, LV2_State_Store_Function  s
 	struct lmidi* lm = s->midi->seq;
 
     LV2_State_Map_Path* map_path = NULL;
+    if (features)
     for (int i = 0; features[i]; ++i)
     {
         if (!strcmp(features[i]->URI, LV2_STATE__mapPath))
@@ -345,6 +352,7 @@ static LV2_State_Status remidrestore(LV2_Handle handle, LV2_State_Retrieve_Funct
     const char* path = 0;
     LV2_State_Map_Path* map_path = NULL;
 
+    if (features)
     for (int i = 0; features[i]; ++i)
     {
         if (!strcmp(features[i]->URI, LV2_STATE__mapPath))

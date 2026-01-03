@@ -48,6 +48,9 @@ struct lmidi
     LV2_Atom_Forge forge;
     LV2_Atom_Forge_Frame atom_frame;
     LV2_Worker_Schedule* scheduler;
+    uint32_t work_size;
+    volatile int work_pending;
+    uint8_t work_buf[1024];
     char filepath[255];
     char newfilepath[255];
 
