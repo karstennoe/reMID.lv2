@@ -151,10 +151,35 @@
     (function () {
       function load() {
         var st = document.getElementById('remid-status');
-        if (st && st.textContent === 'Loading banks...') st.textContent = 'Inline JS loaded, loading script.js...';
-        var s = document.createElement('script');
-        s.src = '/resources/script.js{{{ns}}}';
-        document.head.appendChild(s);
+        var q = window.location && window.location.search ? window.location.search : '';
+        var candidates = [
+          '/resources/script.js' + q,
+          'script.js' + q,
+          '/resources/script.js',
+          'script.js'
+        ];
+
+        function tryNext() {
+          if (!candidates.length) {
+            if (st) st.textContent = 'Failed to load script.js (all URL candidates failed)';
+            return;
+          }
+
+          var url = candidates.shift();
+          if (st && st.textContent === 'Loading banks...') st.textContent = 'Inline JS loaded, loading script.js from ' + url;
+
+          var s = document.createElement('script');
+          s.src = url;
+          s.onload = function () {
+            if (st) st.textContent = 'script.js loaded from ' + url;
+          };
+          s.onerror = function () {
+            tryNext();
+          };
+          document.head.appendChild(s);
+        }
+
+        tryNext();
       }
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
       else load();

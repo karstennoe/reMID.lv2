@@ -6,12 +6,17 @@
 
   // MOD only serves files under modgui:resourcesDirectory, exposed via /resources/.
   // The {{{ns}}} tag ensures the correct per-plugin query string is used across hosts.
+  const Q = (window.location && window.location.search) ? window.location.search : "";
   const BANK_INDEX_CANDIDATES = [
-    // Recommended in MOD docs:
+    // Preferred (templated):
     "/resources/banks_index.json{{{ns}}}",
-    // Some setups resolve relative resources better:
     "banks_index.json{{{ns}}}",
-    // Fallbacks if templating isn't applied to JS:
+
+    // Non-templated but keep the same query string as the current resource (works when icon.html is served via /resources/...?...):
+    "/resources/banks_index.json" + Q,
+    "banks_index.json" + Q,
+
+    // Last-ditch:
     "/resources/banks_index.json",
     "banks_index.json",
   ];
