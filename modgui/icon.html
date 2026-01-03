@@ -145,4 +145,19 @@
 
     <div class="remid-help">Program: 0 = use MIDI Program Change, 1..128 = override</div>
   </div>
+
+  <!-- Fallback loader: ensures JS runs even if modgui:javascript isn't applied by the host -->
+  <script>
+    (function () {
+      function load() {
+        var st = document.getElementById('remid-status');
+        if (st && st.textContent === 'Loading banks...') st.textContent = 'Inline JS loaded, loading script.js...';
+        var s = document.createElement('script');
+        s.src = '/resources/script.js{{{ns}}}';
+        document.head.appendChild(s);
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
+      else load();
+    })();
+  </script>
 </div>

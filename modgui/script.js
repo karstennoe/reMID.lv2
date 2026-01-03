@@ -1,9 +1,20 @@
 (function () {
   "use strict";
 
+  if (window.__remid_modgui_loaded) return;
+  window.__remid_modgui_loaded = true;
+
   // MOD only serves files under modgui:resourcesDirectory, exposed via /resources/.
   // The {{{ns}}} tag ensures the correct per-plugin query string is used across hosts.
-  const BANK_INDEX_URL = "/resources/banks_index.json{{{ns}}}";
+  const BANK_INDEX_CANDIDATES = [
+    // Recommended in MOD docs:
+    "/resources/banks_index.json{{{ns}}}",
+    // Some setups resolve relative resources better:
+    "banks_index.json{{{ns}}}",
+    // Fallbacks if templating isn't applied to JS:
+    "/resources/banks_index.json",
+    "banks_index.json",
+  ];
 
   function $(id) {
     return document.getElementById(id);
@@ -68,18 +79,20 @@
     let index;
     try {
       setStatus("Loading banks...");
-      try {
-        index = await fetchJson(BANK_INDEX_URL);
-      } catch (e1) {
+      let lastErr = null;
+      for (const url of BANK_INDEX_CANDIDATES) {
         try {
-          index = await fetchJson("/resources/banks_index.json");
-        } catch (e2) {
-          index = await fetchJson("banks_index.json");
+          index = await fetchJson(url);
+          setStatus(`Loaded banks_index.json from ${url}`);
+          break;
+        } catch (e) {
+          lastErr = e;
         }
       }
+      if (!index) throw lastErr || new Error("banks_index.json load failed");
     } catch (e) {
-      bankSelect.innerHTML = `<option value="">missing banks_index.json</option>`;
-      setStatus("Failed to load banks_index.json (check /resources + {{{ns}}})");
+      bankSelect.innerHTML = `<option value="">(banks_index.json missing)</option>`;
+      setStatus(`Failed to load banks_index.json: ${String(e && e.message ? e.message : e)}`);
       return;
     }
 
@@ -113,6 +126,11 @@
 
     options.sort((a, b) => a.label.localeCompare(b.label));
     bankSelect.innerHTML = options.map((o) => `<option value="${o.key}">${o.label}</option>`).join("");
+    if (!options.length) {
+      bankSelect.innerHTML = `<option value="">(no banks in index)</option>`;
+      setStatus("banks_index.json loaded but contained zero banks");
+      return;
+    }
 
     const defaultKey = "instruments/banks/bank-all-0.swibank";
     const hasDefault = options.some((o) => o.key === defaultKey);
@@ -155,12 +173,16 @@
     bankSelect.addEventListener("change", loadSelectedBank);
 
     loadSelectedBank();
-    setStatus("Banks loaded");
+    setStatus(`Banks loaded (${options.length} UI entries)`);
   }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => main().catch(() => {}));
-    } else {
-      main().catch(() => {});
-    }
-  })();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setStatus("JS loaded, starting...");
+      main().catch((e) => setStatus(`JS error: ${String(e && e.message ? e.message : e)}`));
+    });
+  } else {
+    setStatus("JS loaded, starting...");
+    main().catch((e) => setStatus(`JS error: ${String(e && e.message ? e.message : e)}`));
+  }
+})();
