@@ -1,9 +1,6 @@
 (function () {
   "use strict";
 
-  if (window.__remid_modgui_loaded) return;
-  window.__remid_modgui_loaded = true;
-
   // MOD only serves files under modgui:resourcesDirectory, exposed via /resources/.
   // The {{{ns}}} tag ensures the correct per-plugin query string is used across hosts.
   const Q = (window.location && window.location.search) ? window.location.search : "";
@@ -80,6 +77,8 @@
   async function main() {
     const bankSelect = $("remid-bank-select");
     if (!bankSelect) return;
+    if (bankSelect.getAttribute("data-remid-init")) return;
+    bankSelect.setAttribute("data-remid-init", "1");
 
     let index;
     try {

@@ -149,9 +149,6 @@
   <!-- Inline JS: avoids relying on external script loading (some MODEP builds fail to fetch script.js). -->
   <script>
     (function () {
-      if (window.__remid_modgui_loaded) return;
-      window.__remid_modgui_loaded = true;
-
       function $(id) { return document.getElementById(id); }
       function setStatus(text) {
         var el = $('remid-status');
@@ -256,6 +253,8 @@
       function main() {
         var bankSelect = $('remid-bank-select');
         if (!bankSelect) return;
+        if (bankSelect.getAttribute('data-remid-init')) return;
+        bankSelect.setAttribute('data-remid-init', '1');
 
         setStatus('Loading banks... (fetch=' + (typeof window.fetch) + ')');
         try {
