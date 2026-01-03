@@ -192,9 +192,35 @@
       }
 
       function fetchJson(url) {
-        return fetch(url, { cache: 'no-cache' }).then(function (r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
-          return r.json();
+        try {
+          if (typeof window.fetch === 'function') {
+            return window.fetch(url, { cache: 'no-cache' }).then(function (r) {
+              if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
+              return r.json();
+            });
+          }
+        } catch (e) {
+          return Promise.reject(e);
+        }
+
+        // Fallback for older webviews with no fetch().
+        return new Promise(function (resolve, reject) {
+          try {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function () {
+              if (xhr.status >= 200 && xhr.status < 300) {
+                if (xhr.response) return resolve(xhr.response);
+                try { return resolve(JSON.parse(xhr.responseText)); } catch (e) { return reject(e); }
+              }
+              reject(new Error('HTTP ' + xhr.status + ' for ' + url));
+            };
+            xhr.onerror = function () { reject(new Error('XHR error for ' + url)); };
+            xhr.send();
+          } catch (e) {
+            reject(e);
+          }
         });
       }
 
@@ -213,10 +239,15 @@
         function tryNext() {
           if (!candidates.length) return Promise.reject(last || new Error('banks_index.json load failed'));
           var url = candidates.shift();
-          return fetchJson(url).catch(function (e) {
+          try {
+            return fetchJson(url).catch(function (e) {
+              last = e;
+              return tryNext();
+            });
+          } catch (e) {
             last = e;
             return tryNext();
-          });
+          }
         }
 
         return tryNext();
@@ -226,8 +257,9 @@
         var bankSelect = $('remid-bank-select');
         if (!bankSelect) return;
 
-        setStatus('Loading banks...');
-        loadIndex().then(function (index) {
+        setStatus('Loading banks... (fetch=' + (typeof window.fetch) + ')');
+        try {
+          loadIndex().then(function (index) {
           var options = [];
           var banks = index && index.banks ? index.banks : {};
 
@@ -279,10 +311,14 @@
           bankSelect.addEventListener('change', loadSelectedBank);
           loadSelectedBank();
           setStatus('Banks loaded (' + options.length + ' UI entries)');
-        }).catch(function (e) {
+          }).catch(function (e) {
           bankSelect.innerHTML = '<option value="">(banks_index.json missing)</option>';
           setStatus('Failed to load banks_index.json: ' + String(e && e.message ? e.message : e));
-        });
+          });
+        } catch (e) {
+          bankSelect.innerHTML = '<option value="">(GUI error)</option>';
+          setStatus('GUI error: ' + String(e && e.message ? e.message : e));
+        }
       }
 
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);
