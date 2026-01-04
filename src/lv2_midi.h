@@ -42,6 +42,8 @@ struct urid_t
     LV2_URID remid_program;
     LV2_URID remid_bank_msb;
     LV2_URID remid_bank_lsb;
+    LV2_URID remid_bank_name;
+    LV2_URID remid_patch_name;
     LV2_URID polyphony;
     LV2_URID chiptype;
     LV2_URID use_sid_vol;
@@ -63,6 +65,9 @@ struct lmidi
 
 	// Optional per-channel program overrides (1..128). 0 means "no override".
 	const float* chan_program_override[16];
+
+    // Owning plugin instance (struct super*), used to access loaded banks for notifications.
+    void* owner;
 
     // Last state we notified to the UI/host (per MIDI channel 0..15).
     uint8_t last_bank_id[16];

@@ -85,7 +85,7 @@ void jack_read_midi(void* mseq, jack_nframes_t nframes, midi_arrays_t *midi)
         case SND_SEQ_EVENT_PGMCHANGE:
             if(midi->midi_channels[channel].program==-1) break;
             //printf("prg change %d\n", value);
-            midi->midi_channels[channel].program = param;
+            midi_set_program(midi, channel, param);
             break;
         }
     }

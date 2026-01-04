@@ -5,6 +5,7 @@
 
 #include "midi.h"
 #include "lv2_midi.h"
+#include "lv2_audio.h"
 
 #define INSTRUMENT_FILE_URI "http://github.com/ssj71/reMID.lv2/blob/master/instruments/instruments.conf"
 #define POLYPHONY_URI "polyphony"
@@ -17,6 +18,8 @@
 #define REMID_PROGRAM_URI "http://github.com/ssj71/reMID.lv2#program"
 #define REMID_BANK_MSB_URI "http://github.com/ssj71/reMID.lv2#bank_msb"
 #define REMID_BANK_LSB_URI "http://github.com/ssj71/reMID.lv2#bank_lsb"
+#define REMID_BANK_NAME_URI "http://github.com/ssj71/reMID.lv2#bank_name"
+#define REMID_PATCH_NAME_URI "http://github.com/ssj71/reMID.lv2#patch_name"
 
 #define SND_SEQ_EVENT_NOTEOFF 0x80
 #define SND_SEQ_EVENT_NOTEON 0x90
@@ -32,6 +35,9 @@ static void notify_channel_states(struct lmidi* lm, midi_arrays_t* midi, int for
 {
     if (!lm || !midi) return;
     if (!lm->atom_out_p) return;
+
+    struct super* owner = (struct super*)lm->owner;
+    sw_bank_t* const* banks = owner ? owner->banks : NULL;
 
     for (int ch = 0; ch < 16; ++ch)
     {
@@ -77,6 +83,30 @@ static void notify_channel_states(struct lmidi* lm, midi_arrays_t* midi, int for
         lv2_atom_forge_int(&lm->forge, msb);
         lv2_atom_forge_key(&lm->forge, lm->urid.remid_bank_lsb);
         lv2_atom_forge_int(&lm->forge, lsb);
+
+        // Include human-friendly bank/patch names if we can resolve them.
+        if (banks)
+        {
+            sw_bank_t* bank = NULL;
+            if (bank_id < REMID_BANK_COUNT) bank = banks[bank_id];
+            if (!bank) bank = banks[REMID_BANK_ALL];
+
+            const char* bank_name = sw_bank_name(bank);
+            char patch_buf[64];
+            patch_buf[0] = 0;
+
+            if (bank_name && *bank_name)
+            {
+                lv2_atom_forge_key(&lm->forge, lm->urid.remid_bank_name);
+                lv2_atom_forge_string(&lm->forge, bank_name, (uint32_t)strlen(bank_name) + 1u);
+            }
+
+            if (bank && sw_bank_describe_program(bank, program, patch_buf, sizeof(patch_buf)))
+            {
+                lv2_atom_forge_key(&lm->forge, lm->urid.remid_patch_name);
+                lv2_atom_forge_string(&lm->forge, patch_buf, (uint32_t)strlen(patch_buf) + 1u);
+            }
+        }
 
         lv2_atom_forge_pop(&lm->forge, &val_frame);
         lv2_atom_forge_pop(&lm->forge, &set_frame);
@@ -185,7 +215,7 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 					}
 					if(midi->midi_channels[channel].program==-1) break;
 					//printf("prg change %d\n", value);
-					midi->midi_channels[channel].program = param;
+					midi_set_program(midi, channel, (int)param);
 					break;
 				}//switch message type
     		}//if event is midi
@@ -301,6 +331,8 @@ void* lv2_init_seq(const LV2_Feature * const* host_features)
                 lm->urid.remid_program = urid_map->map(urid_map->handle, REMID_PROGRAM_URI);
                 lm->urid.remid_bank_msb = urid_map->map(urid_map->handle, REMID_BANK_MSB_URI);
                 lm->urid.remid_bank_lsb = urid_map->map(urid_map->handle, REMID_BANK_LSB_URI);
+                lm->urid.remid_bank_name = urid_map->map(urid_map->handle, REMID_BANK_NAME_URI);
+                lm->urid.remid_patch_name = urid_map->map(urid_map->handle, REMID_PATCH_NAME_URI);
                 lm->urid.polyphony = urid_map->map(urid_map->handle,POLYPHONY_URI);
                 lm->urid.chiptype = urid_map->map(urid_map->handle,CHIPTYPE_URI);
                 lm->urid.use_sid_vol = urid_map->map(urid_map->handle,USE_SID_VOL_URI);

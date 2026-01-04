@@ -96,6 +96,7 @@ Program Change per channel selects the patch within that channel's bank.
 Optional Bank Select support (CC0 MSB + CC32 LSB):
 
 - The plugin remembers Bank Select per channel and uses it to choose the bank/category.
+- Bank Select is only applied when followed by a Program Change (prevents accidental CC0/CC32 from knobs changing banks).
 - Bank Select is ignored on Channel 10 (drums stay on the drum bank by default).
 - Only MSB=0 is recognized; LSB mapping:
   - 0 Lead
@@ -130,6 +131,13 @@ Observed drum pad notes (Channel 10) used in the kits:
 - 49 (C#2) Crash
 - 50 (D2)  Perc / ride-ish
 - 51 (D#2) Cymbal / perc
+
+GUI note
+~~~~~~~~
+
+The MOD GUI can display per-channel bank/patch names based on the plugin's `NOTIFY` port messages.
+If your host does not forward `NOTIFY` to the webview, the GUI falls back to a best-effort mapping
+from `banks_index.json` (may differ from what you hear if the DSP loaded different bank files).
 
 Channel program overrides (no MIDI Program Change required)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -30,6 +30,7 @@ typedef struct midi_channel_state
     uint8_t bank_id;
     uint8_t bank_msb;
     uint8_t bank_lsb;
+    uint8_t bank_select_pending;
     int program;
     int sustain;
     int pitchbend;
@@ -77,5 +78,6 @@ void silence_all(midi_key_state_t **midi_keys);
 void midi_close(midi_arrays_t* midi, int polyphony);
 midi_arrays_t* new_midi_arrays(midi_arrays_t* old_midi, int polyphony);
 void midi_bank_select_cc(midi_arrays_t* midi, int channel, int cc, int value);
+void midi_set_program(midi_arrays_t* midi, int channel, int program);
 
 #endif

@@ -433,6 +433,62 @@ const char* sw_bank_name(const sw_bank_t* bank)
   return bank ? bank->name : NULL;
 }
 
+static const char* path_basename_local(const char* path)
+{
+  if (!path) return NULL;
+  const char* last_slash = strrchr(path, '/');
+  const char* last_back = strrchr(path, '\\');
+  const char* last = last_slash;
+  if (!last || (last_back && last_back > last)) last = last_back;
+  return last ? (last + 1) : path;
+}
+
+bool sw_bank_describe_program(const sw_bank_t* bank, uint8_t program, char* out, size_t out_len)
+{
+  if (!bank || !out || out_len == 0) return false;
+  out[0] = 0;
+  if (program > 127) return false;
+
+  const program_slot_t slot = bank->programs[program];
+  if (slot.type == SLOT_EMPTY || slot.index < 0) return false;
+
+  if (slot.type == SLOT_INSTRUMENT)
+  {
+    if ((size_t)slot.index >= bank->instrument_count) return false;
+    const instrument_entry_t* e = &bank->instruments[slot.index];
+    if (e->name[0])
+    {
+      snprintf(out, out_len, "%s", e->name);
+      return true;
+    }
+    const char* base = path_basename_local(e->path);
+    if (!base) return false;
+    // Strip .swi if present.
+    const char* dot = strrchr(base, '.');
+    if (dot && !strcmp(dot, ".swi"))
+    {
+      const size_t n = (size_t)(dot - base);
+      if (n + 1 > out_len) return false;
+      memcpy(out, base, n);
+      out[n] = 0;
+      return true;
+    }
+    snprintf(out, out_len, "%s", base);
+    return true;
+  }
+
+  if (slot.type == SLOT_DRUMKIT)
+  {
+    if ((size_t)slot.index >= bank->drumkit_count) return false;
+    const drumkit_entry_t* dk = &bank->drumkits[slot.index];
+    if (!dk->name) return false;
+    snprintf(out, out_len, "DRUMKIT:%s", dk->name);
+    return true;
+  }
+
+  return false;
+}
+
 bool sw_bank_get_instrument(const sw_bank_t* bank, uint8_t program, uint8_t note, uint8_t out_inst[128])
 {
   if (!bank || !out_inst) return false;

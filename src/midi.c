@@ -167,8 +167,27 @@ void midi_bank_select_cc(midi_arrays_t* midi, int channel, int cc, int value)
         st->bank_lsb = v;
     else
         return;
+    // Only apply bank changes on the next Program Change (prevents accidental CC0/32 from knobs changing banks).
+    st->bank_select_pending = 1;
+}
 
-    st->bank_id = bank_from_select(st->bank_msb, st->bank_lsb, st->bank_id);
+void midi_set_program(midi_arrays_t* midi, int channel, int program)
+{
+    if (!midi) return;
+    if (channel < 0 || channel > 15) return;
+    if (!midi->midi_channels[channel].in_use) return;
+    if (midi->midi_channels[channel].program == -1) return;
+    if (program < 0 || program > 127) return;
+
+    midi_channel_state_t* st = &midi->midi_channels[channel];
+    st->program = program;
+
+    // Apply pending Bank Select as part of the classic "Bank Select + Program Change" sequence.
+    if (st->bank_select_pending && channel != 9)
+    {
+        st->bank_id = bank_from_select(st->bank_msb, st->bank_lsb, st->bank_id);
+        st->bank_select_pending = 0;
+    }
 }
 
 void read_midi(void* seq, uint32_t nframes, midi_arrays_t* midi)
@@ -266,6 +285,7 @@ midi_arrays_t* init_midi(void* o, int polyphony, char** midi_connect_args)
         midi->midi_channels[i].bank_id = default_bank_for_channel(i);
         midi->midi_channels[i].bank_msb = 0;
         midi->midi_channels[i].bank_lsb = 0;
+        midi->midi_channels[i].bank_select_pending = 0;
         midi->midi_channels[i].program = 0;
         midi->midi_channels[i].sustain = 0;
         midi->midi_channels[i].pitchbend = 0;
@@ -329,6 +349,7 @@ midi_arrays_t* new_midi_arrays(midi_arrays_t* old_midi, int polyphony)
         midi->midi_channels[i].bank_id = old_midi ? old_midi->midi_channels[i].bank_id : default_bank_for_channel(i);
         midi->midi_channels[i].bank_msb = old_midi ? old_midi->midi_channels[i].bank_msb : 0;
         midi->midi_channels[i].bank_lsb = old_midi ? old_midi->midi_channels[i].bank_lsb : 0;
+        midi->midi_channels[i].bank_select_pending = old_midi ? old_midi->midi_channels[i].bank_select_pending : 0;
         midi->midi_channels[i].program = 0;
         midi->midi_channels[i].sustain = 0;
         midi->midi_channels[i].pitchbend = 0;

@@ -449,6 +449,13 @@
               var prog = asInt(v.program);
               if (ch1 === null || bankId === null || prog === null) return;
               applyChannelState(ch1, bankId, prog);
+
+              // Prefer human-readable names from DSP notifications if provided.
+              if (v.bank_name) setChannelBank(ch1, String(v.bank_name));
+              else if (payload.bank_name) setChannelBank(ch1, String(payload.bank_name));
+
+              if (v.patch_name) setChannelLabel(ch1, String(v.patch_name));
+              else if (payload.patch_name) setChannelLabel(ch1, String(payload.patch_name));
             }
 
             if (Array.isArray(d)) {

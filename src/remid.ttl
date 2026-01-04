@@ -28,6 +28,20 @@
     rdfs:comment "Notify-only. The plugin emits patch:Set messages on the NOTIFY port with per-channel bank/program state." ;
     .
 
+<http://github.com/ssj71/reMID.lv2#bank_name>
+    a lv2:Parameter ;
+    rdfs:label "Bank Name" ;
+    rdfs:range atom:String ;
+    rdfs:comment "Notify-only. Human-readable bank name for a channel_state update." ;
+    .
+
+<http://github.com/ssj71/reMID.lv2#patch_name>
+    a lv2:Parameter ;
+    rdfs:label "Patch Name" ;
+    rdfs:range atom:String ;
+    rdfs:comment "Notify-only. Human-readable patch description for a channel_state update." ;
+    .
+
 <http://github.com/ssj71/reMID.lv2/polyphony>
     a lv2:Parameter ;
     rdfs:label "polyphony" ;

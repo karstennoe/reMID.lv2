@@ -80,7 +80,7 @@ void alsa_read_midi(void* mseq, midi_arrays_t* midi)
             if(midi->midi_channels[channel].program==-1) break;
             value=ev->data.control.value;
             //printf("prg change %d\n", value);
-            midi->midi_channels[channel].program=value;
+            midi_set_program(midi, channel, value);
             break;
         }
     }

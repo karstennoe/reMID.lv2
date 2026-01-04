@@ -32,6 +32,11 @@ bool sw_bank_get_instrument(const sw_bank_t* bank, uint8_t program, uint8_t note
 // Human-readable bank name (may be NULL).
 const char* sw_bank_name(const sw_bank_t* bank);
 
+// Returns a short human-readable description of what `program` maps to, e.g.
+// an instrument name or "DRUMKIT:<name>".
+// Returns false if the slot is empty or invalid.
+bool sw_bank_describe_program(const sw_bank_t* bank, uint8_t program, char* out, size_t out_len);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

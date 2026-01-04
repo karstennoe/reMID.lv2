@@ -220,6 +220,7 @@ LV2_Handle init_remid(const LV2_Descriptor *descriptor,double sample_freq, const
 	set_bundle_path(s, base);
 	init_multitimbral_banks(s);
 	struct lmidi* lm = (struct lmidi*)s->midi->seq;
+	lm->owner = s;
 	snprintf(lm->filepath, sizeof(lm->filepath), "%s", instr_file);
 	for(int ch = 0; ch < 16; ++ch)
 	{
