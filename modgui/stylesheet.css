@@ -68,7 +68,7 @@
 
 .mod-reMID{{{cns}}} .remid-table-header, .mod-reMID .remid-table-header {
   display: grid;
-  grid-template-columns: 30px 80px 1fr;
+  grid-template-columns: 30px 60px 80px 1fr;
   gap: 8px;
   font-size: 12px;
   font-weight: 700;
@@ -79,10 +79,18 @@
 
 .mod-reMID{{{cns}}} .remid-row, .mod-reMID .remid-row {
   display: grid;
-  grid-template-columns: 30px 80px 1fr;
+  grid-template-columns: 30px 60px 80px 1fr;
   gap: 8px;
   align-items: center;
   padding: 3px 0;
+}
+
+.mod-reMID{{{cns}}} .remid-bank, .mod-reMID .remid-bank {
+  font-size: 12px;
+  opacity: 0.85;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mod-reMID{{{cns}}} .remid-program, .mod-reMID .remid-program {

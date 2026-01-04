@@ -11,6 +11,13 @@
 #define CHIPTYPE_URI "chip_type"
 #define USE_SID_VOL_URI "use_sid_volume"
 
+#define REMID_CHANNEL_STATE_URI "http://github.com/ssj71/reMID.lv2#channel_state"
+#define REMID_CHANNEL_URI "http://github.com/ssj71/reMID.lv2#channel"
+#define REMID_BANK_URI "http://github.com/ssj71/reMID.lv2#bank"
+#define REMID_PROGRAM_URI "http://github.com/ssj71/reMID.lv2#program"
+#define REMID_BANK_MSB_URI "http://github.com/ssj71/reMID.lv2#bank_msb"
+#define REMID_BANK_LSB_URI "http://github.com/ssj71/reMID.lv2#bank_lsb"
+
 #define SND_SEQ_EVENT_NOTEOFF 0x80
 #define SND_SEQ_EVENT_NOTEON 0x90
 #define SND_SEQ_EVENT_KEYPRESS 0xa0
@@ -20,6 +27,61 @@
 #define SND_SEQ_EVENT_PITCHBEND 0xe0
 
 
+
+static void notify_channel_states(struct lmidi* lm, midi_arrays_t* midi, int force_all)
+{
+    if (!lm || !midi) return;
+    if (!lm->atom_out_p) return;
+
+    for (int ch = 0; ch < 16; ++ch)
+    {
+        const midi_channel_state_t* st = &midi->midi_channels[ch];
+        const uint8_t bank_id = (uint8_t)st->bank_id;
+        const uint8_t program = (uint8_t)st->program;
+        const uint8_t msb = (uint8_t)st->bank_msb;
+        const uint8_t lsb = (uint8_t)st->bank_lsb;
+
+        if (!force_all &&
+            lm->last_bank_id[ch] == bank_id &&
+            lm->last_program[ch] == program &&
+            lm->last_bank_msb[ch] == msb &&
+            lm->last_bank_lsb[ch] == lsb)
+        {
+            continue;
+        }
+
+        lm->last_bank_id[ch] = bank_id;
+        lm->last_program[ch] = program;
+        lm->last_bank_msb[ch] = msb;
+        lm->last_bank_lsb[ch] = lsb;
+
+        lv2_atom_forge_frame_time(&lm->forge, 0);
+
+        LV2_Atom_Forge_Frame set_frame;
+        lv2_atom_forge_object(&lm->forge, &set_frame, 0, lm->urid.p_Set);
+
+        lv2_atom_forge_key(&lm->forge, lm->urid.p_property);
+        lv2_atom_forge_urid(&lm->forge, lm->urid.remid_channel_state);
+
+        lv2_atom_forge_key(&lm->forge, lm->urid.p_value);
+        LV2_Atom_Forge_Frame val_frame;
+        lv2_atom_forge_object(&lm->forge, &val_frame, 0, lm->urid.remid_channel_state);
+
+        lv2_atom_forge_key(&lm->forge, lm->urid.remid_channel);
+        lv2_atom_forge_int(&lm->forge, ch + 1);
+        lv2_atom_forge_key(&lm->forge, lm->urid.remid_bank);
+        lv2_atom_forge_int(&lm->forge, bank_id);
+        lv2_atom_forge_key(&lm->forge, lm->urid.remid_program);
+        lv2_atom_forge_int(&lm->forge, program);
+        lv2_atom_forge_key(&lm->forge, lm->urid.remid_bank_msb);
+        lv2_atom_forge_int(&lm->forge, msb);
+        lv2_atom_forge_key(&lm->forge, lm->urid.remid_bank_lsb);
+        lv2_atom_forge_int(&lm->forge, lsb);
+
+        lv2_atom_forge_pop(&lm->forge, &val_frame);
+        lv2_atom_forge_pop(&lm->forge, &set_frame);
+    }
+}
 
 void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 {
@@ -40,7 +102,7 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
     //tell host if we have a new file
     if(lm->newfilepath[0] == 1)
     {
-    	lm->newfilepath[0] = 0;
+     	lm->newfilepath[0] = 0;
 		lv2_atom_forge_frame_time(&lm->forge, 0);
 		LV2_Atom_Forge_Frame frame;
 		lv2_atom_forge_object( &lm->forge, &frame, 0, lm->urid.p_Set);
@@ -179,10 +241,16 @@ void lv2_read_midi(void* mseq, uint32_t nframes, midi_arrays_t *midi)
 					lv2_atom_forge_path(&lm->forge, lm->filepath, strlen(lm->filepath)+1);
 
 					lv2_atom_forge_pop(&lm->forge, &frame);
+
+                    // Also send per-channel state snapshot for UI.
+                    notify_channel_states(lm, midi, 1);
 				}
-    		}
-    	}//if event not null
+     		}
+     	}//if event not null
     }//for each atom
+
+    // Emit per-channel state changes (effective bank/program) for the GUI/host.
+    notify_channel_states(lm, midi, 0);
 }
 
 void* lv2_init_seq(const LV2_Feature * const* host_features)
@@ -191,6 +259,10 @@ void* lv2_init_seq(const LV2_Feature * const* host_features)
 	for(int ch = 0; ch < 16; ++ch)
 	{
 		lm->chan_program_override[ch] = NULL;
+        lm->last_bank_id[ch] = 0xFF;
+        lm->last_program[ch] = 0xFF;
+        lm->last_bank_msb[ch] = 0xFF;
+        lm->last_bank_lsb[ch] = 0xFF;
 	}
     if (!host_features)
     {
@@ -223,6 +295,12 @@ void* lv2_init_seq(const LV2_Feature * const* host_features)
                 lm->urid.p_property = urid_map->map(urid_map->handle,LV2_PATCH__property);
                 lm->urid.p_value = urid_map->map(urid_map->handle,LV2_PATCH__value);
                 lm->urid.filetype_instr = urid_map->map(urid_map->handle,INSTRUMENT_FILE_URI);
+                lm->urid.remid_channel_state = urid_map->map(urid_map->handle, REMID_CHANNEL_STATE_URI);
+                lm->urid.remid_channel = urid_map->map(urid_map->handle, REMID_CHANNEL_URI);
+                lm->urid.remid_bank = urid_map->map(urid_map->handle, REMID_BANK_URI);
+                lm->urid.remid_program = urid_map->map(urid_map->handle, REMID_PROGRAM_URI);
+                lm->urid.remid_bank_msb = urid_map->map(urid_map->handle, REMID_BANK_MSB_URI);
+                lm->urid.remid_bank_lsb = urid_map->map(urid_map->handle, REMID_BANK_LSB_URI);
                 lm->urid.polyphony = urid_map->map(urid_map->handle,POLYPHONY_URI);
                 lm->urid.chiptype = urid_map->map(urid_map->handle,CHIPTYPE_URI);
                 lm->urid.use_sid_vol = urid_map->map(urid_map->handle,USE_SID_VOL_URI);

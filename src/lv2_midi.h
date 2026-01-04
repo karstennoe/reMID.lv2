@@ -35,6 +35,13 @@ struct urid_t
     LV2_URID p_property;
     LV2_URID p_value;
     LV2_URID filetype_instr;
+    // reMID channel state notifications (sent on NOTIFY port as patch:Set).
+    LV2_URID remid_channel_state;
+    LV2_URID remid_channel;
+    LV2_URID remid_bank;
+    LV2_URID remid_program;
+    LV2_URID remid_bank_msb;
+    LV2_URID remid_bank_lsb;
     LV2_URID polyphony;
     LV2_URID chiptype;
     LV2_URID use_sid_vol;
@@ -56,6 +63,12 @@ struct lmidi
 
 	// Optional per-channel program overrides (1..128). 0 means "no override".
 	const float* chan_program_override[16];
+
+    // Last state we notified to the UI/host (per MIDI channel 0..15).
+    uint8_t last_bank_id[16];
+    uint8_t last_program[16];
+    uint8_t last_bank_msb[16];
+    uint8_t last_bank_lsb[16];
 };
 
 void* lv2_init_seq(const LV2_Feature * const* host_features);
