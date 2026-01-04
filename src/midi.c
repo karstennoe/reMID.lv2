@@ -65,7 +65,7 @@ void find_next_voice(midi_key_state_t **midi_keys, int* free_voices, int* next_v
             *next_voice = i;
         }
     }
-    midi_keys[*next_voice]->last_used = *voice_use_index++;
+    midi_keys[*next_voice]->last_used = (*voice_use_index)++;
     midi_keys[*next_voice]->needs_clearing = needs_clearing;
 }
 
