@@ -29,7 +29,21 @@ static sw_bank_t* load_bundle_bank(struct super* s, const char* rel)
 	if(!s->bundle_path[0]) return NULL;
 	char path[512];
 	snprintf(path, sizeof(path), "%s%s", s->bundle_path, rel);
-	return sw_bank_load(path);
+	sw_bank_t* b = sw_bank_load(path);
+	if(b) return b;
+
+	// Backwards-compat/install layout fallback: some setups historically installed banks under bundle_root/banks/.
+	// If rel starts with "instruments/banks/", try replacing that prefix with "banks/".
+	const char* pfx = "instruments/banks/";
+	const size_t pfx_len = strlen(pfx);
+	if(!strncmp(rel, pfx, pfx_len))
+	{
+		snprintf(path, sizeof(path), "%sbanks/%s", s->bundle_path, rel + pfx_len);
+		b = sw_bank_load(path);
+		if(b) return b;
+	}
+
+	return NULL;
 }
 
 static void init_multitimbral_banks(struct super* s)
@@ -47,24 +61,39 @@ static void init_multitimbral_banks(struct super* s)
 
 	b = load_bundle_bank(s, "instruments/banks/bank-lead-0.swibank");
 	if(b) s->banks[REMID_BANK_LEAD] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-lead-0.swibank (falling back to ALL)\n");
 
 	b = load_bundle_bank(s, "instruments/banks/bank-bass-0.swibank");
 	if(b) s->banks[REMID_BANK_BASS] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-bass-0.swibank (falling back to ALL)\n");
 
 	b = load_bundle_bank(s, "instruments/banks/bank-pads-0.swibank");
 	if(b) s->banks[REMID_BANK_PADS] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-pads-0.swibank (falling back to ALL)\n");
 
 	b = load_bundle_bank(s, "instruments/banks/bank-vocal-0.swibank");
 	if(b) s->banks[REMID_BANK_VOCAL] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-vocal-0.swibank (falling back to ALL)\n");
 
 	b = load_bundle_bank(s, "instruments/banks/bank-arp-0.swibank");
 	if(b) s->banks[REMID_BANK_ARP] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-arp-0.swibank (falling back to ALL)\n");
 
 	// Channel 10 drums use a dedicated multi-kit drum bank (Program Change selects the kit).
 	b = load_bundle_bank(s, "instruments/banks/drumkits-8pad.swibank");
 	if(!b) b = load_bundle_bank(s, "instruments/banks/drumkit-remid.swibank");
 	if(!b) b = load_bundle_bank(s, "instruments/banks/drumkit-gm.swibank");
 	if(b) s->banks[REMID_BANK_DRUMS] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load any drumkit bank (drums may be silent)\n");
+
+	fprintf(stderr, "reMID.lv2: multitimbral banks: lead='%s' bass='%s' pads='%s' vocal='%s' arp='%s' drums='%s' all='%s'\n",
+	        sw_bank_name(s->banks[REMID_BANK_LEAD]) ? sw_bank_name(s->banks[REMID_BANK_LEAD]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_BASS]) ? sw_bank_name(s->banks[REMID_BANK_BASS]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_PADS]) ? sw_bank_name(s->banks[REMID_BANK_PADS]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_VOCAL]) ? sw_bank_name(s->banks[REMID_BANK_VOCAL]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_ARP]) ? sw_bank_name(s->banks[REMID_BANK_ARP]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_DRUMS]) ? sw_bank_name(s->banks[REMID_BANK_DRUMS]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_ALL]) ? sw_bank_name(s->banks[REMID_BANK_ALL]) : "(null)");
 }
 
 static void apply_chan_program_overrides(struct super* s)
