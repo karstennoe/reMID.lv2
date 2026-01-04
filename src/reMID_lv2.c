@@ -23,6 +23,50 @@ typedef struct arugalatastesbad
 	void* everything;
 }Remid;
 
+static sw_bank_t* load_bundle_bank(struct super* s, const char* rel)
+{
+	if(!s || !rel || !*rel) return NULL;
+	if(!s->bundle_path[0]) return NULL;
+	char path[512];
+	snprintf(path, sizeof(path), "%s%s", s->bundle_path, rel);
+	return sw_bank_load(path);
+}
+
+static void init_multitimbral_banks(struct super* s)
+{
+	if(!s) return;
+
+	for(int i = 0; i < REMID_BANK_COUNT; ++i)
+	{
+		s->banks[i] = s->bank;
+	}
+	s->banks[REMID_BANK_ALL] = s->bank;
+
+	// Load category banks from the plugin bundle. If any load fails, fall back to ALL.
+	sw_bank_t* b = NULL;
+
+	b = load_bundle_bank(s, "instruments/banks/bank-lead-0.swibank");
+	if(b) s->banks[REMID_BANK_LEAD] = b;
+
+	b = load_bundle_bank(s, "instruments/banks/bank-bass-0.swibank");
+	if(b) s->banks[REMID_BANK_BASS] = b;
+
+	b = load_bundle_bank(s, "instruments/banks/bank-pads-0.swibank");
+	if(b) s->banks[REMID_BANK_PADS] = b;
+
+	b = load_bundle_bank(s, "instruments/banks/bank-vocal-0.swibank");
+	if(b) s->banks[REMID_BANK_VOCAL] = b;
+
+	b = load_bundle_bank(s, "instruments/banks/bank-arp-0.swibank");
+	if(b) s->banks[REMID_BANK_ARP] = b;
+
+	// Channel 10 drums use a dedicated multi-kit drum bank (Program Change selects the kit).
+	b = load_bundle_bank(s, "instruments/banks/drumkits-8pad.swibank");
+	if(!b) b = load_bundle_bank(s, "instruments/banks/drumkit-remid.swibank");
+	if(!b) b = load_bundle_bank(s, "instruments/banks/drumkit-gm.swibank");
+	if(b) s->banks[REMID_BANK_DRUMS] = b;
+}
+
 static void apply_chan_program_overrides(struct super* s)
 {
 	// Apply before reading MIDI so incoming notes use the intended program.
@@ -174,6 +218,7 @@ LV2_Handle init_remid(const LV2_Descriptor *descriptor,double sample_freq, const
 
 	struct super* s = init_lv2_audio(lrint(sample_freq), instr_file, host_features);
 	set_bundle_path(s, base);
+	init_multitimbral_banks(s);
 	struct lmidi* lm = (struct lmidi*)s->midi->seq;
 	snprintf(lm->filepath, sizeof(lm->filepath), "%s", instr_file);
 	for(int ch = 0; ch < 16; ++ch)
@@ -285,6 +330,7 @@ static LV2_Worker_Status remidwork_response(LV2_Handle handle, uint32_t size, co
 	s->old_bank = s->bank;
 	s->midi = s->newmidi;
 	s->bank = s->new_bank;
+	s->banks[REMID_BANK_ALL] = s->bank;
 	s->newmidi = 0;
 	s->new_bank = 0;
 	strcpy(lm->filepath,lm->newfilepath);
@@ -409,6 +455,7 @@ static LV2_State_Status remidrestore(LV2_Handle handle, LV2_State_Retrieve_Funct
 
         s->midi = new_midi_arrays(s->oldmidi,s->sid_bank->polyphony);
         s->bank = loaded;
+        s->banks[REMID_BANK_ALL] = s->bank;
         free(s->oldmidi);
 		sw_bank_free(s->old_bank);
 		s->oldmidi = 0;

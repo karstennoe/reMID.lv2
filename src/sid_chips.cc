@@ -157,7 +157,7 @@ static void write_frame(SID* sid, const sw_sid_frame_t* fr)
   sid->enable_filter(((fr->fr_vic & 0x0Fu) != 0) && ((fr->mode_vol & 0x70u) != 0));
 }
 
-extern "C" void sid_process(struct CHIPS* chips, midi_arrays_t* midi, sw_bank_t* bank, int num_samples, float* outl, float* outr)
+extern "C" void sid_process(struct CHIPS* chips, midi_arrays_t* midi, sw_bank_t* const* banks, int num_samples, float* outl, float* outr)
 {
   if (!chips || !midi || !outl || !outr) return;
 
@@ -194,6 +194,17 @@ extern "C" void sid_process(struct CHIPS* chips, midi_arrays_t* midi, sw_bank_t*
       continue;
     }
 
+    const uint8_t bank_id = (uint8_t)midi->midi_channels[channel].bank_id;
+    sw_bank_t* bank = NULL;
+    if (banks && bank_id < REMID_BANK_COUNT)
+    {
+      bank = banks[bank_id];
+    }
+    if (!bank && banks)
+    {
+      bank = banks[REMID_BANK_ALL];
+    }
+
     // Handle new MIDI events (note on/off/voice stealing).
     if (midi->midi_keys[i]->note_state_changed)
     {
@@ -209,6 +220,12 @@ extern "C" void sid_process(struct CHIPS* chips, midi_arrays_t* midi, sw_bank_t*
         {
           clear_key(midi->midi_keys, i);
           continue;
+        }
+
+        if (chips->pt_debug)
+        {
+          fprintf(stderr, "reMID.lv2: route ch=%d bank=%u prog=%d note=%d vel=%d\n",
+                  channel + 1, (unsigned)bank_id, program, midi->midi_keys[i]->note, midi->midi_keys[i]->velocity);
         }
 
         sw_runtime_config_t cfg = {

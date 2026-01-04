@@ -24,6 +24,12 @@ typedef struct midi_key_state
 typedef struct midi_channel_state
 {
     int in_use;
+    // reMID extension: bank/category selection for multitimbral routing.
+    // bank_id selects which .swibank mapping to use for the channel.
+    // bank_msb/lsb are remembered from CC0/CC32 Bank Select (optional).
+    uint8_t bank_id;
+    uint8_t bank_msb;
+    uint8_t bank_lsb;
     int program;
     int sustain;
     int pitchbend;
@@ -33,6 +39,18 @@ typedef struct midi_channel_state
     int chanpress_changed;
     int last_velocity;
 } midi_channel_state_t;
+
+typedef enum remid_bank_id
+{
+    REMID_BANK_LEAD = 0,
+    REMID_BANK_BASS = 1,
+    REMID_BANK_PADS = 2,
+    REMID_BANK_VOCAL = 3,
+    REMID_BANK_ARP = 4,
+    REMID_BANK_DRUMS = 5,
+    REMID_BANK_ALL = 6,
+    REMID_BANK_COUNT = 7
+} remid_bank_id_t;
 
 typedef struct midi_arrays
 {
@@ -58,5 +76,6 @@ void note_off(midi_arrays_t* midi, int channel, int note);
 void silence_all(midi_key_state_t **midi_keys);
 void midi_close(midi_arrays_t* midi, int polyphony);
 midi_arrays_t* new_midi_arrays(midi_arrays_t* old_midi, int polyphony);
+void midi_bank_select_cc(midi_arrays_t* midi, int channel, int cc, int value);
 
 #endif

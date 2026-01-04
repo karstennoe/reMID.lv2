@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "midi.h"
 //#define JACK_MIDI
@@ -106,6 +107,70 @@ void note_off(midi_arrays_t* midi, int channel, int note)
     }
 }
 
+static uint8_t default_bank_for_channel(int ch)
+{
+    // MIDI channels are 0..15. Reserve channel 10 (index 9) for drums.
+    static const uint8_t map[16] = {
+        REMID_BANK_LEAD,  // ch1
+        REMID_BANK_BASS,  // ch2
+        REMID_BANK_PADS,  // ch3
+        REMID_BANK_VOCAL, // ch4
+        REMID_BANK_ARP,   // ch5
+        REMID_BANK_LEAD,  // ch6
+        REMID_BANK_BASS,  // ch7
+        REMID_BANK_PADS,  // ch8
+        REMID_BANK_VOCAL, // ch9
+        REMID_BANK_DRUMS, // ch10
+        REMID_BANK_LEAD,  // ch11
+        REMID_BANK_BASS,  // ch12
+        REMID_BANK_PADS,  // ch13
+        REMID_BANK_VOCAL, // ch14
+        REMID_BANK_ARP,   // ch15
+        REMID_BANK_LEAD,  // ch16
+    };
+    if (ch < 0 || ch > 15) return REMID_BANK_ALL;
+    return map[ch];
+}
+
+static uint8_t bank_from_select(uint8_t msb, uint8_t lsb, uint8_t current)
+{
+    // Treat Bank Select as choosing the category for the channel.
+    // Keep it conservative: only accept MSB=0 and a small LSB range.
+    if (msb != 0) return current;
+    switch (lsb)
+    {
+    case 0: return REMID_BANK_LEAD;
+    case 1: return REMID_BANK_BASS;
+    case 2: return REMID_BANK_PADS;
+    case 3: return REMID_BANK_VOCAL;
+    case 4: return REMID_BANK_ARP;
+    case 5: return REMID_BANK_DRUMS;
+    case 6: return REMID_BANK_ALL;
+    default: return current;
+    }
+}
+
+void midi_bank_select_cc(midi_arrays_t* midi, int channel, int cc, int value)
+{
+    if (!midi) return;
+    if (channel < 0 || channel > 15) return;
+    if (!midi->midi_channels[channel].in_use) return;
+
+    // Keep channel 10 reserved for drums by default: ignore Bank Select on ch10.
+    if (channel == 9) return;
+
+    midi_channel_state_t* st = &midi->midi_channels[channel];
+    const uint8_t v = (uint8_t)(value & 0x7F);
+    if (cc == 0)
+        st->bank_msb = v;
+    else if (cc == 32)
+        st->bank_lsb = v;
+    else
+        return;
+
+    st->bank_id = bank_from_select(st->bank_msb, st->bank_lsb, st->bank_id);
+}
+
 void read_midi(void* seq, uint32_t nframes, midi_arrays_t* midi)
 {
 #ifdef ALSA_MIDI
@@ -198,6 +263,9 @@ midi_arrays_t* init_midi(void* o, int polyphony, char** midi_connect_args)
     for(i=0; i<16; i++)
     {
         midi->midi_channels[i].in_use = 1;
+        midi->midi_channels[i].bank_id = default_bank_for_channel(i);
+        midi->midi_channels[i].bank_msb = 0;
+        midi->midi_channels[i].bank_lsb = 0;
         midi->midi_channels[i].program = 0;
         midi->midi_channels[i].sustain = 0;
         midi->midi_channels[i].pitchbend = 0;
@@ -258,6 +326,9 @@ midi_arrays_t* new_midi_arrays(midi_arrays_t* old_midi, int polyphony)
     for(i=0; i<16; i++)
     {
         midi->midi_channels[i].in_use = 1;
+        midi->midi_channels[i].bank_id = old_midi ? old_midi->midi_channels[i].bank_id : default_bank_for_channel(i);
+        midi->midi_channels[i].bank_msb = old_midi ? old_midi->midi_channels[i].bank_msb : 0;
+        midi->midi_channels[i].bank_lsb = old_midi ? old_midi->midi_channels[i].bank_lsb : 0;
         midi->midi_channels[i].program = 0;
         midi->midi_channels[i].sustain = 0;
         midi->midi_channels[i].pitchbend = 0;

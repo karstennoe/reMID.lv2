@@ -31,6 +31,11 @@ void alsa_read_midi(void* mseq, midi_arrays_t* midi)
             if(!midi->midi_channels[channel].in_use) break;
             param=ev->data.control.param;
             value=ev->data.control.value;
+            if(param==0 || param==32)
+            {
+                midi_bank_select_cc(midi, channel, param, value);
+                break;
+            }
             if(param==64)
             {
                 if(value>64) midi->midi_channels[channel].sustain=1;
@@ -124,4 +129,3 @@ void close_alsa(void* mseq)
     free(am->pfd);
     //am is freed by calling function
 }
-

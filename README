@@ -4,7 +4,7 @@ This branch plays **SID-Wizard 1.7** instruments directly at runtime:
 
 - Instruments are stored as `.swi` files.
 - The LV2 plugin loads a `.swibank` file that maps MIDI Program Change (0..127) to `.swi` instruments.
-- The old reMID `.conf` “instrument language” is not used.
+- The old reMID `.conf` instrument language is not used.
 
 Dependencies (Linux)
 --------------------
@@ -75,6 +75,62 @@ Banks are grouped into categories and split into pages (up to 128 programs per b
 LV2 / MODEP notes
 -----------------
 
+Multi-timbral MIDI (channel -> bank routing)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The LV2 plugin behaves like a classic multitimbral MIDI module: each MIDI channel has
+its own bank/category and program (patch) selection.
+
+Default channel mapping (hard-coded for now):
+
+- Ch 1  -> Lead
+- Ch 2  -> Bass
+- Ch 3  -> Pads
+- Ch 4  -> Vocal
+- Ch 5  -> Arp
+- Ch 10 -> Drums (reserved)
+- Ch 6..16 (except 10) repeat the pattern Lead/Bass/Pads/Vocal/Arp
+
+Program Change per channel selects the patch within that channel's bank.
+
+Optional Bank Select support (CC0 MSB + CC32 LSB):
+
+- The plugin remembers Bank Select per channel and uses it to choose the bank/category.
+- Bank Select is ignored on Channel 10 (drums stay on the drum bank by default).
+- Only MSB=0 is recognized; LSB mapping:
+  - 0 Lead
+  - 1 Bass
+  - 2 Pads
+  - 3 Vocal
+  - 4 Arp
+  - 5 Drums
+  - 6 All (uses the global .swibank selected by LV2 state)
+
+Channel 10 drum kits (8-pad mapping)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Channel 10 is routed to a dedicated drum bank: `instruments/banks/drumkits-8pad.swibank`.
+
+Selecting the drum kit:
+
+- Send MIDI Program Change on Channel 10:
+  - Program 0: Default
+  - Program 1: Tight/LoFi
+  - Program 2: Bright
+  - Program 3: Deep
+  - Program 4: Noisy/Glitch
+
+Observed drum pad notes (Channel 10) used in the kits:
+
+- 36 (C1)  Kick
+- 38 (D1)  Snare
+- 42 (F#1) Closed hat
+- 45 (A1)  Tom / perc
+- 46 (A#1) Open hat
+- 49 (C#2) Crash
+- 50 (D2)  Perc / ride-ish
+- 51 (D#2) Cymbal / perc
+
 Channel program overrides (no MIDI Program Change required)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -88,4 +144,3 @@ If a port is set to:
 - `1..128`: force that MIDI channel to use program `0..127` (`value-1`)
 
 If you don't hear anything, verify the bank file exists in the plugin bundle and that it references `.swi` files that exist under `instruments/swi/` (or adjust the bank's `base=`).
-

@@ -44,7 +44,7 @@ extern "C" {
 struct CHIPS *sid_init(int polyphony, int use_sid_volume, int chiptype, int debug);
 void sid_close(struct CHIPS *chips);
 void sid_set_srate(struct CHIPS *chips, int pal, double sample_freq);
-void sid_process(struct CHIPS *chips, struct midi_arrays* midi, sw_bank_t* bank, int num_samples, float* outl, float* outr);
+void sid_process(struct CHIPS *chips, struct midi_arrays* midi, sw_bank_t* const* banks, int num_samples, float* outl, float* outr);
 
 #ifdef  __cplusplus
 }

@@ -42,6 +42,11 @@ void jack_read_midi(void* mseq, jack_nframes_t nframes, midi_arrays_t *midi)
         {
         case SND_SEQ_EVENT_CONTROLLER:
             if(!midi->midi_channels[channel].in_use) break;
+            if(param==0 || param==32)
+            {
+                midi_bank_select_cc(midi, channel, param, value);
+                break;
+            }
             if(param==64)
             {
                 if(value>64) midi->midi_channels[channel].sustain = 1;

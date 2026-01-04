@@ -41,7 +41,13 @@ int process(uint32_t nframes, void *arg)
     float* outr = s->outr;
 #endif
 
-    sid_process(s->sid_bank, s->midi, s->bank, (int)nframes, outr, outl);
+#ifndef LV2
+    sw_bank_t* banks[REMID_BANK_COUNT];
+    for (int i = 0; i < REMID_BANK_COUNT; ++i) banks[i] = s->bank;
+    sid_process(s->sid_bank, s->midi, banks, (int)nframes, outr, outl);
+#else
+    sid_process(s->sid_bank, s->midi, s->banks, (int)nframes, outr, outl);
+#endif
     return 0;
 }
 
@@ -152,6 +158,10 @@ void* init_lv2_audio(uint32_t fs, char* instr_file, const LV2_Feature * const* h
     {
         fprintf(stderr, "reMID.lv2: failed to load .swibank: %s\n", instr_file ? instr_file : "(null)");
     }
+    for (int i = 0; i < REMID_BANK_COUNT; ++i)
+    {
+        s->banks[i] = s->bank;
+    }
 
     s->oldmidi = s->newmidi = 0;
     s->old_bank = s->new_bank = 0;
@@ -165,6 +175,16 @@ void cleanup_audio(void* arg)
 {
     struct super* s = (struct super*)arg;
     midi_close(s->midi,s->sid_bank->polyphony);
+    // Free extra multitimbral banks (avoid double-free if they alias s->bank).
+    for (int i = 0; i < REMID_BANK_COUNT; ++i)
+    {
+        if (i == REMID_BANK_ALL) continue;
+        if (s->banks[i] && s->banks[i] != s->bank)
+        {
+            sw_bank_free(s->banks[i]);
+            s->banks[i] = NULL;
+        }
+    }
     sw_bank_free(s->bank);
 
     //in case there was an unfinished operation

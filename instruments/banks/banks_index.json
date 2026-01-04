@@ -2,7 +2,7 @@
   "banks": {
     "all": [
       {
-        "file": "instruments\\banks\\bank-all-0.swibank",
+        "file": "instruments/banks/bank-all-0.swibank",
         "name": "All (0)",
         "programs": {
           "0": "agogo.swi",
@@ -136,7 +136,7 @@
         }
       },
       {
-        "file": "instruments\\banks\\bank-all-1.swibank",
+        "file": "instruments/banks/bank-all-1.swibank",
         "name": "All (1)",
         "programs": {
           "0": "hihat-hishrt.swi",
@@ -270,7 +270,7 @@
         }
       },
       {
-        "file": "instruments\\banks\\bank-all-2.swibank",
+        "file": "instruments/banks/bank-all-2.swibank",
         "name": "All (2)",
         "programs": {
           "0": "solo-41choir.swi",
@@ -346,7 +346,7 @@
     ],
     "arp": [
       {
-        "file": "instruments\\banks\\bank-arp-0.swibank",
+        "file": "instruments/banks/bank-arp-0.swibank",
         "name": "Arps (0)",
         "programs": {
           "0": "arp-filtupd.swi",
@@ -362,7 +362,7 @@
     ],
     "bass": [
       {
-        "file": "instruments\\banks\\bank-bass-0.swibank",
+        "file": "instruments/banks/bank-bass-0.swibank",
         "name": "Bass (0)",
         "programs": {
           "0": "bass-31filkt.swi",
@@ -407,7 +407,7 @@
     ],
     "drums": [
       {
-        "file": "instruments\\banks\\bank-drums-0.swibank",
+        "file": "instruments/banks/bank-drums-0.swibank",
         "name": "Drums / Percussion (0)",
         "programs": {
           "0": "agogo.swi",
@@ -523,7 +523,7 @@
     ],
     "fx": [
       {
-        "file": "instruments\\banks\\bank-fx-0.swibank",
+        "file": "instruments/banks/bank-fx-0.swibank",
         "name": "SFX (0)",
         "programs": {
           "0": "sfx-alienic.swi",
@@ -555,7 +555,7 @@
     ],
     "keys": [
       {
-        "file": "instruments\\banks\\bank-keys-0.swibank",
+        "file": "instruments/banks/bank-keys-0.swibank",
         "name": "Keys (0)",
         "programs": {
           "0": "chord-vibra.swi",
@@ -579,7 +579,7 @@
     ],
     "lead": [
       {
-        "file": "instruments\\banks\\bank-lead-0.swibank",
+        "file": "instruments/banks/bank-lead-0.swibank",
         "name": "Lead / Solo (0)",
         "programs": {
           "0": "brass-filtsw.swi",
@@ -655,7 +655,7 @@
     ],
     "misc": [
       {
-        "file": "instruments\\banks\\bank-misc-0.swibank",
+        "file": "instruments/banks/bank-misc-0.swibank",
         "name": "Misc (0)",
         "programs": {
           "0": "bell-bliss.swi",
@@ -691,7 +691,7 @@
     ],
     "pads": [
       {
-        "file": "instruments\\banks\\bank-pads-0.swibank",
+        "file": "instruments/banks/bank-pads-0.swibank",
         "name": "Pads / Chords (0)",
         "programs": {
           "0": "chord-41-fat.swi",
@@ -729,7 +729,7 @@
     ],
     "vocal": [
       {
-        "file": "instruments\\banks\\bank-vocal-0.swibank",
+        "file": "instruments/banks/bank-vocal-0.swibank",
         "name": "Vocal (0)",
         "programs": {
           "0": "vocal-catfil.swi",
@@ -742,6 +742,7 @@
     ]
   },
   "base_dir": "../swi",
-  "drumkit_gm": "instruments\\banks\\drumkit-gm.swibank",
-  "drumkit_remid": "instruments\\banks\\drumkit-remid.swibank"
+  "drumkit_gm": "instruments/banks/drumkit-gm.swibank",
+  "drumkit_remid": "instruments/banks/drumkit-remid.swibank",
+  "drumkits_8pad": "instruments/banks/drumkits-8pad.swibank"
 }

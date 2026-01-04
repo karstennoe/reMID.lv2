@@ -12,6 +12,9 @@ struct super
     struct CHIPS* sid_bank;
     struct midi_arrays* midi;
     sw_bank_t* bank;
+    // Multitimbral banks: indexed by remid_bank_id_t (see midi.h).
+    // banks[REMID_BANK_ALL] always points at `bank` (which can change via LV2 state).
+    sw_bank_t* banks[REMID_BANK_COUNT];
 
     struct midi_arrays* newmidi;
     sw_bank_t* new_bank;
