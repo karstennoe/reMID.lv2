@@ -116,17 +116,17 @@ static uint8_t default_bank_for_channel(int ch)
         REMID_BANK_PADS,  // ch3
         REMID_BANK_VOCAL, // ch4
         REMID_BANK_ARP,   // ch5
-        REMID_BANK_LEAD,  // ch6
-        REMID_BANK_BASS,  // ch7
-        REMID_BANK_PADS,  // ch8
-        REMID_BANK_VOCAL, // ch9
+        REMID_BANK_KEYS,  // ch6
+        REMID_BANK_MISC,  // ch7
+        REMID_BANK_FX,    // ch8
+        REMID_BANK_LEAD,  // ch9
         REMID_BANK_DRUMS, // ch10
-        REMID_BANK_LEAD,  // ch11
-        REMID_BANK_BASS,  // ch12
-        REMID_BANK_PADS,  // ch13
-        REMID_BANK_VOCAL, // ch14
-        REMID_BANK_ARP,   // ch15
-        REMID_BANK_LEAD,  // ch16
+        REMID_BANK_BASS,  // ch11
+        REMID_BANK_PADS,  // ch12
+        REMID_BANK_VOCAL, // ch13
+        REMID_BANK_ARP,   // ch14
+        REMID_BANK_KEYS,  // ch15
+        REMID_BANK_MISC,  // ch16
     };
     if (ch < 0 || ch > 15) return REMID_BANK_ALL;
     return map[ch];
@@ -146,6 +146,9 @@ static uint8_t bank_from_select(uint8_t msb, uint8_t lsb, uint8_t current)
     case 4: return REMID_BANK_ARP;
     case 5: return REMID_BANK_DRUMS;
     case 6: return REMID_BANK_ALL;
+    case 7: return REMID_BANK_KEYS;
+    case 8: return REMID_BANK_MISC;
+    case 9: return REMID_BANK_FX;
     default: return current;
     }
 }

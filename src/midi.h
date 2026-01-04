@@ -50,7 +50,11 @@ typedef enum remid_bank_id
     REMID_BANK_ARP = 4,
     REMID_BANK_DRUMS = 5,
     REMID_BANK_ALL = 6,
-    REMID_BANK_COUNT = 7
+    // Extra categories (optional defaults / Bank Select targets)
+    REMID_BANK_KEYS = 7,
+    REMID_BANK_MISC = 8,
+    REMID_BANK_FX = 9,
+    REMID_BANK_COUNT = 10
 } remid_bank_id_t;
 
 typedef struct midi_arrays

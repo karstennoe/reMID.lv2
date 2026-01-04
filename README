@@ -88,8 +88,11 @@ Default channel mapping (hard-coded for now):
 - Ch 3  -> Pads
 - Ch 4  -> Vocal
 - Ch 5  -> Arp
+- Ch 6  -> Keys
+- Ch 7  -> Misc
+- Ch 8  -> FX
 - Ch 10 -> Drums (reserved)
-- Ch 6..16 (except 10) repeat the pattern Lead/Bass/Pads/Vocal/Arp
+- Ch 9..16 (except 10) continue repeating the non-drum pattern: Lead/Bass/Pads/Vocal/Arp/Keys/Misc/FX
 
 Program Change per channel selects the patch within that channel's bank.
 
@@ -99,13 +102,16 @@ Optional Bank Select support (CC0 MSB + CC32 LSB):
 - Bank Select is only applied when followed by a Program Change (prevents accidental CC0/CC32 from knobs changing banks).
 - Bank Select is ignored on Channel 10 (drums stay on the drum bank by default).
 - Only MSB=0 is recognized; LSB mapping:
-  - 0 Lead
-  - 1 Bass
-  - 2 Pads
-  - 3 Vocal
-  - 4 Arp
-  - 5 Drums
-  - 6 All (uses the global .swibank selected by LV2 state)
+   - 0 Lead
+   - 1 Bass
+   - 2 Pads
+   - 3 Vocal
+   - 4 Arp
+   - 5 Drums
+   - 6 All (uses the global .swibank selected by LV2 state)
+   - 7 Keys
+   - 8 Misc
+   - 9 FX
 
 Channel 10 drum kits (8-pad mapping)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -292,20 +292,25 @@
           }
 
           // Bank IDs mirror src/midi.h remid_bank_id_t.
-          var BANK_LEAD = 0, BANK_BASS = 1, BANK_PADS = 2, BANK_VOCAL = 3, BANK_ARP = 4, BANK_DRUMS = 5, BANK_ALL = 6;
+          var BANK_LEAD = 0, BANK_BASS = 1, BANK_PADS = 2, BANK_VOCAL = 3, BANK_ARP = 4, BANK_DRUMS = 5, BANK_ALL = 6, BANK_KEYS = 7, BANK_MISC = 8, BANK_FX = 9;
           var bankLabelById = {};
           bankLabelById[BANK_LEAD] = 'Lead';
           bankLabelById[BANK_BASS] = 'Bass';
           bankLabelById[BANK_PADS] = 'Pads';
           bankLabelById[BANK_VOCAL] = 'Vocal';
           bankLabelById[BANK_ARP] = 'Arp';
+          bankLabelById[BANK_KEYS] = 'Keys';
+          bankLabelById[BANK_MISC] = 'Misc';
+          bankLabelById[BANK_FX] = 'FX';
           bankLabelById[BANK_DRUMS] = 'Drums';
           bankLabelById[BANK_ALL] = 'All';
 
           function defaultBankForChannel(ch1) {
             if (ch1 === 10) return BANK_DRUMS;
-            var map = [BANK_LEAD, BANK_BASS, BANK_PADS, BANK_VOCAL, BANK_ARP];
-            var idx = (ch1 - 1) % map.length;
+            var map = [BANK_LEAD, BANK_BASS, BANK_PADS, BANK_VOCAL, BANK_ARP, BANK_KEYS, BANK_MISC, BANK_FX];
+            var idx = ch1 - 1;
+            if (ch1 > 10) idx -= 1; // skip channel 10 (drums)
+            idx = idx % map.length;
             return map[idx];
           }
 
@@ -324,6 +329,9 @@
           categoryPrograms[BANK_PADS] = pickPrograms('pads');
           categoryPrograms[BANK_VOCAL] = pickPrograms('vocal');
           categoryPrograms[BANK_ARP] = pickPrograms('arp');
+          categoryPrograms[BANK_KEYS] = pickPrograms('keys');
+          categoryPrograms[BANK_MISC] = pickPrograms('misc');
+          categoryPrograms[BANK_FX] = pickPrograms('fx');
 
           var drumKitNames = { 0: 'Default', 1: 'Tight/LoFi', 2: 'Bright', 3: 'Deep', 4: 'Noisy/Glitch' };
 

@@ -79,6 +79,18 @@ static void init_multitimbral_banks(struct super* s)
 	if(b) s->banks[REMID_BANK_ARP] = b;
 	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-arp-0.swibank (falling back to ALL)\n");
 
+	b = load_bundle_bank(s, "instruments/banks/bank-keys-0.swibank");
+	if(b) s->banks[REMID_BANK_KEYS] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-keys-0.swibank (falling back to ALL)\n");
+
+	b = load_bundle_bank(s, "instruments/banks/bank-misc-0.swibank");
+	if(b) s->banks[REMID_BANK_MISC] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-misc-0.swibank (falling back to ALL)\n");
+
+	b = load_bundle_bank(s, "instruments/banks/bank-fx-0.swibank");
+	if(b) s->banks[REMID_BANK_FX] = b;
+	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load bank-fx-0.swibank (falling back to ALL)\n");
+
 	// Channel 10 drums use a dedicated multi-kit drum bank (Program Change selects the kit).
 	b = load_bundle_bank(s, "instruments/banks/drumkits-8pad.swibank");
 	if(!b) b = load_bundle_bank(s, "instruments/banks/drumkit-remid.swibank");
@@ -86,12 +98,15 @@ static void init_multitimbral_banks(struct super* s)
 	if(b) s->banks[REMID_BANK_DRUMS] = b;
 	else fprintf(stderr, "reMID.lv2: multitimbral: failed to load any drumkit bank (drums may be silent)\n");
 
-	fprintf(stderr, "reMID.lv2: multitimbral banks: lead='%s' bass='%s' pads='%s' vocal='%s' arp='%s' drums='%s' all='%s'\n",
+	fprintf(stderr, "reMID.lv2: multitimbral banks: lead='%s' bass='%s' pads='%s' vocal='%s' arp='%s' keys='%s' misc='%s' fx='%s' drums='%s' all='%s'\n",
 	        sw_bank_name(s->banks[REMID_BANK_LEAD]) ? sw_bank_name(s->banks[REMID_BANK_LEAD]) : "(null)",
 	        sw_bank_name(s->banks[REMID_BANK_BASS]) ? sw_bank_name(s->banks[REMID_BANK_BASS]) : "(null)",
 	        sw_bank_name(s->banks[REMID_BANK_PADS]) ? sw_bank_name(s->banks[REMID_BANK_PADS]) : "(null)",
 	        sw_bank_name(s->banks[REMID_BANK_VOCAL]) ? sw_bank_name(s->banks[REMID_BANK_VOCAL]) : "(null)",
 	        sw_bank_name(s->banks[REMID_BANK_ARP]) ? sw_bank_name(s->banks[REMID_BANK_ARP]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_KEYS]) ? sw_bank_name(s->banks[REMID_BANK_KEYS]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_MISC]) ? sw_bank_name(s->banks[REMID_BANK_MISC]) : "(null)",
+	        sw_bank_name(s->banks[REMID_BANK_FX]) ? sw_bank_name(s->banks[REMID_BANK_FX]) : "(null)",
 	        sw_bank_name(s->banks[REMID_BANK_DRUMS]) ? sw_bank_name(s->banks[REMID_BANK_DRUMS]) : "(null)",
 	        sw_bank_name(s->banks[REMID_BANK_ALL]) ? sw_bank_name(s->banks[REMID_BANK_ALL]) : "(null)");
 }
